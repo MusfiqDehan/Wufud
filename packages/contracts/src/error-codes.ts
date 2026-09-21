@@ -1,0 +1,58 @@
+export const ErrorCode = {
+  AUTHENTICATION_REQUIRED: "AUTHENTICATION_REQUIRED",
+  INVALID_CREDENTIALS: "INVALID_CREDENTIALS",
+  TOKEN_EXPIRED: "TOKEN_EXPIRED",
+  PERMISSION_DENIED: "PERMISSION_DENIED",
+  VALIDATION_ERROR: "VALIDATION_ERROR",
+  DUPLICATE_RESOURCE: "DUPLICATE_RESOURCE",
+  NOT_FOUND: "NOT_FOUND",
+  RATE_LIMIT_EXCEEDED: "RATE_LIMIT_EXCEEDED",
+  INVALID_CURSOR: "INVALID_CURSOR",
+  INTERNAL_SERVER_ERROR: "INTERNAL_SERVER_ERROR",
+  TENANT_NOT_FOUND: "TENANT_NOT_FOUND",
+  TENANT_SUSPENDED: "TENANT_SUSPENDED",
+  LIMIT_EXCEEDED: "LIMIT_EXCEEDED",
+  SEAT_UNAVAILABLE: "SEAT_UNAVAILABLE",
+  BOOKING_EXPIRED: "BOOKING_EXPIRED",
+  PAYMENT_MISMATCH: "PAYMENT_MISMATCH",
+  GATEWAY_UNAVAILABLE: "GATEWAY_UNAVAILABLE",
+  INSUFFICIENT_FUNDS: "INSUFFICIENT_FUNDS",
+  REFUND_EXCEEDS_RECEIVED: "REFUND_EXCEEDS_RECEIVED",
+  QUOTA_BELOW_CONFIRMED: "QUOTA_BELOW_CONFIRMED",
+  LAST_ADMIN: "LAST_ADMIN",
+  FEATURE_DISABLED: "FEATURE_DISABLED",
+  UNKNOWN_GATEWAY: "UNKNOWN_GATEWAY",
+  DOMAIN_NOT_VERIFIED: "DOMAIN_NOT_VERIFIED",
+} as const;
+
+export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode];
+
+/** User-safe defaults. Never include stack traces, SQL, or secrets. */
+export const ERROR_MESSAGES: Record<ErrorCode, string> = {
+  AUTHENTICATION_REQUIRED: "Please sign in to continue.",
+  INVALID_CREDENTIALS: "That email or password is not correct.",
+  TOKEN_EXPIRED: "Your session timed out. Please sign in again.",
+  PERMISSION_DENIED: "You don't have permission to do that.",
+  VALIDATION_ERROR: "Please check the highlighted fields and try again.",
+  DUPLICATE_RESOURCE: "That information is already in use.",
+  NOT_FOUND: "We couldn't find what you're looking for.",
+  RATE_LIMIT_EXCEEDED: "Too many attempts. Please wait a moment and try again.",
+  INVALID_CURSOR: "We couldn't load the next page. Refresh and try again.",
+  INTERNAL_SERVER_ERROR: "Something went wrong on our end. Please try again later.",
+  TENANT_NOT_FOUND: "This agency site could not be found.",
+  TENANT_SUSPENDED: "This agency is temporarily unavailable.",
+  LIMIT_EXCEEDED: "You've reached a limit on your current plan.",
+  SEAT_UNAVAILABLE: "There aren't enough seats left for this option.",
+  BOOKING_EXPIRED: "This booking hold has expired. Start again to continue.",
+  PAYMENT_MISMATCH: "The payment amount doesn't match your booking. Contact support if this keeps happening.",
+  GATEWAY_UNAVAILABLE: "Online payment isn't available right now. Try again later or choose another method.",
+  INSUFFICIENT_FUNDS: "There isn't enough received payment for this action.",
+  REFUND_EXCEEDS_RECEIVED: "The refund amount can't be more than what was received.",
+  QUOTA_BELOW_CONFIRMED: "Capacity can't be set below seats that are already confirmed.",
+  LAST_ADMIN: "At least one active admin must remain on the account.",
+  FEATURE_DISABLED: "This feature isn't included on your current plan.",
+  UNKNOWN_GATEWAY: "That payment method isn't supported.",
+  DOMAIN_NOT_VERIFIED: "Verify your domain before using it.",
+};
+
+export const GENERIC_REQUEST_FAILED = "Something went wrong. Please try again.";
