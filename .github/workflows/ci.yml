@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, develop]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: wufud
+          POSTGRES_PASSWORD: wufud
+          POSTGRES_DB: wufud
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U wufud"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports: ["6379:6379"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.10.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm --filter @wufud/contracts build
+      - run: pnpm --filter backend test
+      - run: pnpm --filter backend typecheck
+      - run: pnpm --filter frontend typecheck
+      - name: Migrate + seed
+        env:
+          DATABASE_URL: postgresql://wufud:wufud@localhost:5432/wufud
+          REDIS_URL: redis://localhost:6379
+          PAYMENTS_STUB: "true"
+        run: |
+          pnpm migrate:public
+          pnpm seed:demo
+      - run: pnpm --filter frontend build
+        env:
+          API_INTERNAL_URL: http://localhost:4000
