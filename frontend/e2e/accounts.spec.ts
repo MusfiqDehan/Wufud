@@ -37,7 +37,7 @@ test("account overview features stats, charts, ledger and cursor pagination", as
 
   // Save screenshot of the Account Overview page
   await page.screenshot({
-    path: "/home/musfiqdehan/.gemini/antigravity-ide/brain/e69d4a45-aaa4-47e2-b466-500b5741db31/account_overview.png",
+    path: test.info().outputPath("account_overview.png"),
     fullPage: true,
   });
 
@@ -55,7 +55,7 @@ test("account overview features stats, charts, ledger and cursor pagination", as
 
     if (name === "Disbursements") {
       await page.screenshot({
-        path: "/home/musfiqdehan/.gemini/antigravity-ide/brain/e69d4a45-aaa4-47e2-b466-500b5741db31/paginated_table.png",
+        path: test.info().outputPath("paginated_table.png"),
         fullPage: true,
       });
     }
@@ -63,10 +63,10 @@ test("account overview features stats, charts, ledger and cursor pagination", as
 
   // 3. Test POS Counter operations
   await page.goto("/dashboard/pos");
-  await expect(page.getByRole("heading", { name: "Point of Sale (POS)", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Point of Sale (POS) & Counter Collections", exact: true })).toBeVisible();
   await expect(page.getByText("Loading catalog…", { exact: true })).toHaveCount(0);
   await expect(page.getByText("Could not load catalog.", { exact: true })).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "Add Product or Service" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Add Product / Service" })).toBeVisible();
 
   await page.close();
 });
