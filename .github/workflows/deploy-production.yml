@@ -1,0 +1,38 @@
+name: Deploy production
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: Image tag to deploy
+        required: true
+  push:
+    tags: ["v*"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USER }}
+          key: ${{ secrets.PROD_SSH_KEY }}
+          script: |
+            set -euo pipefail
+            cd ${{ secrets.PROD_PATH }}
+            git pull --ff-only
+            echo "${{ secrets.PROD_ENV }}" > .env.production
+            export IMAGE_TAG=${{ github.event.inputs.image_tag || github.ref_name }}
+            PREV=$(docker compose --env-file .env.production -f docker-compose.prod.yml ps -q backend || true)
+            docker compose --env-file .env.production -f docker-compose.prod.yml pull
+            docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend node dist/cli/migrate-public.js
+            docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend node dist/cli/migrate-tenants.js
+            docker compose --env-file .env.production -f docker-compose.prod.yml up -d
+            if ! curl -fsS https://wufud.musfiqdehan.com/api/v1/health; then
+              echo "Health check failed"
+              exit 1
+            fi

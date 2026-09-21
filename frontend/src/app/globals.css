@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Urbanist", ui-sans-serif, system-ui, sans-serif;
+  --color-teal-50: #edf6f2;
+  --color-teal-100: #d7ebe3;
+  --color-teal-200: #a6d7c4;
+  --color-teal-300: #77bda5;
+  --color-teal-400: #14b89a;
+  --color-teal-500: #0e8f86;
+  --color-teal-600: #0b6b72;
+  --color-navy-900: #102d29;
+  --color-navy-800: #193a35;
+  --color-navy-700: #2a4b45;
+  --color-surface: #f7f8f5;
+  --color-ink: #203a34;
+}
+
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  @apply bg-surface text-ink antialiased dark:bg-navy-900 dark:text-slate-100;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+body { margin: 0; }
+::selection { background: #a6d7c4; color: #102d29; }
+button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+button:not(:disabled), select { cursor: pointer; }
+:focus-visible { outline: 2px solid #0e8f86; outline-offset: 4px; }
+h1, h2, h3 { letter-spacing: -0.035em; }
+.workspace-main > h1, .workspace-main > div > h1 { font-size: clamp(1.65rem, 3vw, 2rem); }
+.workspace-main { animation: reveal .3s ease-out; }
+.workspace-main table { background: white; }
+.dark .workspace-main table { background: #193a35; }
+.workspace-main thead { font-size: .7rem; text-transform: uppercase; letter-spacing: .075em; color: #64746e; }
+.workspace-main tbody tr { transition: background .15s; }
+.workspace-main tbody tr:hover { background: #edf6f280; }
+.dark .workspace-main tbody tr:hover { background: #2a4b45; }
+.workspace-main td { padding-top: 1rem; padding-bottom: 1rem; }
+.hero-art { background: radial-gradient(ellipse at 50% 20%, #d9e9d5 0%, #abc6b3 48%, #719483 100%); }
+@keyframes reveal { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+
+.dark .text-slate-500 { color: #a5b8b2; }
+
+.pos-fullscreen-active {
+  background-color: var(--color-surface, #f7f8f5) !important;
+}
+.dark .pos-fullscreen-active {
+  background-color: var(--color-navy-900, #102d29) !important;
+}
+
+.platform-console {
+  --color-navy-900: #19243b;
+  --color-navy-800: #24314c;
+  --color-navy-700: #354566;
+  --color-teal-50: #eef1fd;
+  --color-teal-100: #e0e6fc;
+  --color-teal-200: #b7c8fb;
+  --color-teal-400: #7999ed;
+  --color-teal-500: #506fc6;
+  --color-teal-600: #405ca9;
+  background: #f4f6fb;
+  color: #1f2c46;
+}
+.platform-console .console-sidebar { background: #19243b; color: #f2f5ff; border-color: #2c3954; }
+.platform-console .console-sidebar .workspace-selector { background: #24314c; border-color: #3b4862; }
+.platform-console .console-sidebar .workspace-selector .text-slate-500 { color: #b7c5df; }
+.platform-console .console-sidebar .nav-link { color: #becbe2; }
+.platform-console .console-sidebar .nav-link:hover { background: #2a3955; }
+.platform-console .console-sidebar .nav-link[aria-current="page"] { background: #dce5ff; color: #19243b; }
+.platform-console .console-sidebar .sidebar-help { background: #24314c; }
+.platform-console .console-sidebar .sidebar-help a, .platform-console .console-sidebar .sidebar-help svg { color: #b7c8fb; }
+.platform-console .console-sidebar .text-teal-500 { color: #a1b6ed; }
+.dark .platform-console { background: #131d30; color: #eef2ff; }
+.agency-console { background: #f8f6f0; }
+.agency-console .console-sidebar { border-right-color: #ddd8cb; }
+.agency-console .workspace-selector { background: #f3eddf; border-color: #e4dac4; }
+.agency-console .workspace-main > h1 { font-family: Georgia, serif; font-weight: 500; }
+.dark .agency-console { background: #102d29; }
+.dark .agency-console .workspace-selector { background: #193a35; border-color: #2a4b45; }
+.tenant-site h1, .tenant-site h2 { letter-spacing: -.025em; }
+
+/* Slim themed scrollbar for the sidebar navigation */
+.nav-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #c3cec8 transparent;
+}
+.nav-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.nav-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.nav-scroll::-webkit-scrollbar-thumb {
+  background: #c3cec8;
+  border-radius: 999px;
+}
+.nav-scroll::-webkit-scrollbar-thumb:hover {
+  background: #14b89a;
+}
+.dark .nav-scroll {
+  scrollbar-color: #2a4b45 transparent;
+}
+.dark .nav-scroll::-webkit-scrollbar-thumb {
+  background: #2a4b45;
+}
+.dark .nav-scroll::-webkit-scrollbar-thumb:hover {
+  background: #0e8f86;
+}
+/* Platform console sidebar stays dark in both modes */
+.platform-console .console-sidebar .nav-scroll {
+  scrollbar-color: #35466a transparent;
+}
+.platform-console .console-sidebar .nav-scroll::-webkit-scrollbar-thumb {
+  background: #35466a;
+}
+.platform-console .console-sidebar .nav-scroll::-webkit-scrollbar-thumb:hover {
+  background: #506fc6;
+}
+
+/* Custom password visibility toggle — hide native browser reveal controls */
+input[data-password-input]::-ms-reveal,
+input[data-password-input]::-ms-clear {
+  display: none;
+}
+
+input[data-password-input]::-webkit-textfield-decoration-container {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+input[data-password-input]::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+  pointer-events: none;
+}
