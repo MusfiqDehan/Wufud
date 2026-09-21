@@ -22,11 +22,13 @@ Financial history is soft-deleted only. Reports and settlement matching explicit
 
 ## Accounts and POS
 
-Accounts is a navigation page. Vendors, Disbursements, Stock, Expenses, and Settlements have separate routes beneath `/dashboard/accounts`, with independent feature keys `vendors`, `disbursements`, `stock`, `expenses`, and `settlements`. Both API permissions and page access use those keys. Existing Payments, Refunds, and Reports keep their own gates.
+Accounts provides a financial overview and navigation to dedicated workspaces. Vendors, Disbursements, Stock, Expenses, and Settlements have separate routes beneath `/dashboard/accounts`, with independent feature keys `vendors`, `disbursements`, `stock`, `expenses`, and `settlements`. Both API permissions and page access use those keys. Existing Payments, Refunds, and Reports keep their own gates.
 
-`/dashboard/pos` uses `pos:view` to read the catalog/sales, `pos:edit` to record sales, and `pos:full` to create catalog entries and refund a sale. It supports BDT cash sales of products and services; product stock is deducted atomically, services do not consume stock. Checkout has an idempotency key. Full sale refunds restore product quantities once. Booking refunds retain their separate approval workflow. POS does not charge cards or perform a real external refund transfer; staff record cash received/returned.
+`/dashboard/pos` uses `pos:view` to read the catalog/sales, `pos:edit` to record sales, and `pos:full` to create catalog entries and refund a sale. It supports BDT cash sales of products and services; product stock is deducted atomically, services do not consume stock. Checkout has an idempotency key. Full sale refunds restore product quantities once and record a negative stock-cost reversal while retaining the original issue. Receipts are saved for consistent reprinting. Booking refunds retain their separate approval workflow. POS does not charge cards or perform a real external refund transfer; staff record cash received/returned.
 
-Vendor costs retain SAR, the entered FX rate, and BDT equivalent. Expenses and issued-stock costs are reported separately. Stock issue costs are captured at issue time. Existing issues receive a zero-cost migration default and require review if historical cost reporting is needed.
+POS booking collections create pending manual payments with retry protection. A different authorized user must approve them before booking balances or seats change. Receipts clearly show pending approval. Branch restrictions apply to booking selection and collection.
+
+Vendor costs retain SAR, the entered FX rate, and BDT equivalent. Expenses and issued-stock costs are reported separately. Stock issue costs are captured at issue time. Consumed stock is reported as a cost, not counted again as a cash outflow. Existing issues receive a zero-cost migration default and require review if historical cost reporting is needed.
 
 The first Accounts feature migration copies existing Accounts role permissions, tenant flags, and tenant overrides to the new pages. Explicit new settings are preserved. After migration, each page can be independently disabled or restricted; later migrations do not restore removed role permissions. Existing subscription plans with Accounts are expanded once as well. New subscription plans must explicitly include the new keys as appropriate.
 
@@ -44,10 +46,10 @@ pnpm migrate:tenants
 pnpm typecheck
 pnpm test
 BUSINESS_TEST_DATABASE_URL=postgresql://wufud:wufud@localhost:55432/wufud pnpm --filter backend test -- --runInBand
-CI=1 pnpm --filter frontend exec playwright test e2e/accounts.spec.ts --workers=1
+CI=1 pnpm --filter frontend exec playwright test e2e/accounts.spec.ts e2e/pos.spec.ts e2e/business-access.spec.ts --workers=1
 ```
 
-Database tests create a uniquely named temporary schema and drop only that schema. They exercise actual services and PostgreSQL locks, including last-seat competition, manual-payment maker/checker, simultaneous refund claims, hold expiry, callback duplication/reordering, stock contention, and POS retry/refund behavior. External gateway validation is mocked in these tests; production-provider sandbox certification remains a separate deployment check. Browser checks use the seeded demo administrator and inspect the Accounts subpages and POS.
+Database tests create a uniquely named temporary schema and drop only that schema. They exercise actual services and PostgreSQL locks, including last-seat competition, manual-payment maker/checker, simultaneous refund claims, hold expiry, callback duplication/reordering, stock contention, and POS retry/refund behavior. External gateway validation is mocked in these tests; production-provider sandbox certification remains a separate deployment check. Browser checks use the seeded demo accounts and cover Accounts, POS checkout and saved receipts, pending installment collections, pilgrim isolation, and cross-tenant access denial. The latest local verification passed 49 backend tests across 10 suites and three targeted browser/API tests, plus frontend and backend type checks. This is not a claim that the entire browser suite or external payment providers were tested.
 
 ## Existing seat-counter repair
 
