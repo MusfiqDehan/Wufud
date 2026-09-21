@@ -22,3 +22,11 @@ lerna-debug.log*
 # temp directory
 .temp
 .tmp
+
+# IDEs
+.vscode
+.idea
+.cursor
+.cursorrules
+
+PROJECT_REQUIREMENTS.md
