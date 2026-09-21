@@ -1,8 +1,15 @@
-# Nestjs specific
-/dist
-/node_modules
-/build
-/tmp
+# Dependencies
+node_modules
+.pnpm-store
+
+# Builds
+dist
+build
+.next
+out
+tmp
+.temp
+.turbo
 
 # Logs
 logs
@@ -11,17 +18,27 @@ npm-debug.log*
 pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
 
-# dotenv environment variable files
+# Environment
 .env
+.env.local
 .env.development
 .env.test
 .env.production
+.env.staging
+!.env.example
+!.env.local.example
+!.env.test.example
+!.env.staging.example
+!.env.production.example
+PROJECT_REQUIREMENTS.md
 
-# temp directory
-.temp
-.tmp
+# Coverage / test
+coverage
+.nyc_output
+playwright-report
+test-results
+blob-report
 
 # IDEs
 .vscode
@@ -29,4 +46,19 @@ lerna-debug.log*
 .cursor
 .cursorrules
 
-PROJECT_REQUIREMENTS.md
+# OS
+.DS_Store
+Thumbs.db
+
+# MikroORM
+temp
+
+# Secrets / certs
+*.pem
+*.key
+traefik/certs/*.pem
+traefik/certs/*.key
+traefik/dynamic/.htpasswd
+
+# Generated Traefik custom domains (runtime)
+traefik/dynamic/wufud-custom-domains.yml

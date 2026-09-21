@@ -1,0 +1,23 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "noImplicitAny": false,
+    "strict": false,
+    "incremental": true,
+    "paths": {
+      "@shared/*": ["./src/shared/*"],
+      "@tenancy/*": ["./src/tenancy/*"],
+      "@identity/*": ["./src/identity/*"],
+      "@access/*": ["./src/access/*"]
+    }
+  },
+  "include": ["src"]
+}

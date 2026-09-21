@@ -1,0 +1,65 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - wufud_staging_pg:/var/lib/postgresql/data
+    networks: [internal]
+
+  redis:
+    image: redis:7-alpine
+    networks: [internal]
+
+  backend:
+    image: ghcr.io/musfiqdehan/wufud-backend:${IMAGE_TAG:-develop}
+    env_file: .env.staging
+    depends_on: [postgres, redis]
+    networks: [internal, traefik_proxy]
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik_proxy
+      - traefik.http.routers.wufud-staging-api.rule=HostRegexp(`^([a-z0-9][a-z0-9-]*\.)?staging\.wufud\.musfiqdehan\.com$`) && PathPrefix(`/api`)
+      - traefik.http.routers.wufud-staging-api.entrypoints=websecure
+      - traefik.http.routers.wufud-staging-api.tls=true
+      - traefik.http.routers.wufud-staging-api.tls.certresolver=letsencrypt
+      - traefik.http.routers.wufud-staging-api.tls.domains[0].main=staging.wufud.musfiqdehan.com
+      - traefik.http.routers.wufud-staging-api.tls.domains[0].sans=*.staging.wufud.musfiqdehan.com
+      - traefik.http.routers.wufud-staging-api.middlewares=security-headers@file,compress@file,api-ratelimit@file
+      - traefik.http.services.wufud-staging-api.loadbalancer.server.port=4000
+
+  worker:
+    image: ghcr.io/musfiqdehan/wufud-backend:${IMAGE_TAG:-develop}
+    command: ["node", "dist/worker.js"]
+    env_file: .env.staging
+    depends_on: [postgres, redis]
+    networks: [internal]
+
+  frontend:
+    image: ghcr.io/musfiqdehan/wufud-frontend:${IMAGE_TAG:-develop}
+    env_file: .env.staging
+    environment:
+      API_INTERNAL_URL: http://backend:4000
+    depends_on: [backend]
+    networks: [internal, traefik_proxy]
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik_proxy
+      - traefik.http.routers.wufud-staging-web.rule=HostRegexp(`^([a-z0-9][a-z0-9-]*\.)?staging\.wufud\.musfiqdehan\.com$`) && !PathPrefix(`/api`)
+      - traefik.http.routers.wufud-staging-web.entrypoints=websecure
+      - traefik.http.routers.wufud-staging-web.tls=true
+      - traefik.http.routers.wufud-staging-web.tls.certresolver=letsencrypt
+      - traefik.http.routers.wufud-staging-web.tls.domains[0].main=staging.wufud.musfiqdehan.com
+      - traefik.http.routers.wufud-staging-web.tls.domains[0].sans=*.staging.wufud.musfiqdehan.com
+      - traefik.http.routers.wufud-staging-web.middlewares=security-headers@file,compress@file
+      - traefik.http.services.wufud-staging-web.loadbalancer.server.port=3000
+
+networks:
+  internal:
+  traefik_proxy:
+    external: true
+
+volumes:
+  wufud_staging_pg:
