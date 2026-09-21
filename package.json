@@ -1,0 +1,18 @@
+{
+  "name": "wufud",
+  "private": true,
+  "packageManager": "pnpm@11.10.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --filter backend --filter frontend dev",
+    "build": "pnpm --filter @wufud/contracts build && pnpm --filter backend build && pnpm --filter frontend build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm --filter backend test",
+    "seed:demo": "pnpm --filter backend seed:demo",
+    "migrate:public": "pnpm --filter backend migrate:public",
+    "migrate:tenants": "pnpm --filter backend migrate:tenants"
+  }
+}
