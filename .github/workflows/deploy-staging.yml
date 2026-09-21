@@ -1,0 +1,38 @@
+name: Deploy staging
+
+on:
+  workflow_run:
+    workflows: ["Build images"]
+    types: [completed]
+    branches: [develop]
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: Image tag
+        required: false
+        default: develop
+
+jobs:
+  deploy:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.STAGING_HOST }}
+          username: ${{ secrets.STAGING_USER }}
+          key: ${{ secrets.STAGING_SSH_KEY }}
+          script: |
+            set -euo pipefail
+            cd ${{ secrets.STAGING_PATH }}
+            git pull --ff-only
+            echo "${{ secrets.STAGING_ENV }}" > .env.staging
+            export IMAGE_TAG=${{ github.event.inputs.image_tag || github.sha }}
+            docker compose --env-file .env.staging -f docker-compose.staging.yml pull
+            docker compose --env-file .env.staging -f docker-compose.staging.yml run --rm backend node dist/cli/migrate-public.js
+            docker compose --env-file .env.staging -f docker-compose.staging.yml run --rm backend node dist/cli/migrate-tenants.js
+            docker compose --env-file .env.staging -f docker-compose.staging.yml up -d
+            curl -fsS https://staging.wufud.musfiqdehan.com/api/v1/health
