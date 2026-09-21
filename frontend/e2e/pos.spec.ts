@@ -50,7 +50,7 @@ test("POS page enables rapid retail checkout, stock updates, installment collect
 
   // Capture screenshot of light mode POS in Full Screen Focus mode
   await page.screenshot({
-    path: "/home/musfiqdehan/.gemini/antigravity-ide/brain/e69d4a45-aaa4-47e2-b466-500b5741db31/pos_fullscreen_light.png",
+    path: test.info().outputPath("pos_fullscreen_light.png"),
     fullPage: false,
   });
 
@@ -60,7 +60,7 @@ test("POS page enables rapid retail checkout, stock updates, installment collect
 
   // Capture screenshot of dark mode POS in Full Screen Focus mode
   await page.screenshot({
-    path: "/home/musfiqdehan/.gemini/antigravity-ide/brain/e69d4a45-aaa4-47e2-b466-500b5741db31/pos_fullscreen_dark.png",
+    path: test.info().outputPath("pos_fullscreen_dark.png"),
     fullPage: false,
   });
 
@@ -73,13 +73,16 @@ test("POS page enables rapid retail checkout, stock updates, installment collect
   await page.evaluate(() => document.documentElement.classList.remove("dark"));
   await page.waitForTimeout(300);
   await page.screenshot({
-    path: "/home/musfiqdehan/.gemini/antigravity-ide/brain/e69d4a45-aaa4-47e2-b466-500b5741db31/pos_light_mode.png",
+    path: test.info().outputPath("pos_light_mode.png"),
     fullPage: false,
   });
 
   // 7. Complete Cash Sale and Verify Automatic Receipt Modal
   const checkoutBtn = page.getByRole("button", { name: /Complete Sale & Print Receipt/ });
+  const saleResponse = page.waitForResponse(r => r.url().endsWith("/api/v1/pos/sales") && r.request().method() === "POST");
   await checkoutBtn.click();
+  const saleEnvelope = await (await saleResponse).json();
+  expect(saleEnvelope.success).toBe(true);
 
   // Expect Printable Receipt Modal to open immediately
   await expect(page.getByRole("dialog", { name: "Transaction Receipt" })).toBeVisible({ timeout: 10000 });
@@ -89,7 +92,7 @@ test("POS page enables rapid retail checkout, stock updates, installment collect
 
   // Capture screenshot of Sales Receipt Modal
   await page.screenshot({
-    path: "/home/musfiqdehan/.gemini/antigravity-ide/brain/e69d4a45-aaa4-47e2-b466-500b5741db31/pos_sale_receipt.png",
+    path: test.info().outputPath("pos_sale_receipt.png"),
     fullPage: false,
   });
 
@@ -122,16 +125,23 @@ test("POS page enables rapid retail checkout, stock updates, installment collect
   // 11. Enter Installment Amount & Tender
   const collectBtn = page.getByRole("button", { name: /Collect & Print Receipt/ });
   await expect(collectBtn).toBeVisible();
+  await page.getByPlaceholder("e.g. 50000").fill("100");
+  const collectionResponse = page.waitForResponse(r => r.url().endsWith("/api/v1/pos/installments") && r.request().method() === "POST");
   await collectBtn.click();
+  const collectionEnvelope = await (await collectionResponse).json();
+  expect(collectionEnvelope.success).toBe(true);
+  expect(collectionEnvelope.data.manualPayment.status).toBe("pending");
+  expect(collectionEnvelope.data.receipt.totalReceived).toBe(collectionEnvelope.data.receipt.previousReceived);
 
   // Expect Installment Receipt Modal to open
   await expect(page.getByRole("dialog", { name: "Transaction Receipt" })).toBeVisible({ timeout: 10000 });
   await expect(page.getByText("Booking Installment Receipt")).toBeVisible();
+  await expect(page.getByText(/Approval: pending/)).toBeVisible();
   await expect(page.getByText("Payment Collected Now")).toBeVisible();
 
   // Capture screenshot of Installment Receipt Modal
   await page.screenshot({
-    path: "/home/musfiqdehan/.gemini/antigravity-ide/brain/e69d4a45-aaa4-47e2-b466-500b5741db31/pos_installment_receipt.png",
+    path: test.info().outputPath("pos_installment_receipt.png"),
     fullPage: false,
   });
 
@@ -144,5 +154,12 @@ test("POS page enables rapid retail checkout, stock updates, installment collect
   await expect(page.getByRole("columnheader", { name: "Transaction Ref" })).toBeVisible();
   await expect(page.getByRole("button", { name: "View Receipt" }).first()).toBeVisible();
 
+  // Keep demo stock unchanged and leave a retained, rejected test collection.
+  const token = await page.evaluate(() => localStorage.getItem("wufud_access"));
+  const headers = { Authorization: `Bearer ${token}` };
+  const returned = await page.request.post(`/api/v1/pos/sales/${saleEnvelope.data.id}/refund`, { headers });
+  expect(returned.ok()).toBe(true);
+  const rejected = await page.request.post(`/api/v1/manual-payments/${collectionEnvelope.data.manualPayment.id}/reject`, { headers, data: { note: "Browser regression test cleanup" } });
+  expect(rejected.ok()).toBe(true);
   await page.close();
 });
