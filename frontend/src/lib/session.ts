@@ -13,14 +13,22 @@ export function getStoredAccessToken(): string | null {
   return localStorage.getItem(ACCESS_STORAGE_KEY);
 }
 
+function notifyAuthChanged() {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new Event("wufud-auth-changed"));
+  }
+}
+
 export function storeAccessToken(token: string) {
   localStorage.setItem(ACCESS_STORAGE_KEY, token);
   scheduleProactiveAccessRefresh();
+  notifyAuthChanged();
 }
 
 export function clearStoredAccessToken() {
   localStorage.removeItem(ACCESS_STORAGE_KEY);
   stopProactiveAccessRefresh();
+  notifyAuthChanged();
 }
 
 function getBase() {
