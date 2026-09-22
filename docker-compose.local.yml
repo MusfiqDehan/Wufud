@@ -57,7 +57,7 @@ services:
       CI: "true"
       DATABASE_URL: postgresql://wufud:wufud@postgres:5432/wufud
       REDIS_URL: redis://redis:6379
-      API_PORT: 4000
+      API_PORT: 4005
       PLATFORM_HOST: wufud.localhost
       DEMO_PASSWORD: WufudDemo!2026
       SEED_DEMO: "true"
@@ -66,7 +66,7 @@ services:
       JWT_ACCESS_SECRET: local-access-secret-change-me
       JWT_REFRESH_SECRET: local-refresh-secret-change-me
     ports:
-      - "4400:4000"
+      - "4005:4005"
     depends_on:
       install:
         condition: service_completed_successfully
@@ -78,16 +78,16 @@ services:
   frontend:
     image: node:22-bookworm
     working_dir: /app
-    command: sh -c "corepack enable && pnpm --filter frontend exec next dev --hostname 0.0.0.0 --port 3000"
+    command: sh -c "corepack enable && pnpm --filter frontend exec next dev --hostname 0.0.0.0 --port 3009"
     volumes:
       - .:/app
       - wufud_node_modules:/app/node_modules
     environment:
       CI: "true"
-      API_INTERNAL_URL: http://backend:4000
+      API_INTERNAL_URL: http://backend:4005
       PLATFORM_HOST: wufud.localhost
     ports:
-      - "3000:3000"
+      - "3009:3009"
     depends_on:
       install:
         condition: service_completed_successfully
