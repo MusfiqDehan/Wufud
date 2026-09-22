@@ -24,5 +24,5 @@ COPY --from=build /app/backend/package.json ./backend/package.json
 COPY --from=build /app/backend/src/migrations ./backend/src/migrations
 USER wufud
 WORKDIR /app/backend
-EXPOSE 4000
+EXPOSE 4005
 CMD ["node", "dist/main.js"]
