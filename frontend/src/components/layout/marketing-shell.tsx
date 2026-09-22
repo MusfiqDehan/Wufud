@@ -2,15 +2,22 @@
 import { useHostContext } from "@/components/host-provider";
 import { AgencyLogo } from "./agency-logo";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { BrandLogo } from "./brand-logo";
 import { ThemeToggle } from "./theme-toggle";
 import { Button } from "@/components/ui/button";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, LogOut } from "lucide-react";
+import { logout } from "@/lib/auth";
+import { isSignInMarketingCta, useClientSignedIn } from "@/lib/use-client-signed-in";
 
 export function MarketingShell({ children, ctaHref = "/login", ctaLabel = "Sign in", tenant: tenantProp = false }: { children: React.ReactNode; ctaHref?: string; ctaLabel?: string; tenant?: boolean }) {
+  const router = useRouter();
   const context = useHostContext();
+  const { signedIn, setSignedIn } = useClientSignedIn();
   const tenant = tenantProp || context?.plane === "tenant";
   const agencyName = context?.branding?.display_name ?? context?.tenant?.name ?? "Your agency";
+  const showSignOut = signedIn && isSignInMarketingCta(ctaHref);
+
   return (
     <div className={tenant ? "tenant-site min-h-screen bg-[#faf7ef] dark:bg-navy-900" : "min-h-screen"}>
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:p-3">Skip to content</a>
@@ -30,7 +37,33 @@ export function MarketingShell({ children, ctaHref = "/login", ctaLabel = "Sign 
             )}
             {tenant && <Link href="/packages" className="hover:text-teal-500">Our journeys</Link>}
           </nav>
-          <div className="flex items-center gap-2"><ThemeToggle /><Button asChild><Link href={ctaHref}>{ctaLabel}<ArrowUpRight className="hidden h-4 w-4 sm:block" /></Link></Button></div>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            {showSignOut ? (
+              <Button
+                variant="outline"
+                onClick={async () => {
+                  try {
+                    await logout();
+                  } finally {
+                    setSignedIn(false);
+                    router.push("/");
+                    router.refresh();
+                  }
+                }}
+              >
+                Sign out
+                <LogOut className="hidden h-4 w-4 sm:block" />
+              </Button>
+            ) : (
+              <Button asChild>
+                <Link href={ctaHref}>
+                  {ctaLabel}
+                  <ArrowUpRight className="hidden h-4 w-4 sm:block" />
+                </Link>
+              </Button>
+            )}
+          </div>
         </div>
         <nav aria-label="Mobile navigation" className="flex flex-wrap justify-center gap-5 border-t border-slate-200/60 px-4 py-3 text-xs dark:border-navy-700 md:hidden">
           <Link href="/#features">{tenant ? "Why travel with us" : "Features"}</Link>
