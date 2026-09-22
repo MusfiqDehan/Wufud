@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.12",
+    "date": "2026-09-22",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.12)",
+    "summary": "Automated release 1.12 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "fixes",
+        "text": "avoid Swagger deep route scan hanging production boot",
+        "hash": "d35d5d3",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/d35d5d3ff172184162ec60878d78db6d1533fcdf",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
     "version": "1.11",
     "date": "2026-09-22",
     "type": "minor",

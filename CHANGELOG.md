@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.12 (2026-09-22)
+
+### 🐛 Bug Fixes & Stability
+
+- avoid Swagger deep route scan hanging production boot ([d35d5d3](https://github.com/MusfiqDehan/Wufud/commit/d35d5d3ff172184162ec60878d78db6d1533fcdf)) by @MusfiqDehan
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.11...1.12
+
+---
+
 ## What's Changed in 1.11 (2026-09-22)
 
 ### 🐛 Bug Fixes & Stability
