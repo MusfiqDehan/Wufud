@@ -21,11 +21,24 @@ export function MarketingShell({ children, ctaHref = "/login", ctaLabel = "Sign 
             <Link href="/#features" className="hover:text-teal-500">{tenant ? "Why travel with us" : "Features"}</Link>
             {!tenant && <Link href="/#solutions" className="hover:text-teal-500">Who it’s for</Link>}
             {!tenant && <Link href="/#pricing" className="hover:text-teal-500">Pricing</Link>}
+            {!tenant && <Link href="/changelog" className="hover:text-teal-500">Changelog</Link>}
+            {!tenant && (
+              <Link href="/status" className="inline-flex items-center gap-1.5 hover:text-teal-500">
+                <span className="h-1.5 w-1.5 rounded-full bg-teal-500 animate-pulse" />
+                Status
+              </Link>
+            )}
             {tenant && <Link href="/packages" className="hover:text-teal-500">Our journeys</Link>}
           </nav>
           <div className="flex items-center gap-2"><ThemeToggle /><Button asChild><Link href={ctaHref}>{ctaLabel}<ArrowUpRight className="hidden h-4 w-4 sm:block" /></Link></Button></div>
         </div>
-        <nav aria-label="Mobile navigation" className="flex justify-center gap-6 border-t border-slate-200/60 px-4 py-3 text-xs dark:border-navy-700 md:hidden"><Link href="/#features">{tenant ? "Why travel with us" : "Features"}</Link>{!tenant && <Link href="/#pricing">Pricing</Link>}{tenant && <Link href="/packages">Our journeys</Link>}</nav>
+        <nav aria-label="Mobile navigation" className="flex flex-wrap justify-center gap-5 border-t border-slate-200/60 px-4 py-3 text-xs dark:border-navy-700 md:hidden">
+          <Link href="/#features">{tenant ? "Why travel with us" : "Features"}</Link>
+          {!tenant && <Link href="/#pricing">Pricing</Link>}
+          {!tenant && <Link href="/changelog">Changelog</Link>}
+          {!tenant && <Link href="/status">Status</Link>}
+          {tenant && <Link href="/packages">Our journeys</Link>}
+        </nav>
       </header>
       <main id="main-content">{children}</main>
     </div>

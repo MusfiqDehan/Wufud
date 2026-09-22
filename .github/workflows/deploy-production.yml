@@ -1,16 +1,26 @@
 name: Deploy production
 
 on:
+  workflow_run:
+    workflows: ["Build images"]
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
     inputs:
       image_tag:
         description: Image tag to deploy
-        required: true
+        required: false
+        default: main
   push:
-    tags: ["v*"]
+    branches:
+      - main
+    tags:
+      - "v*"
+      - "[0-9]*"
 
 jobs:
   deploy:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'push' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -26,7 +36,7 @@ jobs:
             cd ${{ secrets.PROD_PATH }}
             git pull --ff-only
             echo "${{ secrets.PROD_ENV }}" > .env.production
-            export IMAGE_TAG=${{ github.event.inputs.image_tag || github.ref_name }}
+            export IMAGE_TAG=${{ github.event.inputs.image_tag || (github.event.workflow_run && github.event.workflow_run.head_sha) || (github.ref_type == 'tag' && github.ref_name) || 'main' }}
             PREV=$(docker compose --env-file .env.production -f docker-compose.prod.yml ps -q backend || true)
             docker compose --env-file .env.production -f docker-compose.prod.yml pull
             docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend node dist/cli/migrate-public.js
