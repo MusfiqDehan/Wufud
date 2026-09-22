@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.9 (2026-09-22)
+
+### 🐛 Bug Fixes & Stability
+
+- include migrate/seed CLI in images and production demo emails ([e9ed012](https://github.com/MusfiqDehan/Wufud/commit/e9ed012166d7e613e47f58b8e48db74cc6aa8bcc)) by @MusfiqDehan
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.8...1.9
+
+---
+
 ## What's Changed in 1.8 (2026-09-22)
 
 ### 🛠️ Maintenance & Refactoring

@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.9",
+    "date": "2026-09-22",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.9)",
+    "summary": "Automated release 1.9 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "fixes",
+        "text": "include migrate/seed CLI in images and production demo emails",
+        "hash": "e9ed012",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/e9ed012166d7e613e47f58b8e48db74cc6aa8bcc",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
     "version": "1.8",
     "date": "2026-09-22",
     "type": "minor",
