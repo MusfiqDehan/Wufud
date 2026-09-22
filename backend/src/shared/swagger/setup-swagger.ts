@@ -27,7 +27,7 @@ export function setupSwagger(app: INestApplication) {
       ].join("\n"),
     )
     .setVersion("1.0.0")
-    .addServer("http://localhost:4400", "Local API (versioned: /api/v1/...)")
+    .addServer("http://localhost:4005", "Local API (versioned: /api/v1/...)")
     .addTag("Health", "Liveness probe. No auth required.")
     .addTag("Public", "Host/tenant resolution for marketing pages. No auth required.")
     .addTag("Auth", "Login, register, pilgrim storefront sessions, refresh, invites.")
