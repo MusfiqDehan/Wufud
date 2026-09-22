@@ -1,4 +1,4 @@
-# Wufud — AI Agent Context
+# Wufud | AI Agent Context
 
 > **Wufūd** (وفود) — a schema-per-tenant Hajj & Umrah booking SaaS.
 > Read this file to understand the project structure, architecture, and conventions before making changes.
