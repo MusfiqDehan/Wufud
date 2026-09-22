@@ -3,6 +3,29 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.6 (2026-09-22)
+
+### 🚀 Features & Capabilities
+
+- Tabbed packages admin for create and edit: basic details, Makkah/Madinah hotels, preset inclusions, and tier pricing with room types
+- Users dashboard loads live tenant roles and branches for invites and branch-scoped role assignment with permission previews
+- User role assignment API supports branch scope and returns role mapping on member listings
+
+### 🐛 Bug Fixes & Stability
+
+- Business interceptor validation aligned with expanded package and tier admin payloads (hotels, itinerary, tier features)
+- Dashboard and reports seat charts aggregate quota by tier and show confirmed + held vs total capacity
+- Chart cards and bar charts use flex, capacity-aware scaling so charts stay inside their containers
+- POS receipt modal portals printable content to the document body so print and PDF output are no longer blank
+
+### 🛠️ Maintenance & Refactoring
+
+- Traefik edge routing configuration and Prometheus/Grafana monitoring stack for local and staging deployments
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.5...1.6
+
+---
+
 ## What's Changed in 1.5 (2026-09-22)
 
 ### 🚀 Features & Capabilities
