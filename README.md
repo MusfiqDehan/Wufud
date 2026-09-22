@@ -1,6 +1,7 @@
-# Wufud
+# Wufud - Hajj & Umrah Package Booking System
 
-Wufūd (وفود) means “delegations.” This repository is a schema-per-tenant Hajj and Umrah booking SaaS: NestJS + MikroORM on PostgreSQL, Next.js on Tailwind 4, Traefik at the edge.
+Wufūd (وفود) is the Arabic plural for "delegations" or "envoys,". Wufūd means groups of representatives, ambassadors, or delegations sent by various tribes to meet a leader or ruler.
+This repository is a schema-per-tenant Hajj and Umrah booking SaaS: NestJS + MikroORM on PostgreSQL, Next.js on Tailwind 4, Traefik at the edge.
 
 ## Stack
 
