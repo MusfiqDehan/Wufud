@@ -11,7 +11,7 @@ const urbanist = Urbanist({ subsets: ["latin"], variable: "--font-sans" });
 const BASE_URL = "https://wufud.musfiqdehan.com";
 
 const PLATFORM_META = {
-  title: "Wufud — Hajj & Umrah Booking Platform",
+  title: "Wufud | Hajj & Umrah Booking Platform",
   description:
     "From the first booking to the journey home. Bring your packages, pilgrims, teams, and payments together in one calm, connected workspace.",
   keywords: [
@@ -75,7 +75,7 @@ export async function generateMetadata(): Promise<Metadata> {
           width: 1200,
           height: 630,
           alt: isPlatform
-            ? "Wufud — Hajj & Umrah journeys, beautifully managed."
+            ? "Wufud | Hajj & Umrah journeys, beautifully managed."
             : `${siteName} — Your Hajj & Umrah Partner`,
         },
       ],
