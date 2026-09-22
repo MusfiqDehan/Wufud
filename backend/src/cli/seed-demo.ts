@@ -781,7 +781,7 @@ async function maybeInviteTenant(client: Pg, now: Date) {
   }
 
   const originProto = PLATFORM_HOST.includes("localhost") ? "http" : "https";
-  const originPort = PLATFORM_HOST.includes("localhost") ? `:${process.env.WEB_PORT ?? "3000"}` : "";
+  const originPort = PLATFORM_HOST.includes("localhost") ? `:${process.env.WEB_PORT ?? "3009"}` : "";
   const acceptUrl = `${originProto}://${slug}.${PLATFORM_HOST}${originPort}/invite?token=${encodeURIComponent(token)}`;
 
   const mailbox = await client.query<{ host: string; port: number; username: string; password: string; from_address: string; from_name: string; use_ssl: boolean }>(

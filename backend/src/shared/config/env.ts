@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const schema = z.object({
   NODE_ENV: z.enum(["development", "test", "staging", "production"]).default("development"),
-  API_PORT: z.coerce.number().default(4400),
+  API_PORT: z.coerce.number().default(4005),
   DATABASE_URL: z.string().default("postgresql://wufud:wufud@localhost:55432/wufud"),
   REDIS_URL: z.string().default("redis://localhost:56379"),
   JWT_ACCESS_SECRET: z.string().default("local-access-secret-change-me"),
@@ -15,7 +15,7 @@ const schema = z.object({
   SMTP_USER: z.string().optional().default(""),
   SMTP_PASS: z.string().optional().default(""),
   SMTP_SECURE: z.coerce.boolean().default(false),
-  WEB_PORT: z.coerce.number().default(3000),
+  WEB_PORT: z.coerce.number().default(3009),
   PUBLIC_WEB_ORIGIN: z.string().optional().default(""),
   SSLCOMMERZ_STORE_ID: z.string().optional().default(""),
   SSLCOMMERZ_STORE_PASSWORD: z.string().optional().default(""),
@@ -28,7 +28,7 @@ const schema = z.object({
   DEMO_PASSWORD: z.string().default("WufudDemo!2026"),
   SEED_DEMO: z.string().default("false"),
   TRAEFIK_DYNAMIC_PATH: z.string().default("../traefik/dynamic/wufud-custom-domains.yml"),
-  CORS_ORIGINS: z.string().default("http://localhost:3000,http://wufud.localhost:3000,http://demo.wufud.localhost:3000,http://tenant1.wufud.localhost:3000"),
+  CORS_ORIGINS: z.string().default("http://localhost:3009,http://wufud.localhost:3009,http://demo.wufud.localhost:3009,http://tenant1.wufud.localhost:3009"),
   SSLCOMMERZ_FALLBACK_PHONE: z.string().default("01700000000"),
 });
 

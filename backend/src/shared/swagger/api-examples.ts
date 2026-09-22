@@ -68,6 +68,6 @@ export const EX_BOOKING_RES = successOf("Booking created successfully.", {
 });
 
 export const EX_PAYMENT_INIT_RES = successOf("Payment initiated.", {
-  gateway_url: "http://demo.wufud.localhost:3000/api/v1/payments/success?tran_id=TXN-01a0c095-01a0c095",
+  gateway_url: "http://demo.wufud.localhost:3009/api/v1/payments/success?tran_id=TXN-01a0c095-01a0c095",
   tran_id: "TXN-01a0c095-01a0c095",
 });

@@ -28,7 +28,7 @@ services:
       - traefik.http.routers.wufud-staging-api.tls.domains[0].main=staging.wufud.musfiqdehan.com
       - traefik.http.routers.wufud-staging-api.tls.domains[0].sans=*.staging.wufud.musfiqdehan.com
       - traefik.http.routers.wufud-staging-api.middlewares=security-headers@file,compress@file,api-ratelimit@file
-      - traefik.http.services.wufud-staging-api.loadbalancer.server.port=4000
+      - traefik.http.services.wufud-staging-api.loadbalancer.server.port=4005
 
   worker:
     image: ghcr.io/musfiqdehan/wufud-backend:${IMAGE_TAG:-develop}
@@ -41,7 +41,7 @@ services:
     image: ghcr.io/musfiqdehan/wufud-frontend:${IMAGE_TAG:-develop}
     env_file: .env.staging
     environment:
-      API_INTERNAL_URL: http://backend:4000
+      API_INTERNAL_URL: http://backend:4005
     depends_on: [backend]
     networks: [internal, traefik_proxy]
     labels:
@@ -54,7 +54,7 @@ services:
       - traefik.http.routers.wufud-staging-web.tls.domains[0].main=staging.wufud.musfiqdehan.com
       - traefik.http.routers.wufud-staging-web.tls.domains[0].sans=*.staging.wufud.musfiqdehan.com
       - traefik.http.routers.wufud-staging-web.middlewares=security-headers@file,compress@file
-      - traefik.http.services.wufud-staging-web.loadbalancer.server.port=3000
+      - traefik.http.services.wufud-staging-web.loadbalancer.server.port=3009
 
 networks:
   internal:

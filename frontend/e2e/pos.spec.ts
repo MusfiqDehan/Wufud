@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test("POS page enables rapid retail checkout, stock updates, installment collections, and printable receipts", async ({ browser }) => {
   test.setTimeout(90000);
-  const page = await browser.newPage({ baseURL: process.env.TENANT_BASE_URL ?? "http://demo.wufud.localhost:3000" });
+  const page = await browser.newPage({ baseURL: process.env.TENANT_BASE_URL ?? "http://demo.wufud.localhost:3009" });
 
   // 1. Sign in as Tenant Owner / POS Cashier
   await page.goto("/login");

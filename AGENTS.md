@@ -9,13 +9,13 @@
 
 ```
 ┌─────────────┐     ┌──────────┐     ┌────────────────────┐
-│  Cloudflare  │────▶│  Traefik  │────▶│  Next.js (port 3000)│ ← Frontend
+│  Cloudflare  │────▶│  Traefik  │────▶│  Next.js (port 3009)│ ← Frontend
 └─────────────┘     └──────────┘     └────────────────────┘
                          │                      │
                          │  /api/*               │ rewrites /api/* →
                          ▼                      ▼
                    ┌────────────────────┐  ┌────────────────┐
-                   │ NestJS API (4400)  │  │ BullMQ Worker  │
+                   │ NestJS API (4005)  │  │ BullMQ Worker  │
                    └────────────────────┘  └────────────────┘
                          │       │              │       │
                          ▼       ▼              ▼       ▼
@@ -526,7 +526,7 @@ pnpm test                        # Backend Jest tests
 pnpm lint                        # ESLint all packages
 
 # E2E tests (frontend)
-CI=1 PLAYWRIGHT_BASE_URL=http://wufud.localhost:3000 \
+CI=1 PLAYWRIGHT_BASE_URL=http://wufud.localhost:3009 \
   pnpm --filter frontend exec playwright test e2e/<spec>.spec.ts --workers=1
 
 # Docker
@@ -545,7 +545,7 @@ Key variables (see `.env.local.example` for full list):
 |---|---|---|
 | `DATABASE_URL` | `postgresql://wufud:wufud@localhost:55432/wufud` | PostgreSQL connection |
 | `REDIS_URL` | `redis://localhost:56379` | Redis connection |
-| `API_PORT` | `4400` | Backend API port |
+| `API_PORT` | `4005` | Backend API port |
 | `PLATFORM_HOST` | `wufud.localhost` | Platform domain |
 | `JWT_ACCESS_SECRET` | — | JWT signing secret |
 | `JWT_REFRESH_SECRET` | — | Refresh token secret |
@@ -553,7 +553,7 @@ Key variables (see `.env.local.example` for full list):
 | `DEMO_PASSWORD` | `WufudDemo!2026` | Seeded demo accounts |
 | `TRAEFIK_DYNAMIC_PATH` | `./traefik/dynamic/...` | Traefik config sync |
 
-Docker compose maps: Postgres → `55432`, Redis → `56379`, API → `4400`, Frontend → `3000`, Mailpit → `8025`.
+Docker compose maps: Postgres → `55432`, Redis → `56379`, API → `4005`, Frontend → `3009`, Mailpit → `8025`.
 
 ---
 
@@ -574,7 +574,7 @@ Password: `WufudDemo!2026` (override with `DEMO_PASSWORD`)
 ## 12. API Conventions
 
 - **Base path**: `/api/v1/...` (legacy `/api/...` auto-rewrites to `/api/v1/...`)
-- **OpenAPI docs**: `http://localhost:4400/api/docs`
+- **OpenAPI docs**: `http://localhost:4005/api/docs`
 - **Auth**: Bearer JWT via `POST /api/v1/auth/login`
 - **Response envelope**: `{ success: boolean, data: T, message?: string }`
 - **Error format**: `{ success: false, error: { code: ErrorCode, message: string } }`

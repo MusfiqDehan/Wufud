@@ -19,6 +19,37 @@ export interface ChangelogRelease {
 
 export const PLATFORM_CHANGELOG: ChangelogRelease[] = [
   {
+    version: "1.8",
+    title: "Standardized Local Dev Ports (Frontend 3009 & API 4005)",
+    date: "2026-09-22",
+    type: "patch",
+    summary:
+      "Aligned default frontend and API ports across env templates, Docker Compose, Next.js rewrites, Playwright, and documentation so Wufud can run beside other local stacks without clashing on 3000/4400.",
+    releaseUrl: "https://github.com/MusfiqDehan/Wufud/releases/tag/1.8",
+    changes: [
+      {
+        category: "maintenance",
+        text: "Default API_PORT 4005 and WEB_PORT 3009 in backend env schema, CORS defaults, and .env examples for local, staging, and production",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "maintenance",
+        text: "Docker Compose local, staging, and production services publish the API on 4005 and the web app on 3009 with matching container ports",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "maintenance",
+        text: "Frontend API client, host helpers, and Next.js rewrites target localhost:4005; Playwright defaults to port 3009",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "maintenance",
+        text: "All Playwright e2e specs, CI workflow, AGENTS.md, README, and docker-local-test script updated for the new ports",
+        author: "MusfiqDehan",
+      },
+    ],
+  },
+  {
     version: "1.7",
     title: "Changelog Pagination, Payment Hardening & SQL Report Aggregation",
     date: "2026-09-22",

@@ -14,7 +14,7 @@ export class ApiError extends Error {
 
 function getBase() {
   if (typeof window === "undefined") {
-    return process.env.API_INTERNAL_URL ?? "http://localhost:4400";
+    return process.env.API_INTERNAL_URL ?? "http://localhost:4005";
   }
   return "";
 }
@@ -36,7 +36,7 @@ export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
     const token = localStorage.getItem("wufud_access");
     if (token) headers.set("Authorization", `Bearer ${token}`);
   }
-  const host = typeof window !== "undefined" ? window.location.host : process.env.PLATFORM_HOST ?? "localhost:3000";
+  const host = typeof window !== "undefined" ? window.location.host : process.env.PLATFORM_HOST ?? "localhost:3009";
   headers.set("X-Forwarded-Host", host);
   const res = await fetch(`${getBase()}${path}`, { ...init, headers, cache: "no-store" });
   if (res.status === 204) return undefined as T;

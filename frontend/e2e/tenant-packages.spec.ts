@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test("tenant landing page renders rich package cards with hotels, duration, and inclusions", async ({ browser }) => {
   test.setTimeout(60000);
-  const page = await browser.newPage({ baseURL: process.env.TENANT_BASE_URL ?? "http://demo.wufud.localhost:3000" });
+  const page = await browser.newPage({ baseURL: process.env.TENANT_BASE_URL ?? "http://demo.wufud.localhost:3009" });
 
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "Our upcoming departures" })).toBeVisible({ timeout: 15000 });

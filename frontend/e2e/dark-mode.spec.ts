@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test("capture dark mode pagination", async ({ browser }) => {
   const page = await browser.newPage({
-    baseURL: process.env.TENANT_BASE_URL ?? "http://demo.wufud.localhost:3000",
+    baseURL: process.env.TENANT_BASE_URL ?? "http://demo.wufud.localhost:3009",
     colorScheme: "dark",
   });
   await page.goto("/login");
