@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.20",
+    "date": "2026-09-22",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.20)",
+    "summary": "Automated release 1.20 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "maintenance",
+        "text": "update README to clarify project description and purpose",
+        "hash": "a1d8926",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/a1d8926792b42f3ffcaff0ae7a12036353f5b083",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
     "version": "1.19",
     "date": "2026-09-22",
     "type": "minor",

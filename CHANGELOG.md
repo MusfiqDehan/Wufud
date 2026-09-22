@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.20 (2026-09-22)
+
+### 🛠️ Maintenance & Refactoring
+
+- update README to clarify project description and purpose ([a1d8926](https://github.com/MusfiqDehan/Wufud/commit/a1d8926792b42f3ffcaff0ae7a12036353f5b083)) by @MusfiqDehan
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.19...1.20
+
+---
+
 ## What's Changed in 1.19 (2026-09-22)
 
 ### 🚀 Features & Capabilities
