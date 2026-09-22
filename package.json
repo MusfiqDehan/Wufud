@@ -13,6 +13,7 @@
     "test": "pnpm --filter backend test",
     "seed:demo": "pnpm --filter backend seed:demo",
     "migrate:public": "pnpm --filter backend migrate:public",
-    "migrate:tenants": "pnpm --filter backend migrate:tenants"
+    "migrate:tenants": "pnpm --filter backend migrate:tenants",
+    "changelog:generate": "node scripts/generate-changelog.mjs"
   }
 }
