@@ -11,7 +11,7 @@ import type { Request } from "express";
 @ApiTags("Public")
 @Controller("api/v1/public")
 export class PublicContextController {
-  constructor(private readonly em: EntityManager) {}
+  constructor(private readonly em: EntityManager) { }
 
   @Public()
   @Get("context")
@@ -49,13 +49,13 @@ export class PublicContextController {
         tenant: { id: store.tenant.id, slug: store.tenant.slug, name: store.tenant.name },
         branding: settings
           ? {
-              display_name: settings.displayName,
-              logo_url: settings.logoUrl,
-              primary_color: settings.primaryColor,
-              title: settings.title,
-              description: settings.description,
-              og_image_url: settings.ogImageUrl,
-            }
+            display_name: settings.displayName,
+            logo_url: settings.logoUrl,
+            primary_color: settings.primaryColor,
+            title: settings.title,
+            description: settings.description,
+            og_image_url: settings.ogImageUrl,
+          }
           : { display_name: store.tenant.name },
       });
     }
@@ -65,7 +65,7 @@ export class PublicContextController {
       host,
       branding: {
         display_name: "Wufud",
-        title: seo?.title ?? "Wufud — Pilgrimage Booking SaaS",
+        title: seo?.title ?? "Wufud | Pilgrimage Booking SaaS",
         description: seo?.description ?? "Agency ERP and booking for Hajj and Umrah.",
         og_image_url: seo?.ogImageUrl,
       },

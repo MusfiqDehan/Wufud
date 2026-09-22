@@ -48,13 +48,7 @@ export default async function HomePage() {
           { persona: "Pilgrim", body: "Browse, book the family, pay in full or installments, track the journey." },
         ]}
       />
-      <PricingTable
-        plans={[
-          { name: "Starter", price: "BDT 4,900/mo", href: "/start?plan=starter", trial: "14-day trial", features: ["1 branch", "Core booking", "Email support"] },
-          { name: "Growth", price: "BDT 12,900/mo", href: "/start?plan=growth", trial: "14-day trial", features: ["5 branches", "Accounts & reports", "Custom domain"] },
-          { name: "Enterprise", price: "Let’s talk", href: "/start?plan=enterprise", trial: "30-day trial", features: ["Unlimited", "Dedicated onboarding", "SLA"] },
-        ]}
-      />
+      <PricingTable />
       <CtaBand title="Launch your agency on Wufud." href="/start" label="Start your agency" />
       <SiteFooter />
     </MarketingShell>
