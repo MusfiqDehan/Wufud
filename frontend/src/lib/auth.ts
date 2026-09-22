@@ -1,13 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import { canAccessFeature, type AccessMe } from "@wufud/contracts";
 import { api } from "./api";
+import {
+  clearStoredAccessToken,
+  getStoredAccessToken,
+  storeAccessToken,
+} from "./session";
 
 export async function login(email: string, password: string) {
   const data = await api<{ access_token: string; user: { id: string } }>("/api/auth/login", {
     method: "POST",
     body: JSON.stringify({ email, password }),
   });
-  localStorage.setItem("wufud_access", data.access_token);
+  storeAccessToken(data.access_token);
   return data;
 }
 
@@ -16,16 +21,16 @@ export async function storefrontSession(email: string, password: string, fullNam
     method: "POST",
     body: JSON.stringify({ email, password, fullName }),
   });
-  localStorage.setItem("wufud_access", data.access_token);
+  storeAccessToken(data.access_token);
   return data;
 }
 
 export function hasAccessToken() {
-  return typeof window !== "undefined" && Boolean(localStorage.getItem("wufud_access"));
+  return typeof window !== "undefined" && Boolean(getStoredAccessToken());
 }
 
 export function logout() {
-  localStorage.removeItem("wufud_access");
+  clearStoredAccessToken();
   return api("/api/auth/logout", { method: "POST" });
 }
 

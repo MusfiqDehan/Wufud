@@ -24,6 +24,7 @@ import { useCrudList } from "@/features/crud";
 import { api, ApiError } from "@/lib/api";
 import { formatApiError } from "@/lib/api-error";
 import { hasAccessToken, storefrontSession } from "@/lib/auth";
+import { clearStoredAccessToken } from "@/lib/session";
 import type { JourneyPackage } from "@/components/marketing/tenant-packages";
 
 const formatMoney = (val?: string | number) => {
@@ -263,7 +264,7 @@ export default function PackageDetail({ params }: { params: Promise<{ id: string
                     (err.error_code === "AUTHENTICATION_REQUIRED" ||
                       err.error_code === "TOKEN_EXPIRED")
                   ) {
-                    localStorage.removeItem("wufud_access");
+                    clearStoredAccessToken();
                     setSignedIn(false);
                     setError("Sign in with your pilgrim email to complete this booking.");
                   } else {

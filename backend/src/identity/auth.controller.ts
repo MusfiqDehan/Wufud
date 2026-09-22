@@ -3,7 +3,8 @@ import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import type { Response } from "express";
 import { IsOptional, IsString, MinLength } from "class-validator";
 import { Public } from "../shared/decorators/public.decorator";
-import { SUCCESS_MESSAGES } from "@wufud/contracts";
+import { ErrorCode, SUCCESS_MESSAGES } from "@wufud/contracts";
+import { DomainError } from "../shared/errors/domain.error";
 import { successResponse } from "../shared/interceptors/success.interceptor";
 import { ApiErrorEnvelopeDto } from "../shared/swagger/envelope.dto";
 import { AuthService } from "./auth.service";
@@ -118,7 +119,7 @@ export class AuthController {
     const cookie = (res.req as { cookies?: { wufud_refresh?: string } }).cookies?.wufud_refresh;
     const token = body.refreshToken ?? cookie;
     if (!token) {
-      return successResponse(null, "Missing refresh token.");
+      throw DomainError.unauthorized(ErrorCode.TOKEN_EXPIRED);
     }
     const result = await this.auth.refresh(token);
     this.setRefresh(res, result.refreshToken);

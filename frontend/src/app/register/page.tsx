@@ -11,6 +11,7 @@ import { Input, Label } from "@/components/ui/input";
 import { PasswordInput } from "@/components/ui/password-input";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
+import { storeAccessToken } from "@/lib/session";
 import { formatApiError } from "@/lib/api-error";
 import { firstZodIssueMessage, registerSchema } from "@/lib/validation";
 
@@ -63,7 +64,7 @@ export default function RegisterPage() {
                   method: "POST",
                   body: JSON.stringify({ fullName, email, password }),
                 });
-                localStorage.setItem("wufud_access", data.access_token);
+                storeAccessToken(data.access_token);
                 router.push("/portal");
               } catch (err) {
                 setError(formatApiError(err));

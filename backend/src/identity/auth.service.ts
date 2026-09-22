@@ -109,7 +109,10 @@ export class AuthService {
       if (!user?.refreshTokenHash || !(await argon2.verify(user.refreshTokenHash, refreshToken))) {
         throw DomainError.unauthorized(ErrorCode.TOKEN_EXPIRED);
       }
-      return this.issue(user);
+      const tokens = await this.issue(user);
+      user.refreshTokenHash = await argon2.hash(tokens.refreshToken);
+      await this.em.flush();
+      return tokens;
     } catch {
       throw DomainError.unauthorized(ErrorCode.TOKEN_EXPIRED);
     }
