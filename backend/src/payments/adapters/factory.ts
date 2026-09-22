@@ -11,6 +11,9 @@ export function getGateway(
   isSandbox: boolean,
   urls: GatewayUrls,
 ): BaseGatewayAdapter {
+  if (slug === "stub" && (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "staging")) {
+    throw new DomainError(ErrorCode.GATEWAY_UNAVAILABLE, "The stub gateway is only available locally.", 400);
+  }
   if (slug === "stub" || process.env.NODE_ENV === "test") {
     return new StubAdapter(credentials, isSandbox, urls);
   }
