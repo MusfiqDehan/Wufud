@@ -3,6 +3,19 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.8 (2026-09-22)
+
+### 🛠️ Maintenance & Refactoring
+
+- Default **API** port **4005** and **frontend** port **3009** in backend env schema, CORS defaults, and `.env` examples (local, staging, production)
+- Docker Compose stacks publish and use the same ports inside containers
+- Next.js rewrites, frontend API/host helpers, Playwright config, and all e2e specs target the new ports
+- README, AGENTS.md, CI workflow, Swagger seed URLs, and `docker-local-test.sh` documentation updated
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.7...1.8
+
+---
+
 ## What's Changed in 1.7 (2026-09-22)
 
 ### 🚀 Features & Capabilities
