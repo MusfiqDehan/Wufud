@@ -1,0 +1,206 @@
+export interface ChangelogItem {
+  category: "features" | "fixes" | "perf" | "security" | "maintenance";
+  text: string;
+  pr?: string;
+  commit?: string;
+  commitUrl?: string;
+  author?: string;
+}
+
+export interface ChangelogRelease {
+  version: string;
+  title: string;
+  date: string;
+  type: "major" | "minor" | "patch";
+  summary: string;
+  changes: ChangelogItem[];
+  releaseUrl?: string;
+}
+
+export const PLATFORM_CHANGELOG: ChangelogRelease[] = [
+  {
+    version: "1.4",
+    title: "Real-time Seat Holds, POS Terminal Sales & Automated Reconciliations",
+    date: "2026-09-21",
+    type: "minor",
+    summary:
+      "Introduced high-concurrency seat reservation locks with automated 30-minute hold timers, a physical POS terminal module for branch cashiers, and automated bank reconciliation reports.",
+    releaseUrl: "https://github.com/MusfiqDehan/Wufud/releases/tag/1.4",
+    changes: [
+      {
+        category: "features",
+        text: "Interactive Point of Sale (POS) terminal for quick on-site pilgrim booking and immediate receipt printing",
+        commit: "7cc873d",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "features",
+        text: "Automated BullMQ background job for releasing expired seat reservations back into tier quotas",
+        commit: "0fdee44",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "features",
+        text: "Modern Changelog and Live Healthcheck Status pages with automated GitHub release integrations",
+        commit: "9af7255",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "fixes",
+        text: "Ensure accurate seat counter increments during concurrent checkout sessions",
+        commit: "a3b5e10",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "perf",
+        text: "Redis cached tenant versioning to invalidate schema cache in under 2ms",
+        commit: "b47eb86",
+        author: "MusfiqDehan",
+      },
+    ],
+  },
+  {
+    version: "1.3",
+    title: "Vendor SAR/BDT Disbursements & Multi-Currency Accounting Hub",
+    date: "2026-09-21",
+    type: "minor",
+    summary:
+      "Full financial management suite for Hajj & Umrah operators, featuring dual-currency (SAR and BDT) vendor disbursements, batch hotel payouts, and pilgrim installment schedules.",
+    releaseUrl: "https://github.com/MusfiqDehan/Wufud/releases/tag/1.3",
+    changes: [
+      {
+        category: "features",
+        text: "Dual-currency expense tracking for Makkah and Madinah hotel vendor disbursements",
+        commit: "68ef4c5",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "features",
+        text: "Flexible installment scheduler with automated SMS and email reminder notifications",
+        commit: "f71b8da",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "security",
+        text: "Branch-scoped financial visibility: restricts cashier roles to assigned branch transactions only",
+        commit: "c49995a",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "fixes",
+        text: "Fixed decimal precision rounding for SAR to BDT currency conversion on bulk settlements",
+        commit: "9d72b81",
+        author: "MusfiqDehan",
+      },
+    ],
+  },
+  {
+    version: "1.2",
+    title: "Dynamic Payment Gateway Adapters with SSLCommerz & Stripe",
+    date: "2026-09-21",
+    type: "minor",
+    summary:
+      "Pluggable payment architecture enabling tenants to link their own SSLCommerz merchant accounts or Stripe keys, with automated webhooks and branch manual collections.",
+    releaseUrl: "https://github.com/MusfiqDehan/Wufud/releases/tag/1.2",
+    changes: [
+      {
+        category: "features",
+        text: "Multi-gateway adapter strategy supporting SSLCommerz, Stripe, and in-branch cash collection",
+        commit: "c72f520",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "features",
+        text: "Automated webhook retry queue with cryptographic signature verification",
+        commit: "d665161",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "perf",
+        text: "Optimized database connection pooling under high-load booking bursts",
+        commit: "3549689",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "fixes",
+        text: "Resolved callback redirection issue on mobile banking bKash/Nagad checkout sheets",
+        commit: "38c9be5",
+        author: "MusfiqDehan",
+      },
+    ],
+  },
+  {
+    version: "1.1",
+    title: "Isolated Tenant Schemas & Custom Domain Edge Routing",
+    date: "2026-09-21",
+    type: "minor",
+    summary:
+      "Enterprise data isolation architecture giving every agency a dedicated PostgreSQL schema (t_<slug>) and custom domain routing powered by Traefik v3 with automated Let's Encrypt TLS.",
+    releaseUrl: "https://github.com/MusfiqDehan/Wufud/releases/tag/1.1",
+    changes: [
+      {
+        category: "features",
+        text: "Schema-per-tenant architecture ensuring complete data privacy and isolated booking records",
+        commit: "b5c1bfc",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "features",
+        text: "Dynamic Traefik SSL certificate provisioning for custom agency domains",
+        commit: "05b493c",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "security",
+        text: "AsyncLocalStorage context resolver guaranteeing zero cross-tenant query leakage",
+        commit: "ca68004",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "maintenance",
+        text: "Automated schema migration script runner for multi-tenant deployments",
+        commit: "d41b190",
+        author: "MusfiqDehan",
+      },
+    ],
+  },
+  {
+    version: "1.0",
+    title: "Initial Launch of Wufud SaaS Platform",
+    date: "2026-09-21",
+    type: "major",
+    summary:
+      "Official launch of the modern, cloud-native Hajj & Umrah booking platform, purpose-built for agency operators and pilgrims.",
+    releaseUrl: "https://github.com/MusfiqDehan/Wufud/releases/tag/1.0",
+    changes: [
+      {
+        category: "features",
+        text: "Package builder with multi-tier pricing, hotel allocations, and airline routing",
+        commit: "28ff492",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "features",
+        text: "Pilgrim portal with family group bookings and passport/visa document upload",
+        commit: "532f029",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "features",
+        text: "Role-based access control with Headquarter and branch-specific permissions",
+        commit: "c49995a",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "features",
+        text: "Modern, calm responsive UI crafted with Tailwind CSS and dark mode support",
+        commit: "fabf545",
+        author: "MusfiqDehan",
+      },
+    ],
+  },
+];
+
+export function getChangelogEntries(): ChangelogRelease[] {
+  return PLATFORM_CHANGELOG;
+}
