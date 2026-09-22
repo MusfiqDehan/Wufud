@@ -3,6 +3,23 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.22 (2026-09-22)
+
+### 🚀 Features & Capabilities
+
+- implement client-side authentication state management with hooks ([a173053](https://github.com/MusfiqDehan/Wufud/commit/a173053be64518cd881a40af36c8e11925696765)) by @MusfiqDehan
+- add notification for authentication state changes on token store and clear ([ba42b6c](https://github.com/MusfiqDehan/Wufud/commit/ba42b6c46cba4277cd307ba5041e49f7e8667bb6)) by @MusfiqDehan
+- implement sign-in and sign-out toggle in SiteFooter component ([bc2fd28](https://github.com/MusfiqDehan/Wufud/commit/bc2fd28a78586d17b590f3e9dc4678d96826e308)) by @MusfiqDehan
+- add sign-out functionality to MarketingShell component ([afe0af2](https://github.com/MusfiqDehan/Wufud/commit/afe0af2effc9aec7582d974ae1eb3f8609fcee4d)) by @MusfiqDehan
+
+### 🛠️ Maintenance & Refactoring
+
+- update TypeScript build information for frontend ([baba447](https://github.com/MusfiqDehan/Wufud/commit/baba447932faddd06600113da91f002705958bd9)) by @MusfiqDehan
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.21...1.22
+
+---
+
 ## What's Changed in 1.21 (2026-09-22)
 
 ### 🛠️ Maintenance & Refactoring

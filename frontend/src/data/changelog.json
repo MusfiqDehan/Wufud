@@ -1,5 +1,49 @@
 [
   {
+    "version": "1.22",
+    "date": "2026-09-22",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.22)",
+    "summary": "Automated release 1.22 with 5 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "features",
+        "text": "implement client-side authentication state management with hooks",
+        "hash": "a173053",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/a173053be64518cd881a40af36c8e11925696765",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "features",
+        "text": "add notification for authentication state changes on token store and clear",
+        "hash": "ba42b6c",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/ba42b6c46cba4277cd307ba5041e49f7e8667bb6",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "features",
+        "text": "implement sign-in and sign-out toggle in SiteFooter component",
+        "hash": "bc2fd28",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/bc2fd28a78586d17b590f3e9dc4678d96826e308",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "features",
+        "text": "add sign-out functionality to MarketingShell component",
+        "hash": "afe0af2",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/afe0af2effc9aec7582d974ae1eb3f8609fcee4d",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "update TypeScript build information for frontend",
+        "hash": "baba447",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/baba447932faddd06600113da91f002705958bd9",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
     "version": "1.21",
     "date": "2026-09-22",
     "type": "minor",
