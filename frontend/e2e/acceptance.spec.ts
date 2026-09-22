@@ -11,7 +11,7 @@ test("platform admin can sign in", async ({ page }) => {
 });
 
 test("tenant admin can open reports", async ({ browser }) => {
-  const page = await browser.newPage({ baseURL: process.env.TENANT_BASE_URL ?? "http://demo.wufud.localhost:3000" });
+  const page = await browser.newPage({ baseURL: process.env.TENANT_BASE_URL ?? "http://demo.wufud.localhost:3009" });
   await page.goto("/login");
   await page.getByLabel("Email").fill("owner@demo.local");
   await page.getByLabel("Password").fill(password);
