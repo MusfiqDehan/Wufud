@@ -21,11 +21,16 @@ services:
 
   backend:
     image: ghcr.io/musfiqdehan/wufud-backend:${IMAGE_TAG:-main}
+    hostname: wufud-backend
     env_file: .env.production
     depends_on: [postgres, redis]
     volumes:
       - /srv/shared/traefik/dynamic:/traefik/dynamic
-    networks: [internal, traefik_proxy]
+    networks:
+      internal:
+        aliases: [wufud-backend]
+      traefik_proxy:
+        aliases: [wufud-backend]
     labels:
       - traefik.enable=true
       - traefik.docker.network=traefik_proxy
@@ -49,7 +54,7 @@ services:
     image: ghcr.io/musfiqdehan/wufud-frontend:${IMAGE_TAG:-main}
     env_file: .env.production
     environment:
-      API_INTERNAL_URL: http://backend:4005
+      API_INTERNAL_URL: http://wufud-backend:4005
       HOSTNAME: 0.0.0.0
     depends_on: [backend]
     networks: [internal, traefik_proxy]
