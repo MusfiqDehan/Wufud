@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.11",
+    "date": "2026-09-22",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.11)",
+    "summary": "Automated release 1.11 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "fixes",
+        "text": "include pnpm store for backend runtime symlinks",
+        "hash": "9b4c396",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/9b4c3965407a33f526386340f2d4fa8ea61959ba",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
     "version": "1.10",
     "date": "2026-09-22",
     "type": "minor",

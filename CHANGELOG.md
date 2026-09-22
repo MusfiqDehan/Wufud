@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.11 (2026-09-22)
+
+### 🐛 Bug Fixes & Stability
+
+- include pnpm store for backend runtime symlinks ([9b4c396](https://github.com/MusfiqDehan/Wufud/commit/9b4c3965407a33f526386340f2d4fa8ea61959ba)) by @MusfiqDehan
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.10...1.11
+
+---
+
 ## What's Changed in 1.10 (2026-09-22)
 
 ### 🐛 Bug Fixes & Stability
