@@ -1,0 +1,83 @@
+name: Release & Changelog
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      bump_type:
+        description: 'Manual version bump override (patch | minor | major)'
+        required: false
+        default: 'auto'
+        type: choice
+        options:
+          - auto
+          - patch
+          - minor
+          - major
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.RELEASE_PAT || secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Generate Changelog and Tag
+        id: changelog
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_PAT || secrets.GITHUB_TOKEN }}
+          BUMP_INPUT: ${{ github.event.inputs.bump_type || 'auto' }}
+          REPO_NAME: ${{ github.repository }}
+        run: |
+          node scripts/generate-changelog.mjs \
+            --bump "$BUMP_INPUT" \
+            --repo "$REPO_NAME" \
+            --output-github-env
+
+      - name: Commit Updated Changelog Files
+        if: steps.changelog.outputs.new_tag != ''
+        run: |
+          git add CHANGELOG.md frontend/src/data/changelog.json || true
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(release): update changelog for ${{ steps.changelog.outputs.new_tag }} [skip ci]"
+            git push origin main
+          fi
+
+      - name: Create Git Tag and Push
+        if: steps.changelog.outputs.new_tag != ''
+        env:
+          NEW_TAG: ${{ steps.changelog.outputs.new_tag }}
+        run: |
+          git tag -a "$NEW_TAG" -m "Release $NEW_TAG"
+          git push origin "$NEW_TAG"
+
+      - name: Create GitHub Release
+        if: steps.changelog.outputs.new_tag != ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_PAT || secrets.GITHUB_TOKEN }}
+          NEW_TAG: ${{ steps.changelog.outputs.new_tag }}
+        run: |
+          gh release create "$NEW_TAG" \
+            --title "Release $NEW_TAG" \
+            --notes-file release_notes.md \
+            --verify-tag
