@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.15 (2026-09-22)
+
+### 🐛 Bug Fixes & Stability
+
+- stable wufud-backend service name on shared Traefik network ([6a13675](https://github.com/MusfiqDehan/Wufud/commit/6a1367554509eb346a13bcc59ae12905f98aa819)) by @MusfiqDehan
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.14...1.15
+
+---
+
 ## What's Changed in 1.14 (2026-09-22)
 
 ### 🐛 Bug Fixes & Stability

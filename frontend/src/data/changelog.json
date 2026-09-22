@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.15",
+    "date": "2026-09-22",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.15)",
+    "summary": "Automated release 1.15 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "fixes",
+        "text": "stable wufud-backend service name on shared Traefik network",
+        "hash": "6a13675",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/6a1367554509eb346a13bcc59ae12905f98aa819",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
     "version": "1.14",
     "date": "2026-09-22",
     "type": "minor",
