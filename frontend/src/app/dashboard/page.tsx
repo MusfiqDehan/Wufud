@@ -1,4 +1,5 @@
 "use client";
+import { useMemo } from "react";
 import Link from "next/link";
 import { ArrowRight, CalendarDays, Compass, Wallet } from "lucide-react";
 import { GuardedShell } from "@/components/layout/guarded-shell";
@@ -28,7 +29,20 @@ function AgencyOverview() {
     for (const b of bookings.data?.items ?? []) by[b.status] = (by[b.status] ?? 0) + 1;
     return Object.entries(by).map(([label, value], i) => ({ label, value, color: ["#0e8f86", "#e8a13d", "#506fc6", "#c65d6e", "#7a9e7e"][i % 5] }));
   })();
-  const quotaBars = (report.data?.quota ?? []).slice(0, 8).map(q => ({ label: q.name.slice(0, 10), value: q.confirmed + q.held }));
+  const quotaBars = useMemo(() => {
+    const map = new Map<string, { label: string; value: number; total: number }>();
+    for (const q of report.data?.quota ?? []) {
+      const existing = map.get(q.name) ?? { label: q.name, value: 0, total: 0 };
+      existing.value += (q.confirmed + q.held);
+      existing.total += q.total;
+      map.set(q.name, existing);
+    }
+    const colors = ["#0e8f86", "#506fc6", "#e8a13d", "#8b5cf6", "#c65d6e"];
+    return Array.from(map.values()).map((t, idx) => ({
+      ...t,
+      color: colors[idx % colors.length],
+    }));
+  }, [report.data?.quota]);
   const total = Number(report.data?.collected ?? 0) + Number(report.data?.outstanding ?? 0);
   const ratio = total ? Math.round(Number(report.data?.collected ?? 0)/total*100) : 0;
   return <>
