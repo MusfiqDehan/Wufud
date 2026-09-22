@@ -7,7 +7,7 @@ export function isPlatformHost(host: string) {
 }
 
 export const fetchContext = cache(async (host: string): Promise<PublicHostContext> => {
-  const base = process.env.API_INTERNAL_URL ?? "http://localhost:4400";
+  const base = process.env.API_INTERNAL_URL ?? "http://localhost:4005";
   const res = await fetch(`${base}/api/v1/public/context`, {
     headers: { "X-Forwarded-Host": host.split(":")[0] },
     cache: "no-store",
