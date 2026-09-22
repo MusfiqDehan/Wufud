@@ -1,30 +1,254 @@
 [
   {
     "version": "1.8",
-    "title": "Standardized Local Dev Ports (Frontend 3009 & API 4005)",
     "date": "2026-09-22",
-    "type": "patch",
-    "summary": "Aligned default frontend and API ports across env templates, Docker Compose, Next.js rewrites, Playwright, and documentation so Wufud can run beside other local stacks without clashing on 3000/4400.",
-    "releaseUrl": "https://github.com/MusfiqDehan/Wufud/releases/tag/1.8",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.8)",
+    "summary": "Automated release 1.8 with 35 update(s) across platform services.",
     "changes": [
       {
         "category": "maintenance",
-        "text": "Default API_PORT 4005 and WEB_PORT 3009 in backend env schema, CORS defaults, and .env examples for local, staging, and production",
+        "text": "restore curated changelog.json entries after main merge",
+        "hash": "5096e2e",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/5096e2ed8cde772c5c9b2e7da9feecfa2283fa0d",
         "author": "MusfiqDehan"
       },
       {
         "category": "maintenance",
-        "text": "Docker Compose local, staging, and production services publish the API on 4005 and the web app on 3009 with matching container ports",
+        "text": "dedupe 1.7 section in root changelog after main merge",
+        "hash": "1f04693",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/1f0469381720d23c140c11bfc707e07abdeb458a",
         "author": "MusfiqDehan"
       },
       {
         "category": "maintenance",
-        "text": "Frontend API client, host helpers, and Next.js rewrites target localhost:4005; Playwright defaults to port 3009",
+        "text": "add version 1.8 release summary to root changelog",
+        "hash": "7a38ce5",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/7a38ce548d85c62ca09f0697f9e3641e3601cc37",
         "author": "MusfiqDehan"
       },
       {
         "category": "maintenance",
-        "text": "All Playwright e2e specs, CI workflow, AGENTS.md, README, and docker-local-test script updated for the new ports",
+        "text": "add version 1.8 entry to changelog.json",
+        "hash": "48f8253",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/48f8253b29094c5a8da43c90962edd849b8176ad",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "add version 1.8 entry to platform changelog data",
+        "hash": "11f9bec",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/11f9bec6810a5df17925ce844764ace4c02de3a7",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "docker local smoke script targets ports 3009 and 4005",
+        "hash": "f8c2c6a",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/f8c2c6a6a6064bc3f226fca563bcd523ebebdb9d",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "swagger server URL defaults to port 4005",
+        "hash": "2b3b8b7",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/2b3b8b7b7990db49147d3ef98fdf01332c199615",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "swagger examples reference API port 4005",
+        "hash": "d81964a",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/d81964add061f8c3f991e5285ba4e9589ea28df9",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "seed demo URLs use frontend port 3009",
+        "hash": "312cabf",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/312cabf133ffbfe7a3f9541070ba973fd1448a11",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "run Playwright against frontend on port 3009",
+        "hash": "4ef91c5",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/4ef91c540d613f2e38352f78f7ecb77e511b1c9e",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "update agent context for ports 3009 and 4005",
+        "hash": "720c382",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/720c3823891d9952b8e03fec5f02d2d4854e6cdb",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "document local URLs on ports 3009 and 4005",
+        "hash": "94586e1",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/94586e160bd807d011bd2fa986d07f80647289f2",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "point tenant-packages.spec.ts at local port 3009",
+        "hash": "8af3dcb",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/8af3dcbf7976b3fa04516c4a87ff621944220406",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "point tenancy.spec.ts at local port 3009",
+        "hash": "95c47a6",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/95c47a6117da7a536c486435f2135be363b76bc7",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "point pos.spec.ts at local port 3009",
+        "hash": "00eee81",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/00eee81eaaba0551e7eeff070078711797241523",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "point permissions.spec.ts at local port 3009",
+        "hash": "f7fe5f3",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/f7fe5f3b41c803abb13dc7a5de33f6bb248fb19d",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "point dark-mode.spec.ts at local port 3009",
+        "hash": "4856b4e",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/4856b4eb5730ca82a7fa74f60495a370133fc6f8",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "point charts-overflow.spec.ts at local port 3009",
+        "hash": "9ecdf56",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/9ecdf5633ee79db0ec91ab4cc0eb38cbb67a3f54",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "point business-access.spec.ts at local port 3009",
+        "hash": "0807deb",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/0807deb0fe79ffd34a791db25a4e7b73c22b4d8f",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "point accounts.spec.ts at local port 3009",
+        "hash": "ce33ef5",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/ce33ef5c03c437760f4b4c4fd23393a692880746",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "point acceptance.spec.ts at local port 3009",
+        "hash": "d1ebf8f",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/d1ebf8f8c1bd5f8d4a2282b6f3178d73b2ff0067",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "update host helper defaults for port 3009",
+        "hash": "1fbec54",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/1fbec544f3f47e537822f8c0d60e63a6314d0c6b",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "default browser API origin to port 4005",
+        "hash": "cc7dcc0",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/cc7dcc00f03a356431dca03ec2525d0c312407bf",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "default Playwright base URL to port 3009",
+        "hash": "da3a478",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/da3a478a124b372942cfd5827ca82209a6d1a65a",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "set dev script to serve frontend on port 3009",
+        "hash": "b6defe4",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/b6defe4f27812f66142ce8365628909ba1b6e987",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "point Next.js API rewrites at localhost:4005",
+        "hash": "ebedc64",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/ebedc64a40e4245f613dad30f07f7277b864ab8f",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "expose frontend on port 3009 in Docker image",
+        "hash": "dc8251c",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/dc8251c9ee0f6ef3d89bdac521024274ec96558f",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "expose API on port 4005 in backend Docker image",
+        "hash": "c12dd1f",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/c12dd1fa3f267638527e72cdb349e4ab30cb38ac",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "align production compose API and frontend ports to 4005 and 3009",
+        "hash": "8cbdf93",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/8cbdf93b69229c5914668f204ceec84dc8e94d84",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "align staging compose API and frontend ports to 4005 and 3009",
+        "hash": "bb81b6d",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/bb81b6d33777ebfb9b7f66cea2214fde44d1e7a9",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "align local compose API and frontend ports to 4005 and 3009",
+        "hash": "9074a52",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/9074a52e11eab41bc2bc80416b5c61e31f26132b",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "update production env example for ports 3009 and 4005",
+        "hash": "708c0b6",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/708c0b60429096561e475b7441a7a70ce300681f",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "update staging env example for ports 3009 and 4005",
+        "hash": "bd806eb",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/bd806eb94eb1aa3c760fc23137e41ff4cf1d8793",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "update local env example for ports 3009 and 4005",
+        "hash": "be676a2",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/be676a21d26a970e9bc1bd36c8bbc12b1e700d44",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "default API to 4005 and web to 3009 in env schema and CORS",
+        "hash": "f0f2558",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/f0f2558367801c3f1f937a7f9f95564dc60696d5",
         "author": "MusfiqDehan"
       }
     ]
