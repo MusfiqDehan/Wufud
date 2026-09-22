@@ -3,6 +3,35 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.7 (2026-09-22)
+
+### 🚀 Features & Capabilities
+
+- Changelog page paginates release tags (five versions per page) with navigation that respects search and category filters
+
+### 🐛 Bug Fixes & Stability
+
+- Payment webhooks rely on attempt state for idempotency; tenant webhook receipts record only after verified success
+- Manual payment rejection enforces branch-scoped RBAC before updating pending records
+
+### 🔒 Security
+
+- Checkout session IDs must match the payment attempt for Stripe and stub gateways; transaction IDs use 96-bit randomness
+- Stub payment gateway blocked in staging and production
+- Deployment startup rejects weak, identical, or default JWT access and refresh secrets in staging and production
+
+### ⚡ Performance Improvements
+
+- Tenant accounts report aggregates collections, outstanding balances, and ledger totals in PostgreSQL instead of hydrating full tables in Node
+
+### 🛠️ Maintenance & Refactoring
+
+- README design notes expanded for seat locking, webhook idempotency, reporting scale path, and deployment secret requirements
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.6...1.7
+
+---
+
 ## What's Changed in 1.6 (2026-09-22)
 
 ### 🚀 Features & Capabilities
