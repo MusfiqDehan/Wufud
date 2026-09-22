@@ -46,31 +46,40 @@ export function StatCard({
 
 export function BarChart({
   data,
-  height = 148,
+  height = 128,
   ariaLabel,
 }: {
-  data: { label: string; value: number; color?: string }[];
+  data: { label: string; value: number; total?: number; color?: string }[];
   height?: number;
   ariaLabel: string;
 }) {
-  const max = Math.max(1, ...data.map((d) => d.value));
+  const max = Math.max(1, ...data.map((d) => (d.total ? d.total : d.value)));
+  const barHeight = Math.max(48, height - 44);
   return (
-    <div role="img" aria-label={ariaLabel} className="flex items-end gap-2 overflow-x-auto pb-1" style={{ height }}>
-      {data.map((d) => (
-        <div key={d.label} className="flex min-w-10 flex-1 flex-col items-center gap-2">
-          <div className="flex w-full flex-1 items-end rounded-lg bg-slate-100 dark:bg-navy-700" style={{ height: height - 28 }}>
-            <div
-              title={`${d.label}: ${d.value}`}
-              className="w-full rounded-lg transition-all"
-              style={{
-                height: `${Math.max(4, Math.round((d.value / max) * 100))}%`,
-                background: d.color ?? "#0e8f86",
-              }}
-            />
+    <div role="img" aria-label={ariaLabel} className="flex w-full items-end gap-2.5 pt-1 sm:gap-3">
+      {data.map((d, i) => {
+        const pct = d.total && d.total > 0 ? Math.round((d.value / d.total) * 100) : Math.round((d.value / max) * 100);
+        return (
+          <div key={`${d.label}-${i}`} className="flex min-w-8 flex-1 flex-col items-center gap-1.5">
+            <span className="text-[11px] font-semibold tabular-nums text-slate-700 dark:text-slate-200">
+              {d.value}{d.total !== undefined ? `/${d.total}` : ""}
+            </span>
+            <div className="flex w-full items-end rounded-lg bg-slate-100 p-0.5 dark:bg-navy-700" style={{ height: barHeight }}>
+              <div
+                title={`${d.label}: ${d.value}${d.total ? ` of ${d.total}` : ""} seats (${pct}%)`}
+                className="w-full rounded-md transition-all duration-300"
+                style={{
+                  height: `${Math.max(6, Math.min(100, pct))}%`,
+                  background: d.color ?? "#0e8f86",
+                }}
+              />
+            </div>
+            <span title={d.label} className="max-w-full truncate text-xs font-medium text-slate-600 dark:text-slate-400">
+              {d.label}
+            </span>
           </div>
-          <span className="max-w-full truncate text-[10px] text-slate-500">{d.label}</span>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

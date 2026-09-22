@@ -96,6 +96,31 @@ test("POS page enables rapid retail checkout, stock updates, installment collect
     fullPage: false,
   });
 
+  // Verify print media emulation & PDF output (prevents blank page regression)
+  await page.emulateMedia({ media: "print" });
+  await page.waitForTimeout(300);
+  const pdfBuffer = await page.pdf({ format: "A4", printBackground: true });
+  expect(pdfBuffer.length).toBeGreaterThan(10000);
+
+  const receiptPrintPosition = await page.evaluate(() => {
+    const el = document.getElementById("pos-printable-receipt");
+    if (!el) return null;
+    const rect = el.getBoundingClientRect();
+    const style = window.getComputedStyle(el);
+    return {
+      top: rect.top,
+      visibility: style.visibility,
+      display: style.display,
+    };
+  });
+  expect(receiptPrintPosition?.visibility).toBe("visible");
+  expect(receiptPrintPosition?.display).toBe("block");
+  expect(receiptPrintPosition?.top).toBeLessThan(100);
+
+  // Restore screen media for remaining interactive steps
+  await page.emulateMedia({ media: "screen" });
+  await page.waitForTimeout(200);
+
   // Close receipt dialog
   await page.getByRole("button", { name: "Start Next Sale" }).click();
   await expect(page.getByRole("dialog")).toHaveCount(0);

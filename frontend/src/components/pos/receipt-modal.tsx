@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { CheckCircle2, Printer, X, Receipt, RotateCcw, Building2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -97,7 +98,12 @@ export function ReceiptModal({
   data: ReceiptData | null;
   agencyName?: string;
 }) {
+  const [mounted, setMounted] = useState(false);
   const receiptRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -108,7 +114,7 @@ export function ReceiptModal({
     return () => document.removeEventListener("keydown", handler);
   }, [open, onClose]);
 
-  if (!open || !data) return null;
+  if (!mounted || !open || !data) return null;
 
   const handlePrint = () => {
     window.print();
@@ -118,32 +124,75 @@ export function ReceiptModal({
   const isInstallment = data.type === "installment";
   const isRefund = data.type === "refund";
 
-  return (
-    <div
-      className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-navy-900/60 p-4 backdrop-blur-[3px] print:p-0 print:bg-white print:static"
-      onClick={onClose}
-      role="presentation"
-    >
+  const modalContent = (
+    <div id="pos-receipt-portal">
       <style
         dangerouslySetInnerHTML={{
           __html: `
             @media print {
-              body * {
-                visibility: hidden;
+              @page {
+                size: auto;
+                margin: 8mm;
               }
-              #pos-printable-receipt,
-              #pos-printable-receipt * {
-                visibility: visible;
+              html, body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                height: auto !important;
+                min-height: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: visible !important;
+              }
+              /* Completely isolate receipt: hide everything else attached to body */
+              body > *:not(#pos-receipt-portal) {
+                display: none !important;
+              }
+              #pos-receipt-portal {
+                display: block !important;
+                position: static !important;
+                margin: 0 auto !important;
+                padding: 0 !important;
+                width: 100% !important;
+                background: transparent !important;
+              }
+              #pos-receipt-portal .pos-modal-overlay {
+                position: static !important;
+                display: block !important;
+                overflow: visible !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                background: transparent !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                min-height: 0 !important;
+              }
+              #pos-receipt-portal .pos-modal-dialog {
+                border: none !important;
+                box-shadow: none !important;
+                max-width: 480px !important;
+                margin: 0 auto !important;
+                background: #ffffff !important;
+                padding: 0 !important;
               }
               #pos-printable-receipt {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                margin: 0;
-                padding: 20px;
+                position: static !important;
+                display: block !important;
+                visibility: visible !important;
+                width: 100% !important;
+                max-width: 480px !important;
+                margin: 0 auto !important;
+                padding: 20px !important;
+                border: 1px dashed #cbd5e1 !important;
+                border-radius: 8px !important;
+                background: #ffffff !important;
+                color: #0f172a !important;
                 box-shadow: none !important;
-                border: none !important;
+              }
+              #pos-printable-receipt * {
+                visibility: visible !important;
+                color: inherit !important;
+                text-shadow: none !important;
               }
               .no-print {
                 display: none !important;
@@ -154,12 +203,17 @@ export function ReceiptModal({
       />
 
       <div
-        role="dialog"
-        aria-modal="true"
-        aria-label="Transaction Receipt"
-        onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-navy-700 dark:bg-navy-800 print:border-none print:shadow-none print:max-w-none"
+        className="pos-modal-overlay fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-navy-900/60 p-4 backdrop-blur-[3px] print:p-0 print:bg-white print:static"
+        onClick={onClose}
+        role="presentation"
       >
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Transaction Receipt"
+          onClick={(e) => e.stopPropagation()}
+          className="pos-modal-dialog w-full max-w-lg rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-navy-700 dark:bg-navy-800 print:border-none print:shadow-none print:max-w-none"
+        >
         {/* Top Dialog Action Bar (Hidden in print) */}
         <div className="flex items-center justify-between border-b border-slate-100 p-4 dark:border-navy-700 no-print">
           <div className="flex items-center gap-2">
@@ -189,6 +243,7 @@ export function ReceiptModal({
               type="button"
               size="sm"
               onClick={handlePrint}
+              title="Print receipt or save as PDF"
               className="h-8 gap-1.5 bg-teal-600 hover:bg-teal-700 text-white dark:bg-teal-500"
             >
               <Printer size={14} />
@@ -421,7 +476,14 @@ export function ReceiptModal({
 
         {/* Bottom Actions (Hidden in print) */}
         <div className="flex items-center justify-end gap-2 border-t border-slate-100 p-4 dark:border-navy-700 no-print">
-          <Button type="button" variant="outline" size="sm" onClick={handlePrint} className="gap-1.5">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={handlePrint}
+            title="Print receipt or save as PDF"
+            className="gap-1.5"
+          >
             <Printer size={14} />
             Print Receipt
           </Button>
@@ -431,5 +493,8 @@ export function ReceiptModal({
         </div>
       </div>
     </div>
+  </div>
   );
+
+  return createPortal(modalContent, document.body);
 }

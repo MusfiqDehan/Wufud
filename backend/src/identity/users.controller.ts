@@ -53,7 +53,33 @@ export class UsersController {
     if (tenant) where.tenant = tenant.id;
     if (query.search) where.fullName = { $ilike: `%${query.search}%` };
     const page = await paginate(this.em, User, where, { cursor: query.cursor, pageSize: query.page_size });
-    return listSuccessResponse(page.items.map(serializeUser), page.pagination);
+    const userIds = page.items.map((u) => u.id);
+    const roleMap = new Map<string, { id: string; name: string; slug: string; branch_name?: string }[]>();
+    if (tenant?.schemaName && userIds.length > 0) {
+      const knex = this.em.getConnection().getKnex();
+      const rows = await knex(`${tenant.schemaName}.user_roles as ur`)
+        .leftJoin(`${tenant.schemaName}.roles as r`, "ur.role_id", "r.id")
+        .leftJoin(`${tenant.schemaName}.branches as b`, "ur.branch_id", "b.id")
+        .whereIn("ur.user_id", userIds)
+        .whereNull("r.deleted_at")
+        .select("ur.user_id", "r.id as role_id", "r.name as role_name", "r.slug as role_slug", "b.name as branch_name");
+      for (const row of rows) {
+        if (!row.role_slug) continue;
+        const list = roleMap.get(row.user_id) ?? [];
+        list.push({
+          id: row.role_id,
+          name: row.role_name ?? row.role_slug,
+          slug: row.role_slug,
+          branch_name: row.branch_name ?? undefined,
+        });
+        roleMap.set(row.user_id, list);
+      }
+    }
+    const items = page.items.map((u) => ({
+      ...serializeUser(u),
+      roles: roleMap.get(u.id) ?? [],
+    }));
+    return listSuccessResponse(items, page.pagination);
   }
 
   @Post("invite")

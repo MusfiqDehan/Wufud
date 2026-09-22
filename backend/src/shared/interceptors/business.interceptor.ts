@@ -9,8 +9,37 @@ const money = z.string().regex(/^\d{1,10}(\.\d{1,2})?$/).refine(v => Number(v) >
 const name = z.string().trim().min(1).max(255);
 const uuid = z.string().uuid();
 const qty = z.number().int().nonnegative();
-const tier = z.object({ name, price: money, seatsTotal: qty, currency: z.literal("BDT").optional() });
-const pkg = z.object({ name, kind: z.enum(["hajj", "ramadan_umrah", "offseason_umrah", "ziyarah"]), description: z.string().max(10000).optional(), departureDate: z.coerce.date(), bookingOpensAt: z.coerce.date(), bookingClosesAt: z.coerce.date(), branch: uuid.optional(), isPublished: z.boolean().optional(), isActive: z.boolean().optional() });
+const tier = z.object({
+  name,
+  price: money,
+  seatsTotal: qty,
+  currency: z.string().max(8).optional(),
+  roomType: z.string().max(64).optional().nullable(),
+  features: z.array(z.string()).optional().nullable(),
+});
+const pkg = z.object({
+  name,
+  kind: z.enum(["hajj", "ramadan_umrah", "offseason_umrah", "ziyarah"]),
+  description: z.string().max(10000).optional().nullable(),
+  departureDate: z.coerce.date(),
+  bookingOpensAt: z.coerce.date(),
+  bookingClosesAt: z.coerce.date(),
+  durationDays: z.number().int().min(1).max(120).optional(),
+  maxPilgrims: z.number().int().min(1).max(100).optional(),
+  makkahHotel: z.string().max(255).optional().nullable(),
+  makkahDistance: z.string().max(128).optional().nullable(),
+  madinahHotel: z.string().max(255).optional().nullable(),
+  madinahDistance: z.string().max(128).optional().nullable(),
+  airline: z.string().max(128).optional().nullable(),
+  flightRoute: z.string().max(255).optional().nullable(),
+  inclusions: z.array(z.string()).optional().nullable(),
+  itinerary: z.array(z.object({ day: z.string(), title: z.string(), desc: z.string() })).optional().nullable(),
+  featured: z.boolean().optional(),
+  bannerImage: z.string().optional().nullable(),
+  branch: uuid.optional().nullable(),
+  isPublished: z.boolean().optional(),
+  isActive: z.boolean().optional(),
+});
 const vendor = z.object({ name, kind: z.enum(["hotel", "airline", "transport", "visa", "other"] ) });
 const stock = z.object({ name, quantity: qty, unitCost: z.string().regex(/^\d+(\.\d{1,2})?$/).optional(), salePrice: money.optional(), kind: z.enum(["product", "service"]).optional() });
 const expense = z.object({ title: name, amount: money, currency: z.literal("BDT").optional(), category: name.optional() });

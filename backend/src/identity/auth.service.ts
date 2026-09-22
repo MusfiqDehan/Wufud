@@ -210,8 +210,9 @@ export class AuthService {
       await this.em.flush();
     }
     const roleSlug = String(invitation.metadata?.role_slug ?? invitation.metadata?.roleSlug ?? (invitation.type === "tenant_owner" ? "admin" : "agent"));
+    const branchId = invitation.metadata?.branch_id ?? invitation.metadata?.branchId;
     if (tenant && roleSlug) {
-      await this.assignTenantRole(tenant.schemaName, user, roleSlug);
+      await this.assignTenantRole(tenant.schemaName, user, roleSlug, branchId ? String(branchId) : undefined);
     }
     invitation.acceptedAt = new Date();
     await this.em.flush();
@@ -231,7 +232,9 @@ export class AuthService {
     return { accessToken, refreshToken, user };
   }
 
-  private async assignTenantRole(schema: string, user: User, slug: string, em: EntityManager = this.em) {
+  private async assignTenantRole(schema: string, user: User, slug: string, branchIdOrEm?: string | EntityManager, maybeEm?: EntityManager) {
+    const branchId = typeof branchIdOrEm === "string" ? branchIdOrEm : undefined;
+    const em = (branchIdOrEm && typeof branchIdOrEm !== "string" ? branchIdOrEm : maybeEm) ?? this.em;
     const knex = em.getConnection().getKnex();
     const role = await knex(`${schema}.roles`).where({ slug }).first();
     if (!role) return;
@@ -243,6 +246,7 @@ export class AuthService {
       user_id: user.id,
       user_email: user.email,
       role_id: role.id,
+      branch_id: branchId ?? null,
     });
   }
 

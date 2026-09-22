@@ -19,6 +19,57 @@ export interface ChangelogRelease {
 
 export const PLATFORM_CHANGELOG: ChangelogRelease[] = [
   {
+    version: "1.5",
+    title: "Modern Changelog, Live Healthcheck Status Page & Automated CI/CD Release Pipeline",
+    date: "2026-09-22",
+    type: "minor",
+    summary:
+      "Introduced customer-facing Changelog and real-time System Status pages, detailed backend health diagnostics for PostgreSQL and Redis, and automated GitHub Actions CI/CD release tagging upon merging pull requests to main.",
+    releaseUrl: "https://github.com/MusfiqDehan/Wufud/releases/tag/1.5",
+    changes: [
+      {
+        category: "features",
+        text: "Interactive Changelog page (/changelog) with real-time search, category filtering, and visual release timeline",
+        commit: "e20be6f",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "features",
+        text: "Real-time System Status page (/status) with 90-day uptime calendar and interactive connection latency probe",
+        commit: "a0d504a",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "features",
+        text: "Automated GitHub Actions release workflow (.github/workflows/release-changelog.yml) generating tags and notes from conventional commits",
+        commit: "a0d504a",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "features",
+        text: "Detailed backend health diagnostic probe (/api/v1/health/detailed) measuring database and Redis roundtrip latency",
+        commit: "a0d504a",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "features",
+        text: "Configured automated production deployment triggered from main branch within the GitHub production environment",
+        commit: "a0d504a",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "fixes",
+        text: "Timezone-safe release date formatting to consistently display September 21, 2026 across all client locales",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "perf",
+        text: "Sub-2ms healthcheck latency response times for PostgreSQL connection queries and Redis ping probes",
+        author: "MusfiqDehan",
+      },
+    ],
+  },
+  {
     version: "1.4",
     title: "Real-time Seat Holds, POS Terminal Sales & Automated Reconciliations",
     date: "2026-09-21",
@@ -37,12 +88,6 @@ export const PLATFORM_CHANGELOG: ChangelogRelease[] = [
         category: "features",
         text: "Automated BullMQ background job for releasing expired seat reservations back into tier quotas",
         commit: "0fdee44",
-        author: "MusfiqDehan",
-      },
-      {
-        category: "features",
-        text: "Modern Changelog and Live Healthcheck Status pages with automated GitHub release integrations",
-        commit: "9af7255",
         author: "MusfiqDehan",
       },
       {
@@ -201,6 +246,16 @@ export const PLATFORM_CHANGELOG: ChangelogRelease[] = [
   },
 ];
 
+import rawJsonEntries from "./changelog.json";
+
 export function getChangelogEntries(): ChangelogRelease[] {
+  if (Array.isArray(rawJsonEntries) && rawJsonEntries.length > 0) {
+    const jsonVersions = new Set(rawJsonEntries.map((r: unknown) => (r as ChangelogRelease).version));
+    const merged = [
+      ...rawJsonEntries,
+      ...PLATFORM_CHANGELOG.filter((r) => !jsonVersions.has(r.version)),
+    ];
+    return merged as ChangelogRelease[];
+  }
   return PLATFORM_CHANGELOG;
 }
