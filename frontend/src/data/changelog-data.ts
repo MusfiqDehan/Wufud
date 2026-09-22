@@ -246,6 +246,16 @@ export const PLATFORM_CHANGELOG: ChangelogRelease[] = [
   },
 ];
 
+import rawJsonEntries from "./changelog.json";
+
 export function getChangelogEntries(): ChangelogRelease[] {
+  if (Array.isArray(rawJsonEntries) && rawJsonEntries.length > 0) {
+    const jsonVersions = new Set(rawJsonEntries.map((r: unknown) => (r as ChangelogRelease).version));
+    const merged = [
+      ...rawJsonEntries,
+      ...PLATFORM_CHANGELOG.filter((r) => !jsonVersions.has(r.version)),
+    ];
+    return merged as ChangelogRelease[];
+  }
   return PLATFORM_CHANGELOG;
 }
