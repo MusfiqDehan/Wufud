@@ -7,6 +7,38 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### 🚀 Features & Capabilities
 
+- wire SessionKeeper into app providers ([a0f0c57](https://github.com/MusfiqDehan/Wufud/commit/a0f0c57e004fe337eff9d96a8fbd45a40d16bc74)) by @MusfiqDehan
+- mount session keeper for proactive JWT refresh ([2374672](https://github.com/MusfiqDehan/Wufud/commit/2374672e97ad616d329d8b3bbc7ac5d496b4b57b)) by @MusfiqDehan
+- retry API calls after transparent access-token refresh on 401 ([5a95ca8](https://github.com/MusfiqDehan/Wufud/commit/5a95ca8e6a1207ce475686e1f488e12143c60c75)) by @MusfiqDehan
+- add session helpers for proactive and on-demand access refresh ([1c5f81e](https://github.com/MusfiqDehan/Wufud/commit/1c5f81ede7709dc31f488a0f88475abe4eaffc52)) by @MusfiqDehan
+
+### 🐛 Bug Fixes & Stability
+
+- return unauthorized when refresh token cookie is missing ([4766957](https://github.com/MusfiqDehan/Wufud/commit/47669576c7a3cbf5807850b3ae86ba32c32e3fcd)) by @MusfiqDehan
+- rotate refresh token hash on each successful auth refresh ([6e7bd71](https://github.com/MusfiqDehan/Wufud/commit/6e7bd7176291092e54798ae0b510e7f5b10e3b6f)) by @MusfiqDehan
+
+### 🛠️ Maintenance & Refactoring
+
+- refresh frontend TypeScript build info ([ea7fcf7](https://github.com/MusfiqDehan/Wufud/commit/ea7fcf74fc7ad8f4b0390bc81a426605ad504a89)) by @MusfiqDehan
+- refresh backend TypeScript build info ([841c122](https://github.com/MusfiqDehan/Wufud/commit/841c122a355c302799d717248dfa72f0ce3baba3)) by @MusfiqDehan
+- add version 1.19 release summary to root changelog ([ef429d5](https://github.com/MusfiqDehan/Wufud/commit/ef429d551148539e370a68ce2a123e395d359c9f)) by @MusfiqDehan
+- add version 1.19 entry to changelog.json ([80cdb87](https://github.com/MusfiqDehan/Wufud/commit/80cdb87588a3ceba4c0c85ef8192373836d59aa6)) by @MusfiqDehan
+- add version 1.19 silent session refresh to platform changelog ([5f90735](https://github.com/MusfiqDehan/Wufud/commit/5f90735e23366efea15fc7bfcbcfa6901f563073)) by @MusfiqDehan
+- e2e verifies silent refresh with httpOnly cookie ([d0da127](https://github.com/MusfiqDehan/Wufud/commit/d0da12790a7cd996c76dd8a312a3a2dd5ed75904)) by @MusfiqDehan
+- clear session via helper on storefront auth errors ([b704c57](https://github.com/MusfiqDehan/Wufud/commit/b704c57eed0ded876c01d21bf7141c7bf11d2630)) by @MusfiqDehan
+- store invite accept access token via session helper ([bbb2706](https://github.com/MusfiqDehan/Wufud/commit/bbb2706fa85bc8ca7837d5ca0fab605f048eb800)) by @MusfiqDehan
+- store register access token via session helper ([0388de0](https://github.com/MusfiqDehan/Wufud/commit/0388de0f2918819af2d69d0509251ac108034096)) by @MusfiqDehan
+- route auth token storage through session helpers ([4a7b640](https://github.com/MusfiqDehan/Wufud/commit/4a7b640cdc50955673637121587472c0222f96c5)) by @MusfiqDehan
+- update TypeScript build info to reflect new dependencies and configurations ([c5d7295](https://github.com/MusfiqDehan/Wufud/commit/c5d72955535a9c917bfa86b10cfd5b4b024407aa)) by @MusfiqDehan
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.18...1.19
+
+---
+
+## What's Changed in 1.19 (2026-09-22)
+
+### 🚀 Features & Capabilities
+
 - **Silent session refresh** — httpOnly refresh cookie, automatic access-token renewal on 401 with request retry, and proactive refresh before JWT expiry so users stay signed in without sudden logouts
 
 ### 🐛 Bug Fixes & Stability
