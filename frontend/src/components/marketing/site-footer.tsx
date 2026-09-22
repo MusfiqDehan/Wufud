@@ -1,9 +1,15 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useHostContext } from "@/components/host-provider";
 import { BrandLogo } from "@/components/layout/brand-logo";
 import { AgencyLogo } from "@/components/layout/agency-logo";
+import { logout } from "@/lib/auth";
+import { useClientSignedIn } from "@/lib/use-client-signed-in";
+
 export function SiteFooter() {
+  const router = useRouter();
+  const { signedIn, setSignedIn } = useClientSignedIn();
   const context = useHostContext();
   const tenant = context?.plane === "tenant";
   const name = tenant ? context.branding?.display_name ?? context.tenant?.name ?? "Your agency" : "Wufud";
@@ -28,9 +34,27 @@ export function SiteFooter() {
               Status
             </Link>
           )}
-          <Link href="/login" className="hover:text-teal-500">
-            Sign in
-          </Link>
+          {signedIn ? (
+            <button
+              type="button"
+              className="hover:text-teal-500"
+              onClick={async () => {
+                try {
+                  await logout();
+                } finally {
+                  setSignedIn(false);
+                  router.push("/");
+                  router.refresh();
+                }
+              }}
+            >
+              Sign out
+            </button>
+          ) : (
+            <Link href="/login" className="hover:text-teal-500">
+              Sign in
+            </Link>
+          )}
         </div>
       </div>
     </footer>
