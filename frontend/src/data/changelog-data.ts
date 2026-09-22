@@ -19,6 +19,37 @@ export interface ChangelogRelease {
 
 export const PLATFORM_CHANGELOG: ChangelogRelease[] = [
   {
+    version: "1.19",
+    title: "Silent Session Refresh",
+    date: "2026-09-22",
+    type: "minor",
+    summary:
+      "Agency and platform users stay signed in across access-token expiry: the web app renews JWTs using the httpOnly refresh cookie, refreshes proactively before timeout, and the API rotates refresh tokens on each use.",
+    releaseUrl: "https://github.com/MusfiqDehan/Wufud/releases/tag/1.19",
+    changes: [
+      {
+        category: "features",
+        text: "Automatic access-token renewal on 401 via POST /api/v1/auth/refresh, with credentials and a single in-flight refresh so API calls retry transparently",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "features",
+        text: "Proactive session keep-alive: refresh about one minute before JWT expiry and when returning to a tab with a nearly expired token",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "fixes",
+        text: "API refresh flow persists a new refresh_token_hash on each rotation so long-lived sessions remain valid for the full refresh TTL (default 14 days)",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "maintenance",
+        text: "Playwright e2e (session-refresh.spec.ts) verifies dashboard access after an invalid access token when the refresh cookie is present",
+        author: "MusfiqDehan",
+      },
+    ],
+  },
+  {
     version: "1.16",
     title: "Production live on wufud.musfiqdehan.com",
     date: "2026-09-22",
