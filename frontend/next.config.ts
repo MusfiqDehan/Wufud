@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const backend = process.env.API_INTERNAL_URL ?? "http://localhost:4400";
+const backend = process.env.API_INTERNAL_URL ?? "http://localhost:4005";
 
 const nextConfig: NextConfig = {
   output: "standalone",
