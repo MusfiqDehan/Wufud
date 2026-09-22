@@ -3,7 +3,7 @@ name: Build images
 on:
   push:
     branches: [main, develop]
-    tags: ["v*"]
+    tags: ["v*", "[0-9]*"]
   workflow_dispatch:
 
 env:
