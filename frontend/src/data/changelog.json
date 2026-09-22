@@ -1,5 +1,28 @@
 [
   {
+    "version": "1.17",
+    "date": "2026-09-22",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.17)",
+    "summary": "Automated release 1.17 with 2 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "fixes",
+        "text": "include migrate/seed CLI in images and production demo emails",
+        "hash": "2d29ca7",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/2d29ca7bad19ff40f4421a6881d7b356e8adec65",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "expand 1.16 production go-live release notes [skip ci]",
+        "hash": "1dbb30c",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/1dbb30c6eac4a0d9d6b9e22ac3d38b3d2e89482d",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
     "version": "1.16",
     "date": "2026-09-22",
     "type": "minor",

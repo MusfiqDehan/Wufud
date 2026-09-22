@@ -3,6 +3,20 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.17 (2026-09-22)
+
+### 🐛 Bug Fixes & Stability
+
+- include migrate/seed CLI in images and production demo emails ([2d29ca7](https://github.com/MusfiqDehan/Wufud/commit/2d29ca7bad19ff40f4421a6881d7b356e8adec65)) by @MusfiqDehan
+
+### 🛠️ Maintenance & Refactoring
+
+- expand 1.16 production go-live release notes [skip ci] ([1dbb30c](https://github.com/MusfiqDehan/Wufud/commit/1dbb30c6eac4a0d9d6b9e22ac3d38b3d2e89482d)) by @MusfiqDehan
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.16...1.17
+
+---
+
 ## What's Changed in 1.16 (2026-09-22)
 
 ### 🚀 Features & Capabilities
