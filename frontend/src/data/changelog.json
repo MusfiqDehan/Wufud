@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.14",
+    "date": "2026-09-22",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.14)",
+    "summary": "Automated release 1.14 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "fixes",
+        "text": "bind Next.js frontend to 0.0.0.0 for Traefik",
+        "hash": "0d3a419",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/0d3a419f0580b42161b74797fe120081cc8c7351",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
     "version": "1.13",
     "date": "2026-09-22",
     "type": "minor",

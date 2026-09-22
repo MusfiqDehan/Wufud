@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.14 (2026-09-22)
+
+### 🐛 Bug Fixes & Stability
+
+- bind Next.js frontend to 0.0.0.0 for Traefik ([0d3a419](https://github.com/MusfiqDehan/Wufud/commit/0d3a419f0580b42161b74797fe120081cc8c7351)) by @MusfiqDehan
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.13...1.14
+
+---
+
 ## What's Changed in 1.13 (2026-09-22)
 
 ### 🐛 Bug Fixes & Stability
