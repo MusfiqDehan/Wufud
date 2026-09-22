@@ -339,7 +339,7 @@ async function main() {
        VALUES ($1,$2,$3,$4,true,true,false,$5,$5)`,
       [
         uuid(),
-        "Wufud — Pilgrimage Booking SaaS",
+        "Wufud | Pilgrimage Booking SaaS",
         "Give every Hajj and Umrah agency its own booking ERP.",
         "hajj, umrah, booking, saas",
         now,
