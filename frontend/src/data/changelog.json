@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.10",
+    "date": "2026-09-22",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.10)",
+    "summary": "Automated release 1.10 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "fixes",
+        "text": "copy backend node_modules for runtime CLI and API deps",
+        "hash": "c1623d9",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/c1623d9c5af2d90c82b86974bf0ad0ba7b806c6f",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
     "version": "1.9",
     "date": "2026-09-22",
     "type": "minor",

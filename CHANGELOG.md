@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.10 (2026-09-22)
+
+### 🐛 Bug Fixes & Stability
+
+- copy backend node_modules for runtime CLI and API deps ([c1623d9](https://github.com/MusfiqDehan/Wufud/commit/c1623d9c5af2d90c82b86974bf0ad0ba7b806c6f)) by @MusfiqDehan
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.9...1.10
+
+---
+
 ## What's Changed in 1.9 (2026-09-22)
 
 ### 🐛 Bug Fixes & Stability
