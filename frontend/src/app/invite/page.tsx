@@ -12,6 +12,7 @@ import { api } from "@/lib/api";
 import { formatApiError } from "@/lib/api-error";
 import { firstZodIssueMessage, inviteAcceptSchema } from "@/lib/validation";
 import { getAccess } from "@/lib/auth";
+import { storeAccessToken } from "@/lib/session";
 
 function AcceptInviteForm() {
   const router = useRouter();
@@ -44,7 +45,7 @@ function AcceptInviteForm() {
               method: "POST",
               body: JSON.stringify({ token, password, fullName: fullName || undefined }),
             });
-            localStorage.setItem("wufud_access", data.access_token);
+            storeAccessToken(data.access_token);
             const me = await getAccess();
             const roles = me.role_slugs ?? [];
             if (me.is_platform_admin) router.push("/admin");
