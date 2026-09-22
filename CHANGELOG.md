@@ -3,6 +3,17 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.21 (2026-09-22)
+
+### 🛠️ Maintenance & Refactoring
+
+- enhance README with improved formatting, additional demo account details, and updated design diagrams ([e11e1ee](https://github.com/MusfiqDehan/Wufud/commit/e11e1ee00d4a80fb13bf0f1e70267b8ee44c473e)) by @MusfiqDehan
+- expand ERD documentation with detailed entity relationships and attributes ([61bfff5](https://github.com/MusfiqDehan/Wufud/commit/61bfff54511b613ef0af53adb7c9d37b113ef185)) by @MusfiqDehan
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.20...1.21
+
+---
+
 ## What's Changed in 1.20 (2026-09-22)
 
 ### 🛠️ Maintenance & Refactoring

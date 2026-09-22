@@ -1,5 +1,28 @@
 [
   {
+    "version": "1.21",
+    "date": "2026-09-22",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.21)",
+    "summary": "Automated release 1.21 with 2 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "maintenance",
+        "text": "enhance README with improved formatting, additional demo account details, and updated design diagrams",
+        "hash": "e11e1ee",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/e11e1ee00d4a80fb13bf0f1e70267b8ee44c473e",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "expand ERD documentation with detailed entity relationships and attributes",
+        "hash": "61bfff5",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/61bfff54511b613ef0af53adb7c9d37b113ef185",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
     "version": "1.20",
     "date": "2026-09-22",
     "type": "minor",
