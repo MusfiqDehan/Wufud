@@ -1,9 +1,10 @@
 "use client";
 
+import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { GuardedShell } from "@/components/layout/guarded-shell";
 import { ManagedTable } from "@/components/data/managed-table";
-import { StatCard, BarChart, DonutChart, Sparkline } from "@/components/data/stat-card";
+import { StatCard, BarChart, DonutChart } from "@/components/data/stat-card";
 import { ChartCard } from "@/components/data/chart-card";
 import { api } from "@/lib/api";
 
@@ -28,16 +29,27 @@ export default function ReportsPage() {
   const whole = collected + outstanding;
   const ratio = whole ? Math.round((collected / whole) * 100) : 0;
   const quota = d?.quota ?? [];
-  const quotaTaken = quota.map((q) => ({ label: q.name.slice(0, 10), value: q.confirmed + q.held }));
+
+  const tierAgg = useMemo(() => {
+    const map = new Map<string, { label: string; value: number; total: number }>();
+    for (const q of quota) {
+      const existing = map.get(q.name) ?? { label: q.name, value: 0, total: 0 };
+      existing.value += (q.confirmed + q.held);
+      existing.total += q.total;
+      map.set(q.name, existing);
+    }
+    const colors = ["#0e8f86", "#506fc6", "#e8a13d", "#8b5cf6", "#c65d6e"];
+    return Array.from(map.values()).map((t, idx) => ({
+      ...t,
+      color: colors[idx % colors.length],
+    }));
+  }, [quota]);
 
   return (
     <GuardedShell plane="tenant" feature="reports" level="view">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-semibold">Reports</h1>
-          <p className="mt-1 text-sm text-slate-500">Collections, dues, refunds and seat quota at a glance.</p>
-        </div>
-        {report.data ? <Sparkline points={[collected, outstanding, Number(d?.refunds ?? 0)]} /> : null}
+      <div>
+        <h1 className="text-2xl font-semibold">Reports</h1>
+        <p className="mt-1 text-sm text-slate-500">Collections, dues, refunds and seat quota at a glance.</p>
       </div>
 
       {report.isPending ? (
@@ -68,8 +80,8 @@ export default function ReportsPage() {
                 centerLabel={`${ratio}%`}
               />
             </ChartCard>
-            <ChartCard title="Seats taken by tier" subtitle="Confirmed + held seats">
-              <BarChart data={quotaTaken.length ? quotaTaken : [{ label: "—", value: 0 }]} ariaLabel="Seats taken by tier" />
+            <ChartCard title="Seats taken by tier" subtitle="Confirmed + held seats vs total capacity">
+              <BarChart data={tierAgg.length ? tierAgg : [{ label: "No tiers", value: 0 }]} ariaLabel="Seats taken by tier" />
             </ChartCard>
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
               <StatCard label="Installments due · BDT" value={money(d?.installments_due)} hint="Open + overdue" />
