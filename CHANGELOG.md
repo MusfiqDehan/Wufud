@@ -3,7 +3,7 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## What's Changed in 1.5 (2026-09-21)
+## What's Changed in 1.5 (2026-09-22)
 
 ### 🚀 Features & Capabilities
 

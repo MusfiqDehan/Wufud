@@ -21,7 +21,7 @@ export const PLATFORM_CHANGELOG: ChangelogRelease[] = [
   {
     version: "1.5",
     title: "Modern Changelog, Live Healthcheck Status Page & Automated CI/CD Release Pipeline",
-    date: "2026-09-21",
+    date: "2026-09-22",
     type: "minor",
     summary:
       "Introduced customer-facing Changelog and real-time System Status pages, detailed backend health diagnostics for PostgreSQL and Redis, and automated GitHub Actions CI/CD release tagging upon merging pull requests to main.",
