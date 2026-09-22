@@ -8,6 +8,19 @@ import { TENANT_DDL } from "../tenancy/tenant-ddl";
 const PASSWORD = process.env.DEMO_PASSWORD ?? "WufudDemo!2026";
 const DATABASE_URL = process.env.DATABASE_URL ?? "postgresql://wufud:wufud@localhost:5432/wufud";
 const PLATFORM_HOST = process.env.PLATFORM_HOST ?? "wufud.localhost";
+const LOCAL_PLATFORM = PLATFORM_HOST.includes("localhost") || PLATFORM_HOST === "127.0.0.1";
+const PLATFORM_EMAIL_DOMAIN =
+  process.env.SEED_PLATFORM_EMAIL_DOMAIN ?? (LOCAL_PLATFORM ? "wufud.local" : "wufud.production");
+const TENANT_EMAIL_DOMAIN =
+  process.env.SEED_TENANT_EMAIL_DOMAIN ?? (LOCAL_PLATFORM ? "demo.local" : "demo.production");
+
+function platformEmail(localPart: string) {
+  return `${localPart}@${PLATFORM_EMAIL_DOMAIN}`;
+}
+
+function tenantEmail(localPart: string) {
+  return `${localPart}@${TENANT_EMAIL_DOMAIN}`;
+}
 
 const PACKAGE_GATED_KEYS = [
   "dashboard",
@@ -214,11 +227,14 @@ async function main() {
   const now = new Date();
   const hash = await argon2.hash(PASSWORD);
 
-  for (const host of ["localhost", "wufud.localhost", "127.0.0.1"]) {
+  const platformHosts = LOCAL_PLATFORM
+    ? ["localhost", "wufud.localhost", "127.0.0.1"]
+    : [PLATFORM_HOST];
+  for (const host of platformHosts) {
     await upsert(client, "platform_domains", "host", {
       id: uuid(),
       host,
-      is_primary: host === "wufud.localhost",
+      is_primary: host === (LOCAL_PLATFORM ? "wufud.localhost" : PLATFORM_HOST),
       created_at: now,
       updated_at: now,
       is_active: true,
@@ -371,7 +387,7 @@ async function main() {
     }
   }
 
-  const adminId = await ensureUser(client, "admin@wufud.local", "Platform Admin", hash, null, now);
+  const adminId = await ensureUser(client, platformEmail("admin"), "Platform Admin", hash, null, now);
   const hasRole = await findId(
     client,
     "SELECT id FROM platform_user_roles WHERE user_id = $1 AND role_id = $2",
@@ -391,8 +407,8 @@ async function main() {
     tenantId = uuid();
     await client.query(
       `INSERT INTO tenants (id, name, slug, schema_name, status, is_enabled, plan, features, max_users, max_branches, max_roles, owner_email, timezone, currency, locale, version, is_active, is_published, is_deleted, created_at, updated_at)
-       VALUES ($1,'Nur Travels','demo',$2,'active',true,'growth',$3,50,5,10,'owner@demo.local','Asia/Dhaka','BDT','en',0,true,true,false,$4,$4)`,
-      [tenantId, schema, JSON.stringify(Object.fromEntries(features.map((k) => [k, true]))), now],
+       VALUES ($1,'Nur Travels','demo',$2,'active',true,'growth',$3,50,5,10,$5,'Asia/Dhaka','BDT','en',0,true,true,false,$4,$4)`,
+      [tenantId, schema, JSON.stringify(Object.fromEntries(features.map((k) => [k, true]))), now, tenantEmail("owner")],
     );
     await client.query(
       `INSERT INTO domains (id, tenant_id, domain, is_primary, verified_at, is_active, is_published, is_deleted, created_at, updated_at)
@@ -431,10 +447,10 @@ async function main() {
     );
   }
 
-  const ownerId = await ensureUser(client, "owner@demo.local", "Agency Owner", hash, tenantId, now);
-  const managerId = await ensureUser(client, "manager.ctg@demo.local", "CTG Manager", hash, tenantId, now);
-  const agentId = await ensureUser(client, "agent@demo.local", "Booking Agent", hash, tenantId, now);
-  const pilgrimId = await ensureUser(client, "pilgrim@demo.local", "Demo Pilgrim", hash, tenantId, now);
+  const ownerId = await ensureUser(client, tenantEmail("owner"), "Agency Owner", hash, tenantId, now);
+  const managerId = await ensureUser(client, tenantEmail("manager.ctg"), "CTG Manager", hash, tenantId, now);
+  const agentId = await ensureUser(client, tenantEmail("agent"), "Booking Agent", hash, tenantId, now);
+  const pilgrimId = await ensureUser(client, tenantEmail("pilgrim"), "Demo Pilgrim", hash, tenantId, now);
 
   const assign = async (userId: string, email: string, slug: string, branchCode?: string) => {
     const roleId = await findId(client, `SELECT id FROM "${schema}".roles WHERE slug = $1`, [slug]);
@@ -455,10 +471,10 @@ async function main() {
       );
     }
   };
-  await assign(ownerId, "owner@demo.local", "admin");
-  await assign(managerId, "manager.ctg@demo.local", "branch_manager", "CTG");
-  await assign(agentId, "agent@demo.local", "agent");
-  await assign(pilgrimId, "pilgrim@demo.local", "pilgrim");
+  await assign(ownerId, tenantEmail("owner"), "admin");
+  await assign(managerId, tenantEmail("manager.ctg"), "branch_manager", "CTG");
+  await assign(agentId, tenantEmail("agent"), "agent");
+  await assign(pilgrimId, tenantEmail("pilgrim"), "pilgrim");
 
   const pkgCount = await client.query(`SELECT count(id) AS c FROM "${schema}".packages`);
   if (!Number(pkgCount.rows[0]?.c)) {
@@ -567,11 +583,11 @@ async function main() {
 
   await client.end();
   console.log("Demo seed complete.");
-  console.log("Platform admin: admin@wufud.local");
-  console.log("Tenant admin:   owner@demo.local");
-  console.log("Branch manager: manager.ctg@demo.local");
-  console.log("Agent:          agent@demo.local");
-  console.log("Pilgrim:        pilgrim@demo.local");
+  console.log(`Platform admin: ${platformEmail("admin")}`);
+  console.log(`Tenant admin:   ${tenantEmail("owner")}`);
+  console.log(`Branch manager: ${tenantEmail("manager.ctg")}`);
+  console.log(`Agent:          ${tenantEmail("agent")}`);
+  console.log(`Pilgrim:        ${tenantEmail("pilgrim")}`);
   console.log(`Password:       ${PASSWORD}`);
 }
 

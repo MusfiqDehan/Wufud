@@ -17,6 +17,8 @@ services:
     image: ghcr.io/musfiqdehan/wufud-backend:${IMAGE_TAG:-main}
     env_file: .env.production
     depends_on: [postgres, redis]
+    volumes:
+      - /srv/shared/traefik/dynamic:/traefik/dynamic
     networks: [internal, traefik_proxy]
     labels:
       - traefik.enable=true
