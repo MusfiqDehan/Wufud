@@ -3,6 +3,25 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.19 (2026-09-22)
+
+### 🚀 Features & Capabilities
+
+- **Silent session refresh** — httpOnly refresh cookie, automatic access-token renewal on 401 with request retry, and proactive refresh before JWT expiry so users stay signed in without sudden logouts
+
+### 🐛 Bug Fixes & Stability
+
+- Refresh endpoint **rotates** `refresh_token_hash` on each use so long-lived sessions remain valid for the full refresh TTL
+- Missing refresh token on `/auth/refresh` returns a proper unauthorized error instead of a success envelope
+
+### 🧪 Testing
+
+- Playwright e2e: dashboard load recovers when the stored access token is invalid but the refresh cookie is present
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.18...1.19
+
+---
+
 ## What's Changed in 1.16 (2026-09-22)
 
 ### 🚀 Features & Capabilities
