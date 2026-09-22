@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test("dashboard and reports charts do not overlap or overflow containers", async ({ browser }) => {
   test.setTimeout(60000);
-  const page = await browser.newPage({ baseURL: process.env.TENANT_BASE_URL ?? "http://demo.wufud.localhost:3000" });
+  const page = await browser.newPage({ baseURL: process.env.TENANT_BASE_URL ?? "http://demo.wufud.localhost:3009" });
   await page.goto("/login");
   await page.getByLabel("Email").fill("owner@demo.local");
   await page.getByLabel("Password", { exact: true }).fill(process.env.DEMO_PASSWORD ?? "WufudDemo!2026");
