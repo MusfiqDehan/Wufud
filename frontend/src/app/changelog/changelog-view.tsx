@@ -1,9 +1,12 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Search, Sparkles, Tag, ArrowUpRight, CheckCircle2, ShieldCheck, Wrench, Zap, Bug, Filter, Activity } from "lucide-react";
+import { Search, Sparkles, Tag, ArrowUpRight, ShieldCheck, Wrench, Zap, Bug, Filter, Activity } from "lucide-react";
+import { CursorPagination } from "@/components/data/cursor-pagination";
 import type { ChangelogRelease } from "@/data/changelog-data";
+
+const CHANGELOG_PAGE_SIZE = 5;
 
 interface ChangelogViewProps {
   releases: ChangelogRelease[];
@@ -14,6 +17,8 @@ type FilterCategory = "all" | "features" | "perf" | "fixes" | "security" | "main
 export function ChangelogView({ releases }: ChangelogViewProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<FilterCategory>("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const timelineRef = useRef<HTMLDivElement>(null);
 
   const categoryLabels: { key: FilterCategory; label: string; icon: React.ReactNode }[] = [
     { key: "all", label: "All Updates", icon: <Tag className="h-3.5 w-3.5" /> },
@@ -58,6 +63,31 @@ export function ChangelogView({ releases }: ChangelogViewProps) {
       })
       .filter((r): r is ChangelogRelease => r !== null);
   }, [releases, searchQuery, selectedCategory]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredReleases.length / CHANGELOG_PAGE_SIZE));
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedCategory]);
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
+  const paginatedReleases = useMemo(() => {
+    const start = (currentPage - 1) * CHANGELOG_PAGE_SIZE;
+    return filteredReleases.slice(start, start + CHANGELOG_PAGE_SIZE);
+  }, [filteredReleases, currentPage]);
+
+  const fromRelease = filteredReleases.length === 0 ? 0 : (currentPage - 1) * CHANGELOG_PAGE_SIZE + 1;
+  const toRelease = Math.min(currentPage * CHANGELOG_PAGE_SIZE, filteredReleases.length);
+
+  const goToPage = (page: number) => {
+    setCurrentPage(page);
+    timelineRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   const formatDate = (dateString: string) => {
     try {
@@ -193,7 +223,7 @@ export function ChangelogView({ releases }: ChangelogViewProps) {
       </div>
 
       {/* Timeline Section */}
-      <div className="relative mt-12">
+      <div ref={timelineRef} className="relative mt-12 scroll-mt-24">
         {/* Vertical Rail for desktop */}
         <div className="absolute top-4 bottom-4 left-6 hidden w-0.5 bg-gradient-to-b from-teal-500 via-teal-300 to-slate-200 md:block dark:from-teal-400 dark:via-navy-700 dark:to-navy-800" />
 
@@ -208,6 +238,7 @@ export function ChangelogView({ releases }: ChangelogViewProps) {
               onClick={() => {
                 setSearchQuery("");
                 setSelectedCategory("all");
+                setCurrentPage(1);
               }}
               className="mt-4 inline-flex items-center rounded-lg bg-navy-900 px-4 py-2 text-xs font-medium text-white hover:bg-navy-800 dark:bg-teal-500 dark:text-navy-900"
             >
@@ -216,7 +247,7 @@ export function ChangelogView({ releases }: ChangelogViewProps) {
           </div>
         ) : (
           <div className="space-y-12">
-            {filteredReleases.map((release, rIdx) => (
+            {paginatedReleases.map((release) => (
               <div key={release.version} className="relative md:pl-16">
                 {/* Glowing Node on the timeline rail */}
                 <div className="absolute top-6 left-4 hidden h-4 w-4 -translate-x-1/2 items-center justify-center rounded-full border-2 border-teal-500 bg-surface shadow-xs md:flex dark:bg-navy-900">
@@ -315,6 +346,25 @@ export function ChangelogView({ releases }: ChangelogViewProps) {
                 </article>
               </div>
             ))}
+
+            {totalPages > 1 ? (
+              <CursorPagination
+                className="md:ml-16"
+                compact
+                pageSize={CHANGELOG_PAGE_SIZE}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                totalRecords={filteredReleases.length}
+                fromRecord={fromRelease}
+                toRecord={toRelease}
+                hasPrevious={currentPage > 1}
+                hasNext={currentPage < totalPages}
+                onFirst={() => goToPage(1)}
+                onLast={() => goToPage(totalPages)}
+                onPrevious={() => goToPage(currentPage - 1)}
+                onNext={() => goToPage(currentPage + 1)}
+              />
+            ) : null}
           </div>
         )}
       </div>

@@ -1,128 +1,104 @@
 [
   {
-    "version": "1.6",
+    "version": "1.7",
+    "title": "Changelog Pagination, Payment Hardening & SQL Report Aggregation",
     "date": "2026-09-22",
     "type": "minor",
-    "title": "Platform Improvements & Features (1.6)",
-    "summary": "Automated release 1.6 with 17 update(s) across platform services.",
+    "summary": "Paginated platform changelog releases five versions per page; tightened payment callbacks and transaction IDs; aggregated tenant financial reports in PostgreSQL; and enforced deployment JWT and stub-gateway guardrails.",
+    "releaseUrl": "https://github.com/MusfiqDehan/Wufud/releases/tag/1.7",
     "changes": [
       {
         "category": "features",
-        "text": "load roles and branches for invite and role assignment on users page",
-        "hash": "2341d83",
-        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/2341d8389ef9397daa5398b257c9e338d079770f",
+        "text": "Changelog page paginates release tags (five versions per page) with first/prev/next/last controls that respect search and category filters",
+        "commit": "ccc9bfb",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "fixes",
+        "text": "Payment webhooks rely on attempt state for idempotency; tenant webhook receipts record only after verified success",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "security",
+        "text": "Checkout session IDs must match the payment attempt for Stripe and stub gateways; transaction IDs use 96-bit randomness",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "security",
+        "text": "Stub payment gateway blocked in staging and production; JWT access and refresh secrets must be distinct and at least 32 characters on deploy",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "perf",
+        "text": "Tenant accounts report aggregates collections, outstanding balances, and ledger totals in PostgreSQL instead of hydrating full tables in Node",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "fixes",
+        "text": "Manual payment rejection enforces branch-scoped RBAC before updating pending records",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "README design notes expanded for seat locking, webhook idempotency, reporting scale path, and deployment secret requirements",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
+    "version": "1.6",
+    "title": "Rich Package Builder, Branch-Aware User RBAC & Reliable POS Printing",
+    "date": "2026-09-22",
+    "type": "minor",
+    "summary": "Expanded tenant package administration with hotels, inclusions, and tier workflows; branch-scoped user invites and role assignment; dashboard and reports seat charts that show capacity by tier; and POS receipts that print correctly in the browser.",
+    "releaseUrl": "https://github.com/MusfiqDehan/Wufud/releases/tag/1.6",
+    "changes": [
+      {
+        "category": "features",
+        "text": "Tabbed packages admin for create and edit: basic details, Makkah/Madinah hotels, preset inclusions, and tier pricing with room types",
+        "commit": "27161ae",
         "author": "MusfiqDehan"
       },
       {
         "category": "features",
-        "text": "expand tenant packages admin with rich create and edit flows",
-        "hash": "27161ae",
-        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/27161aef5cc83d998d864088b9bd4a42f6ac561f",
+        "text": "Users dashboard loads live tenant roles and branches for invites and branch-scoped role assignment with permission previews",
+        "commit": "2341d83",
         "author": "MusfiqDehan"
       },
       {
         "category": "features",
-        "text": "enhance user role assignment with branch support and improve user retrieval with role mapping",
-        "hash": "3c0a3ad",
-        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/3c0a3adb29c3730a9b398991cb31756b5fc6a45a",
-        "author": "MusfiqDehan"
-      },
-      {
-        "category": "features",
-        "text": "add Traefik configuration, monitoring stack, and documentation",
-        "hash": "df77a1f",
-        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/df77a1fc7ca27c1837af9667c69b5a1e6cb20b06",
+        "text": "User role assignment API supports branch scope and returns role mapping on member listings",
+        "commit": "3c0a3ad",
         "author": "MusfiqDehan"
       },
       {
         "category": "fixes",
-        "text": "portal POS receipt for reliable print and PDF rendering",
-        "hash": "7920682",
-        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/79206823acbb43422d0c8288771ece2edbd763c4",
+        "text": "Business interceptor validation aligned with expanded package and tier admin payloads (hotels, itinerary, tier features)",
+        "commit": "64811d4",
         "author": "MusfiqDehan"
       },
       {
         "category": "fixes",
-        "text": "improve bar chart labels and capacity-aware bar scaling",
-        "hash": "37be87b",
-        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/37be87bcf67762faeded92a28663e5ee58ffda50",
+        "text": "Dashboard and reports seat charts aggregate quota by tier and show confirmed + held vs total capacity",
+        "commit": "52e627e",
         "author": "MusfiqDehan"
       },
       {
         "category": "fixes",
-        "text": "give chart cards flex layout so inner charts stay contained",
-        "hash": "415aa1b",
-        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/415aa1ba8f3e7ef8369578c098261ee617e63bc9",
+        "text": "Chart cards and bar charts use flex, capacity-aware scaling so charts stay inside their containers",
+        "commit": "415aa1b",
         "author": "MusfiqDehan"
       },
       {
         "category": "fixes",
-        "text": "show tier capacity on reports seat chart and simplify header",
-        "hash": "2ebe35c",
-        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/2ebe35c1769b5cfa19cc41745214d0aa694cb012",
-        "author": "MusfiqDehan"
-      },
-      {
-        "category": "fixes",
-        "text": "aggregate seat quota by tier on agency dashboard chart",
-        "hash": "52e627e",
-        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/52e627edf4619e6dfb873e2d2cf6c303dbf82b1c",
-        "author": "MusfiqDehan"
-      },
-      {
-        "category": "fixes",
-        "text": "align package and tier business validation with admin payloads",
-        "hash": "64811d4",
-        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/64811d4737faae0d59c1fedb411a8b30421415d2",
-        "author": "MusfiqDehan"
-      },
-      {
-        "category": "fixes",
-        "text": "dynamically read and merge changelog.json in getChangelogEntries",
-        "hash": "aae679e",
-        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/aae679e056f665559b4c0673fabbd3efee9ca493",
+        "text": "POS receipt modal portals printable content to the document body so print and PDF output are no longer blank",
+        "commit": "7920682",
         "author": "MusfiqDehan"
       },
       {
         "category": "maintenance",
-        "text": "refresh frontend TypeScript build info",
-        "hash": "221f8e4",
-        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/221f8e4d50487dd63712055c17727c1f0d0b7686",
-        "author": "MusfiqDehan"
-      },
-      {
-        "category": "maintenance",
-        "text": "refresh backend TypeScript build info",
-        "hash": "16a6410",
-        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/16a6410d1e1bb515f66115125e2e347b83f3f96d",
-        "author": "MusfiqDehan"
-      },
-      {
-        "category": "maintenance",
-        "text": "guard dashboard and reports chart overflow in containers",
-        "hash": "bfe4039",
-        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/bfe4039e362bd9ef0279f4349db6b34ede9b8195",
-        "author": "MusfiqDehan"
-      },
-      {
-        "category": "maintenance",
-        "text": "assert POS receipt print layout and non-blank PDF output",
-        "hash": "aa7f73b",
-        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/aa7f73bd5df53878476d3fbf997c62fd88bc6360",
-        "author": "MusfiqDehan"
-      },
-      {
-        "category": "maintenance",
-        "text": "update version 1.5 date to current date September 22, 2026",
-        "hash": "8bfd057",
-        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/8bfd057396746dbb066c60ce48b514543708f401",
-        "author": "MusfiqDehan"
-      },
-      {
-        "category": "maintenance",
-        "text": "add version 1.5 release summary to frontend changelog and root changelog",
-        "hash": "1b02b1f",
-        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/1b02b1fc8e239e5248b7cd82a53e49110109b673",
+        "text": "Traefik edge routing configuration and Prometheus/Grafana monitoring stack for local and staging deployments",
+        "commit": "df77a1f",
         "author": "MusfiqDehan"
       }
     ]

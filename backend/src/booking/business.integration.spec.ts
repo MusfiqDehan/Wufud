@@ -1,4 +1,4 @@
-import { Cancellation, CancellationRule } from "./entities/cancellation.entity";
+import { Cancellation, CancellationRule, RefundRequest } from "./entities/cancellation.entity";
 import { Vendor, VendorDisbursement } from "../accounts/entities/vendor.entity";
 import { PaymentsService } from "../payments/payments.service";
 import { PaymentAttempt } from "../payments/entities/payment-attempt.entity";
@@ -44,6 +44,35 @@ describeDb("business rules against PostgreSQL", () => {
   });
   afterAll(async () => { if (orm) { await orm.em.getConnection().execute(`drop schema "${schema}" cascade`); await orm.close(); } });
 
+  it("rejects cross-branch manual rejection without changing payment status", async () => {
+    const t = await tier(); const b = await bookingService().createBooking(actor, input(t.id));
+    const p = await accountsService().recordManual(actor, { bookingId: b.id, amount: "100" });
+    const restricted = { ...rbac, assertBranchAccess: async () => { throw new Error("Branch denied"); } };
+    await expect(new AccountsService(em(), restricted).rejectManual(p.id, approver)).rejects.toThrow("Branch denied");
+    expect((await em().findOneOrFail(ManualPayment, p.id)).status).toBe("pending");
+  });
+  it("aggregates multiple charges and refunds without multiplying joins", async () => {
+    const before = await accountsService().report();
+    const t = await tier(); const b = await bookingService().createBooking(actor, input(t.id));
+    const db = em();
+    db.create(Cancellation, { booking: b.id, chargeAmount: "10" });
+    db.create(Cancellation, { booking: b.id, chargeAmount: "20", isDeleted: true });
+    db.create(RefundRequest, { booking: b.id, amount: "5", status: "paid" });
+    db.create(RefundRequest, { booking: b.id, amount: "7", status: "paid", isDeleted: true });
+    db.create(RefundRequest, { booking: b.id, amount: "99", status: "requested" });
+    await db.flush();
+    const after = await accountsService().report();
+    expect(Number(after.outstanding) - Number(before.outstanding)).toBe(1042);
+    expect(Number(after.refunds) - Number(before.refunds)).toBe(12);
+    expect(after.bookings - before.bookings).toBe(1);
+    const otherSchema = `empty_${schema}`;
+    await db.getConnection().execute(`create schema "${otherSchema}"`);
+    try {
+      await db.getConnection().execute(TENANT_DDL.replaceAll("__SCHEMA__", otherSchema));
+      const empty = await new AccountsService(orm.em.fork({ schema: otherSchema }), rbac).report();
+      expect(empty.collected).toBe("0.00"); expect(empty.outstanding).toBe("0.00"); expect(empty.bookings).toBe(0);
+    } finally { await db.getConnection().execute(`drop schema "${otherSchema}" cascade`); }
+  });
   it("allows exactly one of two simultaneous last-seat bookings", async () => {
     const t = await tier(1);
     const results = await Promise.allSettled([bookingService().createBooking(actor, input(t.id)), bookingService().createBooking(actor, input(t.id))]);

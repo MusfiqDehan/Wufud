@@ -133,7 +133,7 @@ export class PaymentsController {
   @Post("payments/ipn")
   @ApiOperation({
     summary: "Provider IPN/webhook",
-    description: "Idempotent webhook entry. Duplicate/out-of-order events no-op on terminal attempts; provider event ids are unique.",
+    description: "Idempotent webhook entry. Successful attempts no-op; verified success may supersede failed/cancelled redirects.",
   })
   @ApiBody({ schema: { example: { tran_id: "TXN-01a0c095-01a0c095", val_id: "stub-TXN-01a0c095", card_type: "stub" } } })
   @ApiResponse({
@@ -153,12 +153,16 @@ export class PaymentsController {
     const valId = body.val_id || body.session_id || stripeObj?.id;
     const eventId = rawBody.id || body.val_id || body.tran_id || valId;
     const gateway = rawBody?.type ? "stripe" : (body.card_type || body.gateway || "unknown");
-    if (eventId) await this.payments.recordWebhook(String(eventId), gateway, rawBody);
     const attempt = await this.payments.handleCallback({
       tranId: tranId ? String(tranId) : undefined,
       valId: valId ? String(valId) : undefined,
       status: "success",
     });
+    // The receipt is informational, never the idempotency gate. Record only
+    // verified tenant successes; platform attempts have no tenant event table.
+    if (eventId && attempt.status === "success" && getTenantStore()?.plane === "tenant") {
+      await this.payments.recordWebhook(String(eventId), gateway, { tran_id: attempt.tranId });
+    }
     return successResponse({ tran_id: attempt.tranId, status: attempt.status });
   }
 

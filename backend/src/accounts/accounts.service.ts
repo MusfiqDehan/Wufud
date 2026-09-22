@@ -65,6 +65,8 @@ export class AccountsService {
     return this.em.transactional(async em => {
       const row = await em.findOneOrFail(ManualPayment, { id }, { lockMode: LockMode.PESSIMISTIC_WRITE });
       if (row.status !== "pending") throw DomainError.conflict("Only pending payments can be rejected.");
+      const booking = await em.findOneOrFail(Booking, { id: row.booking.id }, { filters: { softDelete: false } });
+      await this.rbac.assertBranchAccess(actor, booking.branch?.id);
       row.status = "rejected";
       row.approvedById = actor.id;
       if (note) (row as unknown as Record<string, unknown>).note = note;
@@ -82,47 +84,55 @@ export class AccountsService {
   }
 
   async report() {
-    // Soft-deleted rows stay in reports: financial history is never hard-deleted,
-    // so bypass the default softDelete filter here (lists/detail endpoints keep it).
-    const noSoftDelete = { filters: { softDelete: false } } as const;
-    const bookings = await this.em.find(Booking, {}, { populate: ["tier", "pilgrims"], ...noSoftDelete });
-    const refunds = await this.em.find(RefundRequest, { status: "paid" }, { ...noSoftDelete });
-    const tiers = await this.em.find(PackageTier, {}, { ...noSoftDelete });
-    const openInstallments = await this.em.find(Installment, { status: { $in: ["open", "overdue", "defaulted"] }, plan: { booking: { status: { $ne: "cancelled" } } } }, { ...noSoftDelete });
-    const cancellations = await this.em.find(Cancellation, {}, noSoftDelete);
-    const collected = bookings.reduce((s, b) => s + Number(b.amountReceived), 0);
-    const outstanding = bookings.reduce((s, b) => {
-      const charges = cancellations.filter(c => c.booking.id === b.id).reduce((sum, c) => sum + Number(c.chargeAmount), 0);
-      const activeValue = b.status === "cancelled" ? 0 : Number(b.frozenPrice) * b.pilgrimCount / Math.max(1, b.pilgrims.length);
-      const paidRefunds = refunds.filter(r => r.booking.id === b.id).reduce((sum, r) => sum + Number(r.amount), 0);
-      return s + Math.max(0, activeValue + charges - Number(b.amountReceived) + paidRefunds);
-    }, 0);
-    const refunded = refunds.reduce((s, r) => s + Number(r.amount), 0);
-    const installmentsDue = openInstallments.reduce((s, i) => s + Math.max(0, Number(i.amountDue) - Number(i.amountPaid) - Number(i.amountWaived)), 0);
-    const vendors = await this.em.find(VendorDisbursement, {}, noSoftDelete);
-    const expenses = await this.em.find(Expense, {}, noSoftDelete);
-    const issues = await this.em.find(StockIssue, {}, noSoftDelete);
-    const sales = await this.em.find(PosSale, {}, noSoftDelete);
+    // Raw SQL intentionally includes archived financial history. Qualify every
+    // table: pooled connections must never depend on a tenant search_path.
+    const schema = this.em.schema;
+    if (!schema || schema === "public") throw DomainError.forbidden("Tenant schema required.");
+    const q = this.em.getPlatform().quoteIdentifier(schema);
+    const [stats] = await this.em.getConnection().execute<Array<{
+      bookings: number; collected: string; outstanding: string; refunds: string;
+      installments_due: string; installments_open: number;
+      vendor_costs_sar: string; vendor_costs_bdt: string; expenses_bdt: string;
+      stock_issued_cost_bdt: string; pos_collected: string; pos_refunded: string;
+    }>>(`
+      with pilgrims as (
+        select booking_id, count(*) as count from ${q}.booking_pilgrims group by booking_id
+      ), charges as (
+        select booking_id, sum(charge_amount) as total from ${q}.cancellations group by booking_id
+      ), refunds as (
+        select booking_id, sum(amount) as total from ${q}.refund_requests where status = 'paid' group by booking_id
+      )
+      select
+        (select count(*) from ${q}.bookings)::int as bookings,
+        (select coalesce(sum(amount_received), 0)::numeric(20,2)::text from ${q}.bookings) as collected,
+        (select coalesce(sum(greatest(0,
+          case when b.status = 'cancelled' then 0
+            else b.frozen_price * b.pilgrim_count / greatest(1, coalesce(p.count, 0)) end
+          + coalesce(c.total, 0) - b.amount_received + coalesce(r.total, 0)
+        )), 0)::numeric(20,2)::text
+        from ${q}.bookings b left join pilgrims p on p.booking_id = b.id
+          left join charges c on c.booking_id = b.id left join refunds r on r.booking_id = b.id) as outstanding,
+        (select coalesce(sum(total), 0)::numeric(20,2)::text from refunds) as refunds,
+        (select coalesce(sum(greatest(0, i.amount_due - i.amount_paid - i.amount_waived)), 0)::numeric(20,2)::text
+          from ${q}.installments i join ${q}.installment_plans p on p.id = i.plan_id
+          join ${q}.bookings b on b.id = p.booking_id
+          where i.status in ('open', 'overdue', 'defaulted') and b.status <> 'cancelled') as installments_due,
+        (select count(*)::int from ${q}.installments i join ${q}.installment_plans p on p.id = i.plan_id
+          join ${q}.bookings b on b.id = p.booking_id
+          where i.status in ('open', 'overdue', 'defaulted') and b.status <> 'cancelled') as installments_open,
+        (select coalesce(sum(amount_sar), 0)::numeric(20,2)::text from ${q}.vendor_disbursements) as vendor_costs_sar,
+        (select coalesce(sum(amount_bdt), 0)::numeric(20,2)::text from ${q}.vendor_disbursements) as vendor_costs_bdt,
+        (select coalesce(sum(amount), 0)::numeric(20,2)::text from ${q}.expenses) as expenses_bdt,
+        (select coalesce(sum(cost_bdt), 0)::numeric(20,2)::text from ${q}.stock_issues) as stock_issued_cost_bdt,
+        (select coalesce(sum(total), 0)::numeric(20,2)::text from ${q}.pos_sales) as pos_collected,
+        (select coalesce(sum(total), 0)::numeric(20,2)::text from ${q}.pos_sales where status = 'refunded') as pos_refunded
+    `);
+    const tiers = await this.em.find(PackageTier, {}, { filters: { softDelete: false } });
     return {
-      vendor_costs_sar: vendors.reduce((s, v) => s + Number(v.amountSar), 0).toFixed(2),
-      vendor_costs_bdt: vendors.reduce((s, v) => s + Number(v.amountBdt), 0).toFixed(2),
-      expenses_bdt: expenses.reduce((s, e) => s + Number(e.amount), 0).toFixed(2),
-      stock_issued_cost_bdt: issues.reduce((s, i) => s + Number(i.costBdt), 0).toFixed(2),
-      pos_collected: sales.reduce((s, r) => s + Number(r.total), 0).toFixed(2),
-      pos_refunded: sales.filter(r => r.status === "refunded").reduce((s, r) => s + Number(r.total), 0).toFixed(2),
-      bookings: bookings.length,
-      collected: collected.toFixed(2),
-      outstanding: outstanding.toFixed(2),
-      refunds: refunded.toFixed(2),
-      installments_due: installmentsDue.toFixed(2),
-      installments_open: openInstallments.length,
+      ...stats,
       quota: tiers.map((t) => ({
-        id: t.id,
-        name: t.name,
-        remaining: t.seatsAvailable,
-        confirmed: t.seatsConfirmed,
-        held: t.seatsHeld,
-        total: t.seatsTotal,
+        id: t.id, name: t.name, remaining: t.seatsAvailable,
+        confirmed: t.seatsConfirmed, held: t.seatsHeld, total: t.seatsTotal,
       })),
     };
   }
