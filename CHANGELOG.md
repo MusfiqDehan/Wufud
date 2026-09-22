@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## What's Changed in 1.16 (2026-09-22)
 
+### 🚀 Features & Capabilities
+
+- Production deployment on **wufud.musfiqdehan.com** and **demo.wufud.musfiqdehan.com** (Traefik wildcard TLS, API `/api/docs`, demo tenant seed) by @MusfiqDehan
+- GitHub **production** environment with `PROD_*` secrets and automated deploy workflow by @MusfiqDehan
+
 ### 🐛 Bug Fixes & Stability
 
 - hard-reset production deploy checkout and retry health checks ([dd2ec78](https://github.com/MusfiqDehan/Wufud/commit/dd2ec7889d4c4891f5ed0cb4897a305d9774f925)) by @MusfiqDehan

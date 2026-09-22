@@ -3,9 +3,19 @@
     "version": "1.16",
     "date": "2026-09-22",
     "type": "minor",
-    "title": "Platform Improvements & Features (1.16)",
-    "summary": "Automated release 1.16 with 1 update(s) across platform services.",
+    "title": "Production live on wufud.musfiqdehan.com",
+    "summary": "Wufud production on Contabo with demo tenant, GitHub Actions deploy, and reliable HTTPS health verification.",
     "changes": [
+      {
+        "category": "features",
+        "text": "Production on wufud.musfiqdehan.com and demo.wufud.musfiqdehan.com with Traefik wildcard TLS and OpenAPI at /api/docs",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "features",
+        "text": "Demo seed: admin@wufud.production and demo tenant roles on @demo.production (password via DEMO_PASSWORD)",
+        "author": "MusfiqDehan"
+      },
       {
         "category": "fixes",
         "text": "hard-reset production deploy checkout and retry health checks",
