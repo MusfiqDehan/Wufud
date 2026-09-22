@@ -42,6 +42,12 @@ export class CacheService implements OnModuleDestroy {
     }
   }
 
+  async ping(): Promise<number> {
+    const start = Date.now();
+    await this.redis.ping();
+    return Date.now() - start;
+  }
+
   async onModuleDestroy() {
     this.redis.disconnect();
   }
