@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.13 (2026-09-22)
+
+### 🐛 Bug Fixes & Stability
+
+- use unique Redis/Postgres hostnames on shared Traefik network ([6ff3d4a](https://github.com/MusfiqDehan/Wufud/commit/6ff3d4a2465ce002c4eeeb86d5b818a81d75b711)) by @MusfiqDehan
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.12...1.13
+
+---
+
 ## What's Changed in 1.12 (2026-09-22)
 
 ### 🐛 Bug Fixes & Stability
