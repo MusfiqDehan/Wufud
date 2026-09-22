@@ -42,6 +42,7 @@ jobs:
             docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend node dist/cli/migrate-public.js
             docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend node dist/cli/migrate-tenants.js
             docker compose --env-file .env.production -f docker-compose.prod.yml up -d
+            docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend node dist/cli/seed-demo.js
             if ! curl -fsS https://wufud.musfiqdehan.com/api/v1/health; then
               echo "Health check failed"
               exit 1
