@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.16 (2026-09-22)
+
+### 🐛 Bug Fixes & Stability
+
+- hard-reset production deploy checkout and retry health checks ([dd2ec78](https://github.com/MusfiqDehan/Wufud/commit/dd2ec7889d4c4891f5ed0cb4897a305d9774f925)) by @MusfiqDehan
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.15...1.16
+
+---
+
 ## What's Changed in 1.15 (2026-09-22)
 
 ### 🐛 Bug Fixes & Stability

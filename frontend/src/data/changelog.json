@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.16",
+    "date": "2026-09-22",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.16)",
+    "summary": "Automated release 1.16 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "fixes",
+        "text": "hard-reset production deploy checkout and retry health checks",
+        "hash": "dd2ec78",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/dd2ec7889d4c4891f5ed0cb4897a305d9774f925",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
     "version": "1.15",
     "date": "2026-09-22",
     "type": "minor",
