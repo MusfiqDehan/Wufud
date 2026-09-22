@@ -1,5 +1,35 @@
 [
   {
+    "version": "1.19",
+    "date": "2026-09-22",
+    "type": "minor",
+    "title": "Silent Session Refresh",
+    "summary": "Stay signed in when access tokens expire: transparent JWT renewal via httpOnly refresh cookie, proactive refresh before timeout, and rotated refresh tokens on the API.",
+    "releaseUrl": "https://github.com/MusfiqDehan/Wufud/releases/tag/1.19",
+    "changes": [
+      {
+        "category": "features",
+        "text": "Automatic access-token renewal on 401 with retry of the original API call; refresh uses the wufud_refresh httpOnly cookie",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "features",
+        "text": "Session keep-alive refreshes about one minute before JWT expiry and when you return to a tab with a nearly expired token",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "fixes",
+        "text": "Refresh endpoint rotates refresh_token_hash in the database so repeated refreshes work for the full refresh TTL",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "Playwright e2e session-refresh.spec.ts covers dashboard access after an invalid stored access token",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
     "version": "1.16",
     "date": "2026-09-22",
     "type": "minor",
