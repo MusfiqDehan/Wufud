@@ -1,5 +1,51 @@
 [
   {
+    "version": "1.7",
+    "title": "Changelog Pagination, Payment Hardening & SQL Report Aggregation",
+    "date": "2026-09-22",
+    "type": "minor",
+    "summary": "Paginated platform changelog releases five versions per page; tightened payment callbacks and transaction IDs; aggregated tenant financial reports in PostgreSQL; and enforced deployment JWT and stub-gateway guardrails.",
+    "releaseUrl": "https://github.com/MusfiqDehan/Wufud/releases/tag/1.7",
+    "changes": [
+      {
+        "category": "features",
+        "text": "Changelog page paginates release tags (five versions per page) with first/prev/next/last controls that respect search and category filters",
+        "commit": "ccc9bfb",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "fixes",
+        "text": "Payment webhooks rely on attempt state for idempotency; tenant webhook receipts record only after verified success",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "security",
+        "text": "Checkout session IDs must match the payment attempt for Stripe and stub gateways; transaction IDs use 96-bit randomness",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "security",
+        "text": "Stub payment gateway blocked in staging and production; JWT access and refresh secrets must be distinct and at least 32 characters on deploy",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "perf",
+        "text": "Tenant accounts report aggregates collections, outstanding balances, and ledger totals in PostgreSQL instead of hydrating full tables in Node",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "fixes",
+        "text": "Manual payment rejection enforces branch-scoped RBAC before updating pending records",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "README design notes expanded for seat locking, webhook idempotency, reporting scale path, and deployment secret requirements",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
     "version": "1.6",
     "title": "Rich Package Builder, Branch-Aware User RBAC & Reliable POS Printing",
     "date": "2026-09-22",
