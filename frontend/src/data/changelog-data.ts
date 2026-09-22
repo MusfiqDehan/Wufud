@@ -19,6 +19,37 @@ export interface ChangelogRelease {
 
 export const PLATFORM_CHANGELOG: ChangelogRelease[] = [
   {
+    version: "1.16",
+    title: "Production live on wufud.musfiqdehan.com",
+    date: "2026-09-22",
+    type: "minor",
+    summary:
+      "Deployed Wufud to Contabo with Traefik wildcard TLS, seeded demo tenant at demo.wufud.musfiqdehan.com, and hardened GitHub Actions production deploys so the server environment stays green after each release.",
+    releaseUrl: "https://github.com/MusfiqDehan/Wufud/releases/tag/1.16",
+    changes: [
+      {
+        category: "features",
+        text: "Production stack on wufud.musfiqdehan.com and *.wufud.musfiqdehan.com (platform, API /api/docs, demo agency storefront)",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "features",
+        text: "Demo seed uses admin@wufud.production and demo tenant roles on @demo.production with idempotent migrate/seed in deploy workflow",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "fixes",
+        text: "Isolated wufud-postgres, wufud-redis, and wufud-backend hostnames on shared Traefik Docker network; Next.js binds 0.0.0.0 for edge routing",
+        author: "MusfiqDehan",
+      },
+      {
+        category: "maintenance",
+        text: "GitHub production environment secrets (PROD_HOST, PROD_PATH, PROD_ENV, SSH key); deploy resets server checkout to origin/main and retries HTTPS health checks",
+        author: "MusfiqDehan",
+      },
+    ],
+  },
+  {
     version: "1.8",
     title: "Standardized Local Dev Ports (Frontend 3009 & API 4005)",
     date: "2026-09-22",

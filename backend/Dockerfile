@@ -21,6 +21,7 @@ COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/packages/contracts ./packages/contracts
 COPY --from=build /app/backend/dist ./backend/dist
 COPY --from=build /app/backend/package.json ./backend/package.json
+COPY --from=build /app/backend/node_modules ./backend/node_modules
 COPY --from=build /app/backend/src/migrations ./backend/src/migrations
 USER wufud
 WORKDIR /app/backend

@@ -20,7 +20,12 @@ on:
 
 jobs:
   deploy:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'push' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}
+    if: >-
+      ${{
+        (github.event_name == 'workflow_dispatch' ||
+          (github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip ci]')) ||
+          (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success'))
+      }}
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -31,19 +36,31 @@ jobs:
           host: ${{ secrets.PROD_HOST }}
           username: ${{ secrets.PROD_USER }}
           key: ${{ secrets.PROD_SSH_KEY }}
+          command_timeout: 15m
           script: |
             set -euo pipefail
             cd ${{ secrets.PROD_PATH }}
-            git pull --ff-only
+            git fetch origin main
+            git reset --hard origin/main
             echo "${{ secrets.PROD_ENV }}" > .env.production
-            export IMAGE_TAG=${{ github.event.inputs.image_tag || (github.event.workflow_run && github.event.workflow_run.head_sha) || (github.ref_type == 'tag' && github.ref_name) || 'main' }}
-            PREV=$(docker compose --env-file .env.production -f docker-compose.prod.yml ps -q backend || true)
+            export IMAGE_TAG=${{ github.event.inputs.image_tag || 'main' }}
             docker compose --env-file .env.production -f docker-compose.prod.yml pull
             docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend node dist/cli/migrate-public.js
             docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend node dist/cli/migrate-tenants.js
             docker compose --env-file .env.production -f docker-compose.prod.yml up -d
             docker compose --env-file .env.production -f docker-compose.prod.yml run --rm backend node dist/cli/seed-demo.js
-            if ! curl -fsS https://wufud.musfiqdehan.com/api/v1/health; then
-              echo "Health check failed"
-              exit 1
-            fi
+            for attempt in $(seq 1 36); do
+              if curl -fsS https://wufud.musfiqdehan.com/api/v1/health \
+                && curl -fsS -o /dev/null https://wufud.musfiqdehan.com/ \
+                && curl -fsS -o /dev/null https://demo.wufud.musfiqdehan.com/ \
+                && curl -fsS -o /dev/null https://wufud.musfiqdehan.com/api/docs; then
+                echo "Production health checks passed (attempt ${attempt})"
+                exit 0
+              fi
+              echo "Waiting for production stack (attempt ${attempt}/36)..."
+              sleep 5
+            done
+            echo "Production health checks failed after 3 minutes"
+            docker compose --env-file .env.production -f docker-compose.prod.yml ps
+            docker compose --env-file .env.production -f docker-compose.prod.yml logs backend --tail 40
+            exit 1

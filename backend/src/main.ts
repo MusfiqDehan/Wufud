@@ -42,4 +42,7 @@ async function bootstrap() {
   await app.listen(env.API_PORT);
 }
 
-void bootstrap();
+void bootstrap().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

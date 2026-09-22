@@ -44,6 +44,7 @@ export function setupSwagger(app: INestApplication) {
 
   const document = SwaggerModule.createDocument(app, config, {
     operationIdFactory: (_controllerKey, methodKey) => methodKey,
+    deepScanRoutes: false,
   });
 
   SwaggerModule.setup("api/docs", app, document, {
