@@ -3,12 +3,33 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.5 (2026-09-21)
+
+### 🚀 Features & Capabilities
+
+- Modern Changelog page (`/changelog`) with instant search, category filtering, and visual release timeline
+- Real-time System Status page (`/status`) with 90-day uptime calendar and interactive connection latency probe
+- Automated GitHub Actions release workflow (`.github/workflows/release-changelog.yml`) generating tags and notes from conventional commits
+- Detailed backend health diagnostic probe (`/api/v1/health/detailed`) measuring database and Redis roundtrip latency
+- Configured automated production deployment triggered from `main` branch within the GitHub `production` environment
+
+### 🐛 Bug Fixes & Stability
+
+- Timezone-safe release date formatting to consistently display September 21, 2026 across all client locales
+- Standardized project title format and metadata across public context and platform controllers
+
+### ⚡ Performance Improvements
+
+- Sub-2ms healthcheck latency response times for PostgreSQL connection queries and Redis ping probes
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.4...1.5
+
+---
+
 ## What's Changed in 1.4 (2026-09-21)
 
 ### 🚀 Features & Capabilities
 
-- Modern Changelog and System Status pages with live healthcheck diagnostics
-- GitHub Actions automated release pipeline with tag generation and conventional commit categorization
 - Dynamic payment gateway adapters for SSLCommerz and Stripe with automated callback verification
 - Schema-per-tenant isolation (`t_<slug>`) with instant provisioning and dynamic DDL migration
 - Seat capacity management with high-concurrency reservation locks and automated hold timers
@@ -18,7 +39,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### 🐛 Bug Fixes & Stability
 
-- Standardized project title format and metadata across public context and platform controllers
 - Fixed tenant schema switching interceptor for asynchronous worker queues
 - Improved seat counter reconciliation during installment defaults and refund processing
 
