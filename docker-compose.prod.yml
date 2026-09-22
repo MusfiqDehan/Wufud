@@ -28,7 +28,7 @@ services:
       - traefik.http.routers.wufud-api.tls.domains[0].main=wufud.musfiqdehan.com
       - traefik.http.routers.wufud-api.tls.domains[0].sans=*.wufud.musfiqdehan.com
       - traefik.http.routers.wufud-api.middlewares=security-headers@file,compress@file,api-ratelimit@file
-      - traefik.http.services.wufud-api.loadbalancer.server.port=4000
+      - traefik.http.services.wufud-api.loadbalancer.server.port=4005
 
   worker:
     image: ghcr.io/musfiqdehan/wufud-backend:${IMAGE_TAG:-main}
@@ -41,7 +41,7 @@ services:
     image: ghcr.io/musfiqdehan/wufud-frontend:${IMAGE_TAG:-main}
     env_file: .env.production
     environment:
-      API_INTERNAL_URL: http://backend:4000
+      API_INTERNAL_URL: http://backend:4005
     depends_on: [backend]
     networks: [internal, traefik_proxy]
     labels:
@@ -54,7 +54,7 @@ services:
       - traefik.http.routers.wufud-web.tls.domains[0].main=wufud.musfiqdehan.com
       - traefik.http.routers.wufud-web.tls.domains[0].sans=*.wufud.musfiqdehan.com
       - traefik.http.routers.wufud-web.middlewares=security-headers@file,compress@file
-      - traefik.http.services.wufud-web.loadbalancer.server.port=3000
+      - traefik.http.services.wufud-web.loadbalancer.server.port=3009
 
 networks:
   internal:
