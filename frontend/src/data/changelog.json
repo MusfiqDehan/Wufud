@@ -1,46 +1,121 @@
 [
   {
     "version": "1.7",
-    "title": "Changelog Pagination, Payment Hardening & SQL Report Aggregation",
     "date": "2026-09-22",
     "type": "minor",
-    "summary": "Paginated platform changelog releases five versions per page; tightened payment callbacks and transaction IDs; aggregated tenant financial reports in PostgreSQL; and enforced deployment JWT and stub-gateway guardrails.",
-    "releaseUrl": "https://github.com/MusfiqDehan/Wufud/releases/tag/1.7",
+    "title": "Platform Improvements & Features (1.7)",
+    "summary": "Automated release 1.7 with 16 update(s) across platform services.",
     "changes": [
       {
         "category": "features",
-        "text": "Changelog page paginates release tags (five versions per page) with first/prev/next/last controls that respect search and category filters",
-        "commit": "ccc9bfb",
+        "text": "implement pagination for changelog view with search and category filters",
+        "hash": "ccc9bfb",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/ccc9bfb1b567c92bc0398b551d371efc23c2036e",
         "author": "MusfiqDehan"
       },
       {
         "category": "fixes",
-        "text": "Payment webhooks rely on attempt state for idempotency; tenant webhook receipts record only after verified success",
+        "text": "record tenant webhooks only after verified successful payment",
+        "hash": "008032a",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/008032a2dd54c7fd9a19434ced3c46c3548de88e",
         "author": "MusfiqDehan"
       },
       {
-        "category": "security",
-        "text": "Checkout session IDs must match the payment attempt for Stripe and stub gateways; transaction IDs use 96-bit randomness",
+        "category": "fixes",
+        "text": "harden payment callbacks with session match and stronger tran IDs",
+        "hash": "42ee161",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/42ee1617855ceae51ace7ab179ca2c287f5221ea",
         "author": "MusfiqDehan"
       },
       {
-        "category": "security",
-        "text": "Stub payment gateway blocked in staging and production; JWT access and refresh secrets must be distinct and at least 32 characters on deploy",
+        "category": "fixes",
+        "text": "block stub payment gateway outside local and test environments",
+        "hash": "61402e1",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/61402e12cf19556aa09fdc3107d60c4541a07ad8",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "fixes",
+        "text": "require strong distinct JWT secrets in staging and production",
+        "hash": "e15819c",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/e15819ca28cc7e886a4fd8ce7545b57c521c1cee",
         "author": "MusfiqDehan"
       },
       {
         "category": "perf",
-        "text": "Tenant accounts report aggregates collections, outstanding balances, and ledger totals in PostgreSQL instead of hydrating full tables in Node",
-        "author": "MusfiqDehan"
-      },
-      {
-        "category": "fixes",
-        "text": "Manual payment rejection enforces branch-scoped RBAC before updating pending records",
+        "text": "aggregate tenant accounts report in PostgreSQL with schema-qualified SQL",
+        "hash": "dfe84ce",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/dfe84cef40e0c3e50933a2dc3d39e607a98935c7",
         "author": "MusfiqDehan"
       },
       {
         "category": "maintenance",
-        "text": "README design notes expanded for seat locking, webhook idempotency, reporting scale path, and deployment secret requirements",
+        "text": "add version 1.7 release summary to root changelog",
+        "hash": "f6853de",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/f6853deb047edf66b71b5cd0571558d2b2218b27",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "add version 1.7 entry to changelog.json",
+        "hash": "d203c31",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/d203c31b4e2a1ca4bb61fac61978ccca812b51e3",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "add version 1.7 entry to platform changelog data",
+        "hash": "4b6f21b",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/4b6f21b77434e4456805bf0bb2ceb8071e51b127",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "cover concurrent booking races and hold expiry in integration spec",
+        "hash": "caf379b",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/caf379b6b31bdeac7485ad01147a5bccf1c644e6",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "cover payment initiation transaction ID format",
+        "hash": "0deeee9",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/0deeee94cf4905772ec357acdba86c2c791ba51e",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "extend payment callback idempotency and session validation cases",
+        "hash": "c1fd0a7",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/c1fd0a72faaa9ad9bf9d857369e1844d89229c32",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "assert stub gateway guard in adapter factory",
+        "hash": "0f1036b",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/0f1036bc6070b715704e54060f5f167184ee0b3a",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "cover JWT secret validation in env loader",
+        "hash": "8552184",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/855218463293bb4e44b8226d92e0779a9ef00757",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "expand README design answers for seats, webhooks, reporting, and JWT",
+        "hash": "6598717",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/65987170c05996f0100c8ca3db81fd44c3075b26",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "add version 1.6 release summary to frontend changelog and root changelog",
+        "hash": "285ac1d",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/285ac1d3f7bfb9213cdf3288aef3c241f792d2cf",
         "author": "MusfiqDehan"
       }
     ]
