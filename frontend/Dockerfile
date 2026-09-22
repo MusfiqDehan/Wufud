@@ -16,7 +16,7 @@ RUN pnpm --filter @wufud/contracts build && pnpm --filter frontend build
 
 FROM node:22-bookworm-slim AS runner
 WORKDIR /app
-ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3009
+ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3009 HOSTNAME=0.0.0.0
 RUN useradd -m wufud
 COPY --from=build /app/frontend/.next/standalone ./
 COPY --from=build /app/frontend/.next/static ./frontend/.next/static
