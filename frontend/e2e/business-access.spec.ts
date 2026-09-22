@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-const api = process.env.TEST_API_URL ?? "http://localhost:4400/api/v1";
+const api = process.env.TEST_API_URL ?? "http://localhost:4005/api/v1";
 const agency = "demo.wufud.localhost";
 
 test("pilgrim access is restricted to own agency and bookings", async ({ request }) => {
