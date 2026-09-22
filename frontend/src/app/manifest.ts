@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Wufud — Hajj & Umrah Booking Platform",
+    name: "Wufud | Hajj & Umrah Booking Platform",
     short_name: "Wufud",
     description:
       "From the first booking to the journey home. Bring your packages, pilgrims, teams, and payments together in one calm, connected workspace.",
