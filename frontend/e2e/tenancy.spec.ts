@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
-const platform = process.env.PLAYWRIGHT_BASE_URL ?? "http://wufud.localhost:3000";
-const tenant = process.env.TENANT_BASE_URL ?? "http://demo.wufud.localhost:3000";
+const platform = process.env.PLAYWRIGHT_BASE_URL ?? "http://wufud.localhost:3009";
+const tenant = process.env.TENANT_BASE_URL ?? "http://demo.wufud.localhost:3009";
 const password = process.env.DEMO_PASSWORD ?? "WufudDemo!2026";
 
 test("real host contexts produce different landing pages and navigation", async ({ page }) => {
