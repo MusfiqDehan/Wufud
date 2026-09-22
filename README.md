@@ -68,11 +68,13 @@ Password: `WufudDemo!2026` (override with `DEMO_PASSWORD`)
 
 ## Design answers
 
-**Seat overselling.** Booking create runs in one transaction, `SELECT … FOR UPDATE` on `package_tiers`, then increments `seats_held`. A `CHECK (seats_confirmed + seats_held <= seats_total)` constraint is the hard stop. Expired holds are released by a BullMQ job.
+**How do we prevent overselling under concurrent bookings?** Creation locks the package-tier row (`SELECT … FOR UPDATE`), checks availability, and creates the booking/hold plus increments `seats_held` in one transaction. PostgreSQL also enforces `seats_confirmed + seats_held <= seats_total`. Confirmation, cancellation, and expiry use row locks; late receipts never resurrect released seats. PostgreSQL integration tests race bookings for the last seat and concurrent hold expiry.
 
-**Duplicate / out-of-order webhooks.** Each attempt has a unique `tran_id`. Successful attempts no-op; verified success can supersede an earlier failed/cancelled redirect. Attempt and booking locks serialize concurrent callbacks. Provider event ids are unique on `webhook_events`. Amount is re-validated with the provider, not trusted from the callback body.
+**How do we handle duplicate or out-of-order payment webhooks?** The attempt row is locked; a successful attempt is immutable and its receipt/booking update commits in the same transaction. Verified success can supersede a failed/cancelled redirect. Provider validation checks amount, currency, and transaction/session identity; untrusted session IDs cannot replace the checkout session. Transaction IDs now use 96 random bits. Tenant event receipts are informational: retries rely on attempt state, not a pre-inserted event ID. Recommended next steps: authenticated webhook ingress (Stripe signatures), a durable inbox/outbox with retry/reconciliation, and provider validation outside database locks with a locked recheck before committing.
 
-**Reporting.** Lists use keyset (cursor) pagination. Summary reports currently aggregate tenant records and retain archived financial history. Daily snapshots are stored in `daily_booking_stats`; very large tenants will require database-side aggregation before scaling.
+**How would we keep reporting fast at 5 million users?** Summary totals now aggregate in PostgreSQL with pre-grouped joins, avoiding full financial-table hydration and quadratic JavaScript scans; archived financial records remain included. Keyset lists and daily snapshots already exist, but summary requests still scan tenant history and return all tier quotas—this is not a demonstrated five-million-user design. Add incremental tenant/branch/day rollups, tenant- and permission-scoped caching, paginated quotas, and asynchronous exports; use read replicas or an analytics store for heavy/cross-tenant reporting. Validate indexes and partitioning against query plans and representative load tests; shard tenants across databases when one database reaches measured limits.
+
+The stub gateway is disabled in staging/production. Deployment startup now rejects default, short, or identical JWT signing secrets in staging/production. Set distinct `JWT_ACCESS_SECRET` and `JWT_REFRESH_SECRET` values of at least 32 characters before deploying.
 
 ## Assumptions and trade-offs
 
