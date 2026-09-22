@@ -29,29 +29,29 @@ pnpm dev # runs the API and frontend together
 
 Visit:
 
-- Platform: http://wufud.localhost:3000 (and http://localhost:3000)
-- Demo agency: http://demo.wufud.localhost:3000
-- API health: http://localhost:4400/api/v1/health (legacy `/api/health` still works)
-- OpenAPI (Swagger): http://localhost:4400/api/docs — every endpoint is versioned as `/api/v1/...` with a short description plus example request/response; use **Authorize** with a Bearer token from `POST /api/v1/auth/login`.
+- Platform: http://wufud.localhost:3009 (and http://localhost:3009)
+- Demo agency: http://demo.wufud.localhost:3009
+- API health: http://localhost:4005/api/v1/health (legacy `/api/health` still works)
+- OpenAPI (Swagger): http://localhost:4005/api/docs — every endpoint is versioned as `/api/v1/...` with a short description plus example request/response; use **Authorize** with a Bearer token from `POST /api/v1/auth/login`.
 - Mailpit: http://localhost:8025
 
 `*.localhost` resolves to 127.0.0.1 without a hosts file.
 
-Local compose publishes Postgres on `55432`, Redis on `56379`, and the API on `4400` so it can sit beside other stacks. Match those in `.env.local` (see `.env.local.example`).
+Local compose publishes Postgres on `55432`, Redis on `56379`, the API on `4005`, and the frontend on `3009` so they can sit beside other stacks. Match those in `.env.local` (see `.env.local.example`).
 
 ## Host-specific experiences
 
-Keep both services running with `pnpm dev`: the frontend resolves each host through the backend at `localhost:4400`.
+Keep both services running with `pnpm dev`: the frontend resolves each host through the backend at `localhost:4005`.
 
-- `wufud.localhost:3000`: Wufud platform marketing and the navy platform console at `/admin`.
-- `demo.wufud.localhost:3000`: Nur Travels storefront, pilgrim registration, and agency operations at `/dashboard`.
+- `wufud.localhost:3009`: Wufud platform marketing and the navy platform console at `/admin`.
+- `demo.wufud.localhost:3009`: Nur Travels storefront, pilgrim registration, and agency operations at `/dashboard`.
 - Agency names and branding come from `/api/public/context`; tenant pages do not fall back to platform marketing when the API is unavailable.
 - Sign in with each account on its matching hostname. Workspace navigation respects tenant features and user permissions.
 
 With the seeded database and both servers running, verify the live host routing and admin experiences:
 
 ```bash
-CI=1 PLAYWRIGHT_BASE_URL=http://wufud.localhost:3000 pnpm --filter frontend exec playwright test e2e/tenancy.spec.ts e2e/acceptance.spec.ts --workers=1
+CI=1 PLAYWRIGHT_BASE_URL=http://wufud.localhost:3009 pnpm --filter frontend exec playwright test e2e/tenancy.spec.ts e2e/acceptance.spec.ts --workers=1
 ```
 
 ## Demo accounts
