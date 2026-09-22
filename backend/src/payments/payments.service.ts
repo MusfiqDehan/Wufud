@@ -9,11 +9,10 @@ import { PaymentGatewayCatalog } from "./entities/gateway-catalog.entity";
 import { TenantGatewayInstance } from "./entities/tenant-gateway.entity";
 import { PaymentAttempt, PlatformPaymentAttempt, WebhookEvent } from "./entities/payment-attempt.entity";
 import { credentialsComplete, getGateway } from "./adapters/factory";
-import { newId } from "../shared/utils/uuid";
+import { randomBytes } from "node:crypto";
 import { Booking, BookingPilgrim } from "../booking/entities/booking.entity";
 import { User } from "../identity/entities/user.entity";
 import { Payment } from "../accounts/entities/payment.entity";
-import { applyPaymentToInstallments } from "../booking/installment.util";
 import { getTenantStore } from "../tenancy/tenant-context";
 import { env } from "../shared/config/env";
 import { OnboardingService, agencyLoginUrl } from "../platform/onboarding.service";
@@ -149,7 +148,7 @@ export class PaymentsService {
         missing_fields: catalog.configSchema.filter((f) => f.required && !inst?.credentials?.[f.key]).map((f) => f.key),
       });
     }
-    const tranId = `TXN-${sourceId.slice(0, 8)}-${newId().slice(0, 8)}`;
+    const tranId = `TXN-${randomBytes(12).toString("hex")}`;
     const attempt = this.em.create(PaymentAttempt, {
       tranId,
       gatewaySlug,
@@ -195,7 +194,7 @@ export class PaymentsService {
     if (!catalog || !credentialsComplete(catalog.configSchema, catalog.platformCredentials)) {
       throw new DomainError(ErrorCode.GATEWAY_UNAVAILABLE, "Gateway is not configured.", 400);
     }
-    const tranId = `SUB-${sourceId.slice(0, 8)}-${newId().slice(0, 8)}`;
+    const tranId = `SUB-${randomBytes(12).toString("hex")}`;
     const attempt = this.em.create(PlatformPaymentAttempt, {
       tranId,
       gatewaySlug,
@@ -285,16 +284,18 @@ export class PaymentsService {
       await em.flush();
       return attempt;
     }
-    const catalog = await em.findOne(PaymentGatewayCatalog, { slug: attempt.gatewaySlug });
     const inst = await em.findOne(TenantGatewayInstance, { gatewaySlug: attempt.gatewaySlug });
     const urls = this.callbackUrls(getTenantStore()?.host ?? env.PLATFORM_HOST);
     const gw = getGateway(
       attempt.gatewaySlug,
-      inst?.credentials ?? catalog?.platformCredentials ?? {},
+      inst?.credentials ?? {},
       inst?.isSandbox ?? true,
       urls,
     );
     const valId = input.valId || attempt.valId || "";
+    if ((attempt.gatewaySlug === "stripe" || attempt.gatewaySlug === "stub") && valId !== attempt.valId) {
+      throw DomainError.forbidden("Payment session does not match this attempt.");
+    }
     const validation = valId
       ? await gw.validate(valId)
       : { status: "FAILED" as const, amount: 0, currency: attempt.currency, raw: {} };
@@ -302,7 +303,8 @@ export class PaymentsService {
     const ok = validation.status === "VALID" && validation.currency === attempt.currency && (attempt.gatewaySlug === "stub" && env.NODE_ENV !== "production" || Math.round(validation.amount * 100) === Math.round(stored * 100)) && (attempt.gatewaySlug === "stripe" ? valId === attempt.valId : attempt.gatewaySlug === "stub" ? valId === attempt.valId : validation.raw.tran_id === attempt.tranId);
     attempt.status = ok ? "success" : "failed";
     attempt.validatedAt = new Date();
-    attempt.valId = valId;
+    // Never replace the trusted checkout session with an unverified callback ID.
+    if (ok) attempt.valId = valId;
     attempt.gatewayResponse = validation.raw;
     if (ok) await this.markSourcePaid(attempt, em);
     await em.flush();
@@ -326,6 +328,9 @@ export class PaymentsService {
     const urls = this.callbackUrls(getTenantStore()?.host ?? env.PLATFORM_HOST);
     const gw = getGateway(attempt.gatewaySlug, catalog?.platformCredentials ?? {}, catalog?.isSandbox ?? true, urls);
     const valId = input.valId || attempt.valId || "";
+    if ((attempt.gatewaySlug === "stripe" || attempt.gatewaySlug === "stub") && valId !== attempt.valId) {
+      throw DomainError.forbidden("Payment session does not match this attempt.");
+    }
     const validation = valId
       ? await gw.validate(valId)
       : { status: "FAILED" as const, amount: 0, currency: attempt.currency, raw: {} };
@@ -333,7 +338,8 @@ export class PaymentsService {
     const ok = validation.status === "VALID" && validation.currency === attempt.currency && (attempt.gatewaySlug === "stub" && env.NODE_ENV !== "production" || Math.round(validation.amount * 100) === Math.round(stored * 100)) && (attempt.gatewaySlug === "stripe" || attempt.gatewaySlug === "stub" ? valId === attempt.valId : validation.raw.tran_id === attempt.tranId);
     attempt.status = ok ? "success" : "failed";
     attempt.validatedAt = new Date();
-    attempt.valId = valId;
+    // Never replace the trusted checkout session with an unverified callback ID.
+    if (ok) attempt.valId = valId;
     attempt.gatewayResponse = validation.raw;
     await em.flush();
 
