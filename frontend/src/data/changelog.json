@@ -1,5 +1,133 @@
 [
   {
+    "version": "1.6",
+    "date": "2026-09-22",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.6)",
+    "summary": "Automated release 1.6 with 17 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "features",
+        "text": "load roles and branches for invite and role assignment on users page",
+        "hash": "2341d83",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/2341d8389ef9397daa5398b257c9e338d079770f",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "features",
+        "text": "expand tenant packages admin with rich create and edit flows",
+        "hash": "27161ae",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/27161aef5cc83d998d864088b9bd4a42f6ac561f",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "features",
+        "text": "enhance user role assignment with branch support and improve user retrieval with role mapping",
+        "hash": "3c0a3ad",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/3c0a3adb29c3730a9b398991cb31756b5fc6a45a",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "features",
+        "text": "add Traefik configuration, monitoring stack, and documentation",
+        "hash": "df77a1f",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/df77a1fc7ca27c1837af9667c69b5a1e6cb20b06",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "fixes",
+        "text": "portal POS receipt for reliable print and PDF rendering",
+        "hash": "7920682",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/79206823acbb43422d0c8288771ece2edbd763c4",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "fixes",
+        "text": "improve bar chart labels and capacity-aware bar scaling",
+        "hash": "37be87b",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/37be87bcf67762faeded92a28663e5ee58ffda50",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "fixes",
+        "text": "give chart cards flex layout so inner charts stay contained",
+        "hash": "415aa1b",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/415aa1ba8f3e7ef8369578c098261ee617e63bc9",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "fixes",
+        "text": "show tier capacity on reports seat chart and simplify header",
+        "hash": "2ebe35c",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/2ebe35c1769b5cfa19cc41745214d0aa694cb012",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "fixes",
+        "text": "aggregate seat quota by tier on agency dashboard chart",
+        "hash": "52e627e",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/52e627edf4619e6dfb873e2d2cf6c303dbf82b1c",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "fixes",
+        "text": "align package and tier business validation with admin payloads",
+        "hash": "64811d4",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/64811d4737faae0d59c1fedb411a8b30421415d2",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "fixes",
+        "text": "dynamically read and merge changelog.json in getChangelogEntries",
+        "hash": "aae679e",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/aae679e056f665559b4c0673fabbd3efee9ca493",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "refresh frontend TypeScript build info",
+        "hash": "221f8e4",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/221f8e4d50487dd63712055c17727c1f0d0b7686",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "refresh backend TypeScript build info",
+        "hash": "16a6410",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/16a6410d1e1bb515f66115125e2e347b83f3f96d",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "guard dashboard and reports chart overflow in containers",
+        "hash": "bfe4039",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/bfe4039e362bd9ef0279f4349db6b34ede9b8195",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "assert POS receipt print layout and non-blank PDF output",
+        "hash": "aa7f73b",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/aa7f73bd5df53878476d3fbf997c62fd88bc6360",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "update version 1.5 date to current date September 22, 2026",
+        "hash": "8bfd057",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/8bfd057396746dbb066c60ce48b514543708f401",
+        "author": "MusfiqDehan"
+      },
+      {
+        "category": "maintenance",
+        "text": "add version 1.5 release summary to frontend changelog and root changelog",
+        "hash": "1b02b1f",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/1b02b1fc8e239e5248b7cd82a53e49110109b673",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
     "version": "1.5",
     "title": "Modern Changelog, Live Healthcheck Status Page & Automated CI/CD Release Pipeline",
     "date": "2026-09-22",
