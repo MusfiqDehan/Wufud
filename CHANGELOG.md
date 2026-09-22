@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.18 (2026-09-22)
+
+### 📦 Other Changes
+
+- Portal table row action menus so they overlay scroll containers. ([3a8bcd5](https://github.com/MusfiqDehan/Wufud/commit/3a8bcd59137812276bf45b9b37584e356c30b183)) by @MusfiqDehan
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.17...1.18
+
+---
+
 ## What's Changed in 1.17 (2026-09-22)
 
 ### 🐛 Bug Fixes & Stability

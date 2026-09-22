@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.18",
+    "date": "2026-09-22",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.18)",
+    "summary": "Automated release 1.18 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "other",
+        "text": "Portal table row action menus so they overlay scroll containers.",
+        "hash": "3a8bcd5",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/3a8bcd59137812276bf45b9b37584e356c30b183",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
     "version": "1.17",
     "date": "2026-09-22",
     "type": "minor",
