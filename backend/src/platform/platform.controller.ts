@@ -77,7 +77,7 @@ const FEATURES_EXAMPLE = {
 @ApiBearerAuth("access-token")
 @Controller("api/v1/platform")
 export class PlatformController {
-  constructor(private readonly platform: PlatformService) {}
+  constructor(private readonly platform: PlatformService) { }
 
   @Get("tenants")
   @RequireFeature("platform.tenants", "view")
@@ -250,7 +250,7 @@ export class PlatformController {
   @ApiOperation({ summary: "Get platform SEO", description: "Global title/description/OG defaults for the marketing site." })
   @ApiResponse({
     status: 200,
-    schema: { example: { success: true, message: "Operation successful.", data: { title: "Wufud — Pilgrimage Booking SaaS" } } },
+    schema: { example: { success: true, message: "Operation successful.", data: { title: "Wufud | Pilgrimage Booking SaaS" } } },
   })
   async seo() {
     return successResponse(await this.platform.getSeo());
@@ -259,7 +259,7 @@ export class PlatformController {
   @Patch("seo")
   @RequireFeature("platform.seo", "edit")
   @ApiOperation({ summary: "Save platform SEO", description: "Partial update of global SEO settings." })
-  @ApiBody({ schema: { example: { title: "Wufud — Pilgrimage Booking SaaS", description: "Agency ERP and booking for Hajj and Umrah." } } })
+  @ApiBody({ schema: { example: { title: "Wufud | Pilgrimage Booking SaaS", description: "Agency ERP and booking for Hajj and Umrah." } } })
   @ApiResponse({ status: 200, schema: { example: { success: true, message: "SEO updated.", data: { title: "Wufud" } } } })
   async saveSeo(@Body() body: Record<string, unknown>) {
     return successResponse(await this.platform.saveSeo(body), "SEO updated.");
