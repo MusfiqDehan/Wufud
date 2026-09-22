@@ -39,6 +39,13 @@ export function loadEnv(raw: NodeJS.ProcessEnv = process.env): Env {
   if (!parsed.success) {
     throw new Error(`Invalid environment: ${parsed.error.message}`);
   }
+  if (parsed.data.NODE_ENV === "production" || parsed.data.NODE_ENV === "staging") {
+    const { JWT_ACCESS_SECRET: access, JWT_REFRESH_SECRET: refresh } = parsed.data;
+    if (access.length < 32 || refresh.length < 32 || access === refresh ||
+        access.startsWith("local-") || refresh.startsWith("local-")) {
+      throw new Error("Deployment requires distinct JWT secrets of at least 32 characters.");
+    }
+  }
   return parsed.data;
 }
 
