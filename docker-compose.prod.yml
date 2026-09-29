@@ -1,6 +1,7 @@
 services:
   postgres:
     image: postgres:17-alpine
+    restart: unless-stopped
     hostname: wufud-postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -14,6 +15,7 @@ services:
 
   redis:
     image: redis:7-alpine
+    restart: unless-stopped
     hostname: wufud-redis
     networks:
       internal:
@@ -21,6 +23,7 @@ services:
 
   backend:
     image: ghcr.io/musfiqdehan/wufud-backend:${IMAGE_TAG:-main}
+    restart: unless-stopped
     hostname: wufud-backend
     env_file: .env.production
     depends_on: [postgres, redis]
@@ -45,6 +48,7 @@ services:
 
   worker:
     image: ghcr.io/musfiqdehan/wufud-backend:${IMAGE_TAG:-main}
+    restart: unless-stopped
     command: ["node", "dist/worker.js"]
     env_file: .env.production
     depends_on: [postgres, redis]
@@ -52,6 +56,7 @@ services:
 
   frontend:
     image: ghcr.io/musfiqdehan/wufud-frontend:${IMAGE_TAG:-main}
+    restart: unless-stopped
     env_file: .env.production
     environment:
       API_INTERNAL_URL: http://wufud-backend:4005
