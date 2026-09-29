@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.23 (2026-09-29)
+
+### 🐛 Bug Fixes & Stability
+
+- restart Wufud stack automatically after host reboot ([205c6bd](https://github.com/MusfiqDehan/Wufud/commit/205c6bd18e425560b3c9ab515dcc1f62d3ef096b)) by @MusfiqDehan
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.22...1.23
+
+---
+
 ## What's Changed in 1.22 (2026-09-22)
 
 ### 🚀 Features & Capabilities
