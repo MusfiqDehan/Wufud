@@ -38,6 +38,7 @@ services:
       - traefik.enable=true
       - traefik.docker.network=traefik_proxy
       - traefik.http.routers.wufud-api.rule=HostRegexp(`^([a-z0-9][a-z0-9-]*\.)?wufud\.musfiqdehan\.com$`) && PathPrefix(`/api`)
+      - traefik.http.routers.wufud-api.priority=200
       - traefik.http.routers.wufud-api.entrypoints=websecure
       - traefik.http.routers.wufud-api.tls=true
       - traefik.http.routers.wufud-api.tls.certresolver=letsencrypt
@@ -67,6 +68,7 @@ services:
       - traefik.enable=true
       - traefik.docker.network=traefik_proxy
       - traefik.http.routers.wufud-web.rule=HostRegexp(`^([a-z0-9][a-z0-9-]*\.)?wufud\.musfiqdehan\.com$`) && !PathPrefix(`/api`)
+      - traefik.http.routers.wufud-web.priority=200
       - traefik.http.routers.wufud-web.entrypoints=websecure
       - traefik.http.routers.wufud-web.tls=true
       - traefik.http.routers.wufud-web.tls.certresolver=letsencrypt
