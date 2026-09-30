@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.24",
+    "date": "2026-09-30",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.24)",
+    "summary": "Automated release 1.24 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "features",
+        "text": "add introductory media and update sitemap",
+        "hash": "ac02660",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/ac02660f085be71e7c6b54b41eb5576ad04fbb4a",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
     "version": "1.23",
     "date": "2026-09-29",
     "type": "minor",
