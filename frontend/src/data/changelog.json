@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.25",
+    "date": "2026-09-30",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.25)",
+    "summary": "Automated release 1.25 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "fixes",
+        "text": "give Wufud Traefik routers priority over shared catch-all API routes",
+        "hash": "ebf92a0",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/ebf92a0304ad2258b383cab21c05c4246021dbf3",
+        "author": "MusfiqDehan"
+      }
+    ]
+  },
+  {
     "version": "1.24",
     "date": "2026-09-30",
     "type": "minor",

@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.25 (2026-09-30)
+
+### 🐛 Bug Fixes & Stability
+
+- give Wufud Traefik routers priority over shared catch-all API routes ([ebf92a0](https://github.com/MusfiqDehan/Wufud/commit/ebf92a0304ad2258b383cab21c05c4246021dbf3)) by @MusfiqDehan
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.24...1.25
+
+---
+
 ## What's Changed in 1.24 (2026-09-30)
 
 ### 🚀 Features & Capabilities
