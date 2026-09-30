@@ -12,7 +12,7 @@ export function Hero({ eyebrow, title, subtitle, primaryHref, primaryLabel }: { 
         <p className="mb-7 inline-flex items-center gap-2 rounded-full border border-teal-400/25 bg-teal-50 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[.14em] text-teal-600 dark:bg-navy-800 dark:text-teal-200"><span className="h-1.5 w-1.5 rounded-full bg-teal-500" />{eyebrow} · Made for meaningful journeys</p>
         <h1 className="max-w-2xl text-4xl font-medium leading-[1.1] tracking-[-.055em] sm:text-5xl lg:text-[64px]">{title}</h1>
         <p className="mt-6 max-w-lg text-base leading-8 text-slate-500 dark:text-slate-300">{subtitle}</p>
-        <div className="mt-8 flex flex-wrap items-center gap-5"><Button asChild size="lg"><Link href={primaryHref}>{primaryLabel}<ArrowUpRight size={18} /></Link></Button><Link href="#features" className="flex items-center gap-2 text-sm font-medium">Discover Wufud <ArrowRight size={16} /></Link></div>
+        <div className="mt-8 flex flex-wrap items-center gap-5"><Button asChild size="lg"><Link href={primaryHref}>{primaryLabel}<ArrowUpRight size={18} /></Link></Button><Link href="/intro" className="flex items-center gap-2 text-sm font-medium">Watch the intro <ArrowRight size={16} /></Link><Link href="#features" className="flex items-center gap-2 text-sm font-medium">Discover Wufud <ArrowRight size={16} /></Link></div>
         <div className="mt-9 flex flex-wrap gap-5 text-xs text-slate-500"><span className="flex items-center gap-2"><ShieldCheck size={16} className="text-teal-500" />Built around your agency</span><span className="flex items-center gap-2"><Users size={16} className="text-teal-500" />Connected at every step</span></div>
       </div>
       <div className="relative pb-8 pl-3 sm:pl-7">
