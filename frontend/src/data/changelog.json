@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.28",
+    "date": "2026-10-13",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.28)",
+    "summary": "Automated release 1.28 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "maintenance",
+        "text": "bump uuid from 13.0.2 to 14.0.2",
+        "hash": "d7dbec4",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/d7dbec4228f75b94a220a16d7a19f80849f277d2",
+        "author": "dependabot[bot]"
+      }
+    ]
+  },
+  {
     "version": "1.27",
     "date": "2026-10-13",
     "type": "minor",

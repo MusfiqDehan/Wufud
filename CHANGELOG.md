@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.28 (2026-10-13)
+
+### 🛠️ Maintenance & Refactoring
+
+- bump uuid from 13.0.2 to 14.0.2 ([d7dbec4](https://github.com/MusfiqDehan/Wufud/commit/d7dbec4228f75b94a220a16d7a19f80849f277d2)) by @dependabot[bot]
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.27...1.28
+
+---
+
 ## What's Changed in 1.27 (2026-10-13)
 
 ### 🛠️ Maintenance & Refactoring
