@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.27",
+    "date": "2026-10-13",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.27)",
+    "summary": "Automated release 1.27 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "maintenance",
+        "text": "bump @mikro-orm/cli from 6.6.16 to 7.2.1",
+        "hash": "756531b",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/756531bc43ef56762c058ed857060b3be4a5465a",
+        "author": "dependabot[bot]"
+      }
+    ]
+  },
+  {
     "version": "1.26",
     "date": "2026-10-13",
     "type": "minor",

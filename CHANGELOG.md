@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.27 (2026-10-13)
+
+### 🛠️ Maintenance & Refactoring
+
+- bump @mikro-orm/cli from 6.6.16 to 7.2.1 ([756531b](https://github.com/MusfiqDehan/Wufud/commit/756531bc43ef56762c058ed857060b3be4a5465a)) by @dependabot[bot]
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.26...1.27
+
+---
+
 ## What's Changed in 1.26 (2026-10-13)
 
 ### 📦 Other Changes
