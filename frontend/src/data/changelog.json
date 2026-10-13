@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.32",
+    "date": "2026-10-13",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.32)",
+    "summary": "Automated release 1.32 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "other",
+        "text": "Update GitHub Sponsors username in FUNDING.yml",
+        "hash": "9bfc8c3",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/9bfc8c3401a0e02309e53b5acadef45c3644235f",
+        "author": "Md. Musfiqur Rahaman"
+      }
+    ]
+  },
+  {
     "version": "1.31",
     "date": "2026-10-13",
     "type": "minor",

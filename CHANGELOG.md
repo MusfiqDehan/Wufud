@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.32 (2026-10-13)
+
+### 📦 Other Changes
+
+- Update GitHub Sponsors username in FUNDING.yml ([9bfc8c3](https://github.com/MusfiqDehan/Wufud/commit/9bfc8c3401a0e02309e53b5acadef45c3644235f)) by @Md. Musfiqur Rahaman
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.31...1.32
+
+---
+
 ## What's Changed in 1.31 (2026-10-13)
 
 ### 🛠️ Maintenance & Refactoring
