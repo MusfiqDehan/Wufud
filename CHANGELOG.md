@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.33 (2026-10-13)
+
+### 🛠️ Maintenance & Refactoring
+
+- bump eslint from 9.39.5 to 10.12.0 ([d70f47c](https://github.com/MusfiqDehan/Wufud/commit/d70f47c40d4ec74c32a38c3cbd7cc9728f6877f5)) by @dependabot[bot]
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.32...1.33
+
+---
+
 ## What's Changed in 1.32 (2026-10-13)
 
 ### 📦 Other Changes

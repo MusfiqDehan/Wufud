@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.33",
+    "date": "2026-10-13",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.33)",
+    "summary": "Automated release 1.33 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "maintenance",
+        "text": "bump eslint from 9.39.5 to 10.12.0",
+        "hash": "d70f47c",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/d70f47c40d4ec74c32a38c3cbd7cc9728f6877f5",
+        "author": "dependabot[bot]"
+      }
+    ]
+  },
+  {
     "version": "1.32",
     "date": "2026-10-13",
     "type": "minor",
