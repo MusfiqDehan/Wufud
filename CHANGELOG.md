@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.29 (2026-10-13)
+
+### 🛠️ Maintenance & Refactoring
+
+- bump pnpm/action-setup from 4 to 6 ([0e59979](https://github.com/MusfiqDehan/Wufud/commit/0e59979d708b8fae81b5087462f908507cdc8554)) by @dependabot[bot]
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.28...1.29
+
+---
+
 ## What's Changed in 1.28 (2026-10-13)
 
 ### 🛠️ Maintenance & Refactoring

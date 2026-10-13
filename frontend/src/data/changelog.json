@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.29",
+    "date": "2026-10-13",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.29)",
+    "summary": "Automated release 1.29 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "maintenance",
+        "text": "bump pnpm/action-setup from 4 to 6",
+        "hash": "0e59979",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/0e59979d708b8fae81b5087462f908507cdc8554",
+        "author": "dependabot[bot]"
+      }
+    ]
+  },
+  {
     "version": "1.28",
     "date": "2026-10-13",
     "type": "minor",
