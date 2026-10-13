@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.26 (2026-10-13)
+
+### 📦 Other Changes
+
+- [ImgBot] Optimize images ([c51f2d2](https://github.com/MusfiqDehan/Wufud/commit/c51f2d25b5dbaf9fb64f91e8083cb572902c86dc)) by @ImgBotApp
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.25...1.26
+
+---
+
 ## What's Changed in 1.25 (2026-09-30)
 
 ### 🐛 Bug Fixes & Stability
