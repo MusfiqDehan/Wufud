@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.30",
+    "date": "2026-10-13",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.30)",
+    "summary": "Automated release 1.30 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "maintenance",
+        "text": "bump docker/build-push-action from 6 to 7",
+        "hash": "7951ab4",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/7951ab4bb506c7359cc027b1d81e987bfbcb6cc1",
+        "author": "dependabot[bot]"
+      }
+    ]
+  },
+  {
     "version": "1.29",
     "date": "2026-10-13",
     "type": "minor",

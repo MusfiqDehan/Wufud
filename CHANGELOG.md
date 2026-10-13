@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.30 (2026-10-13)
+
+### 🛠️ Maintenance & Refactoring
+
+- bump docker/build-push-action from 6 to 7 ([7951ab4](https://github.com/MusfiqDehan/Wufud/commit/7951ab4bb506c7359cc027b1d81e987bfbcb6cc1)) by @dependabot[bot]
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.29...1.30
+
+---
+
 ## What's Changed in 1.29 (2026-10-13)
 
 ### 🛠️ Maintenance & Refactoring
