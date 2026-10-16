@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.34 (2026-10-16)
+
+### 🛠️ Maintenance & Refactoring
+
+- bump appleboy/ssh-action from 1.2.0 to 1.2.5 ([696436f](https://github.com/MusfiqDehan/Wufud/commit/696436f540b6cf5fe69a771c06aa2554cc6878e7)) by @dependabot[bot]
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.33...1.34
+
+---
+
 ## What's Changed in 1.33 (2026-10-13)
 
 ### 🛠️ Maintenance & Refactoring
