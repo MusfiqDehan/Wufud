@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.35",
+    "date": "2026-10-17",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.35)",
+    "summary": "Automated release 1.35 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "maintenance",
+        "text": "bump actions/checkout from 4 to 7",
+        "hash": "d2d8222",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/d2d82223c1ef2b5eeb3e12f47d1ef686d198e753",
+        "author": "dependabot[bot]"
+      }
+    ]
+  },
+  {
     "version": "1.34",
     "date": "2026-10-16",
     "type": "minor",

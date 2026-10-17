@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.35 (2026-10-17)
+
+### 🛠️ Maintenance & Refactoring
+
+- bump actions/checkout from 4 to 7 ([d2d8222](https://github.com/MusfiqDehan/Wufud/commit/d2d82223c1ef2b5eeb3e12f47d1ef686d198e753)) by @dependabot[bot]
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.34...1.35
+
+---
+
 ## What's Changed in 1.34 (2026-10-16)
 
 ### 🛠️ Maintenance & Refactoring
