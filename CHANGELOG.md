@@ -3,6 +3,20 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.38 (2026-10-20)
+
+### 🐛 Bug Fixes & Stability
+
+- align mikro-orm cli version for deploy stability ([ecd4b20](https://github.com/MusfiqDehan/Wufud/commit/ecd4b206d794c4f733b6365f43ab72d9adcbd22e)) by @copilot-swe-agent[bot]
+
+### 📦 Other Changes
+
+- Initial plan ([40c2259](https://github.com/MusfiqDehan/Wufud/commit/40c2259d07bbdeef56983c559fdb6682064e57f5)) by @copilot-swe-agent[bot]
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.37...1.38
+
+---
+
 ## What's Changed in 1.37 (2026-10-20)
 
 ### 🛠️ Maintenance & Refactoring

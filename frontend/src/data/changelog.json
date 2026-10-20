@@ -1,5 +1,28 @@
 [
   {
+    "version": "1.38",
+    "date": "2026-10-20",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.38)",
+    "summary": "Automated release 1.38 with 2 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "fixes",
+        "text": "align mikro-orm cli version for deploy stability",
+        "hash": "ecd4b20",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/ecd4b206d794c4f733b6365f43ab72d9adcbd22e",
+        "author": "copilot-swe-agent[bot]"
+      },
+      {
+        "category": "other",
+        "text": "Initial plan",
+        "hash": "40c2259",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/40c2259d07bbdeef56983c559fdb6682064e57f5",
+        "author": "copilot-swe-agent[bot]"
+      }
+    ]
+  },
+  {
     "version": "1.37",
     "date": "2026-10-20",
     "type": "minor",
