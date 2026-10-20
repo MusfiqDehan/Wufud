@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.37 (2026-10-20)
+
+### 🛠️ Maintenance & Refactoring
+
+- bump ts-jest from 29.4.12 to 29.4.15 ([3063372](https://github.com/MusfiqDehan/Wufud/commit/30633724fae8528745c3c6078bc95a9c22ee1071)) by @dependabot[bot]
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.36...1.37
+
+---
+
 ## What's Changed in 1.36 (2026-10-20)
 
 ### 🛠️ Maintenance & Refactoring

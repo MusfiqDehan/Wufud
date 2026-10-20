@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.37",
+    "date": "2026-10-20",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.37)",
+    "summary": "Automated release 1.37 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "maintenance",
+        "text": "bump ts-jest from 29.4.12 to 29.4.15",
+        "hash": "3063372",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/30633724fae8528745c3c6078bc95a9c22ee1071",
+        "author": "dependabot[bot]"
+      }
+    ]
+  },
+  {
     "version": "1.36",
     "date": "2026-10-20",
     "type": "minor",
