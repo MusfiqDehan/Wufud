@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.36",
+    "date": "2026-10-20",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.36)",
+    "summary": "Automated release 1.36 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "maintenance",
+        "text": "bump motion from 12.43.0 to 14.3.0",
+        "hash": "891130a",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/891130a008d4d84742f1d43130893f3a54de7712",
+        "author": "dependabot[bot]"
+      }
+    ]
+  },
+  {
     "version": "1.35",
     "date": "2026-10-17",
     "type": "minor",
