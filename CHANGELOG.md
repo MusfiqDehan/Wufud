@@ -3,6 +3,16 @@
 All notable changes to the **Wufud** SaaS platform will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## What's Changed in 1.39 (2026-11-01)
+
+### 🐛 Bug Fixes & Stability
+
+- enforce resource limits, log rotation, and autoheal protection for production ([574b6ea](https://github.com/MusfiqDehan/Wufud/commit/574b6ea4a67cf095f2516643fb0ffcb4ef19ef5e)) by @Md. Musfiqur Rahaman
+
+**Full Changelog**: https://github.com/MusfiqDehan/Wufud/compare/1.38...1.39
+
+---
+
 ## What's Changed in 1.38 (2026-10-20)
 
 ### 🐛 Bug Fixes & Stability

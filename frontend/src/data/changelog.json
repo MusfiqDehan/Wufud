@@ -1,5 +1,21 @@
 [
   {
+    "version": "1.39",
+    "date": "2026-11-01",
+    "type": "minor",
+    "title": "Platform Improvements & Features (1.39)",
+    "summary": "Automated release 1.39 with 1 update(s) across platform services.",
+    "changes": [
+      {
+        "category": "fixes",
+        "text": "enforce resource limits, log rotation, and autoheal protection for production",
+        "hash": "574b6ea",
+        "commitUrl": "https://github.com/MusfiqDehan/Wufud/commit/574b6ea4a67cf095f2516643fb0ffcb4ef19ef5e",
+        "author": "Md. Musfiqur Rahaman"
+      }
+    ]
+  },
+  {
     "version": "1.38",
     "date": "2026-10-20",
     "type": "minor",
